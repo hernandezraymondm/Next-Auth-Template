@@ -8,27 +8,27 @@ import { Separator } from "@/components/ui/separator";
 export const Social = () => {
   return (
     <div className="flex w-full flex-col">
-      <div className="flex items-center w-full gap-x-2">
+      <div className="flex flex-wrap items-center gap-2">
         <Button
           size="lg"
-          className="w-full rounded-full font-bold"
+          className="flex flex-grow rounded-full font-bold"
           variant="outline"
           onClick={() => {}}
         >
-          <FcGoogle className="h-5 w-5" /> Google
+          <FcGoogle className="h-5 w-5 mr-2" /> Google
         </Button>
         <Button
           size="lg"
-          className="w-full rounded-full font-bold"
+          className="flex flex-grow rounded-full font-bold"
           variant="outline"
           onClick={() => {}}
         >
-          <SiFacebook className="h-5 w-5" color="#0866ff" /> Facebook
+          <SiFacebook className="h-5 w-5 mr-2" color="#0866ff" /> Facebook
         </Button>
       </div>
-      <div className="flex items-center gap-3 py-4">
+      <div className="flex items-center gap-3 py-6">
         <Separator className="flex-1" />
-        <span className="text-muted-foreground text-xs ">
+        <span className="text-muted-foreground text-xs">
           Or continue with email
         </span>
         <Separator className="flex-1" />
