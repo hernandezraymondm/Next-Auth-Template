@@ -1,5 +1,7 @@
 import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
+import { ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -8,15 +10,25 @@ const font = Poppins({
 
 interface HeaderProps {
   label: string;
+  subLabel: string;
 }
 
-export const Header = ({ label }: HeaderProps) => {
+export const Header = ({ label, subLabel }: HeaderProps) => {
   return (
     <div className="w-full flex flex-col gap-y-4 items-center justify-center">
-      <h1 className={cn("text-3xl font-semibold", font.className)}>
-        Next Auth
-      </h1>
-      <p className="text-muted-foreground text-sm">{label}</p>
+      <Link href="/">
+        <div className="w-full flex items-center justify-center text-accent drop-shadow-md">
+          <ShieldCheck size={30} />
+          <h1 className={cn("text-3xl font-semibold", font.className)}>
+            NextAuth
+          </h1>
+        </div>
+      </Link>
+
+      <div className="w-full flex flex-col items-center justify-center gap-1">
+        <p className="font-semibold">{label}</p>
+        <p className="text-muted-foreground text-sm">{subLabel}</p>
+      </div>
     </div>
   );
 };

@@ -73,3 +73,9 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+.bg-custom {
+  @apply bg-no-repeat bg-center bg-fixed;
+  background-image: url("https://img.freepik.com/premium-photo/abstract-blurred-sky-colorful_40299-22.jpg");
+  background-size: cover;
+}

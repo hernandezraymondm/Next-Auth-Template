@@ -2,6 +2,8 @@ import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { LoginButton } from "@/components/auth/login-button";
+import { ShieldCheck } from "lucide-react";
+import { Play } from "lucide-react";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -10,21 +12,21 @@ const font = Poppins({
 
 export default function Home() {
   return (
-    <main className="h-full flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-400 to-blue-800">
+    <main className="h-full flex flex-col items-center justify-center bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary to-neutral">
       <div className="space-y-6 text-center">
-        <h1
-          className={cn(
-            "text-6xl font-semibold text-white drop-shadow-md",
-            font.className
-          )}
-        >
-          🔐 Next Auth V5
-        </h1>
-        <p className="text-white text-lg">A simple authentication service</p>
+        <div className="w-full flex items-center justify-center text-accent drop-shadow-md">
+          <ShieldCheck size={60} />
+          <h1 className={cn("text-6xl font-semibold", font.className)}>
+            NextAuth
+          </h1>
+        </div>
+        <p className="text-white text-lg">
+          Secure, Seamless Authentication for Modern Web Apps
+        </p>
         <div>
           <LoginButton>
-            <Button variant="secondary" size="lg">
-              Sign in
+            <Button variant="default" size="lg" className="font-semibold">
+              Get started <Play />
             </Button>
           </LoginButton>
         </div>

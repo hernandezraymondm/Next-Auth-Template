@@ -5,6 +5,8 @@ import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoginSchema } from "@/schemas";
+import { FaCaretRight } from "react-icons/fa6";
+import { EyeIcon, EyeOffIcon, Fingerprint } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import {
@@ -25,6 +27,7 @@ export const LoginForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const [showPassword, setShowPassword] = useState(false);
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -32,6 +35,10 @@ export const LoginForm = () => {
       password: "",
     },
   });
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
@@ -47,10 +54,13 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Sign in with email"
+      headerLabel="Sign in to NextAuth"
+      headerSubLabel="Welcome back! Please sign in to continue"
       backButtonLabel="Don't have an account?"
+      backButtonLink="Sign up"
       backButtonHref="/auth/register"
       showSocial
+      showFooter
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -60,14 +70,9 @@ export const LoginForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Email address</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="john.doe@example.com"
-                      type="email"
-                    />
+                    <Input {...field} disabled={isPending} type="email" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -81,12 +86,31 @@ export const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input
-                      {...field}
-                      disabled={isPending}
-                      placeholder="******"
-                      type="password"
-                    />
+                    <div className="relative">
+                      <Input
+                        {...field}
+                        disabled={isPending}
+                        type={showPassword ? "text" : "password"}
+                        className="pr-10"
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
+                        onClick={togglePasswordVisibility}
+                        disabled={isPending}
+                      >
+                        {showPassword ? (
+                          <EyeOffIcon className="h-4 w-4 text-gray-500" />
+                        ) : (
+                          <EyeIcon className="h-4 w-4 text-gray-500" />
+                        )}
+                        <span className="sr-only">
+                          {showPassword ? "Hide password" : "Show password"}
+                        </span>
+                      </Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,10 +119,24 @@ export const LoginForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button type="submit" disabled={isPending} className="w-full">
-            Login
+          <Button
+            type="submit"
+            disabled={isPending}
+            className="w-full font-semibold drop-shadow-md"
+          >
+            Continue <FaCaretRight />
           </Button>
         </form>
+        <div className="w-full flex place-content-center">
+          <Button
+            type="button"
+            variant="link"
+            disabled={isPending}
+            className="font-semibold mt-4 self-center"
+          >
+            <Fingerprint /> Use passkey instead
+          </Button>
+        </div>
       </Form>
     </CardWrapper>
   );

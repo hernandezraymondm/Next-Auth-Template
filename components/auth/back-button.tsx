@@ -4,14 +4,18 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface BackButtonProps {
-  href: string;
   label: string;
+  link: string;
+  href: string;
 }
 
-export const BackButton = ({ href, label }: BackButtonProps) => {
+export const BackButton = ({ label, link, href }: BackButtonProps) => {
   return (
-    <Button variant="link" className="font-normal w-full" size="sm" asChild>
-      <Link href={href}> {label}</Link>
-    </Button>
+    <div className="w-full flex place-content-center">
+      <p className="text-muted-foreground text-sm">{label}</p>
+      <Button variant="link" className="font-normal" size="custom" asChild>
+        <Link href={href}> {link}</Link>
+      </Button>
+    </div>
   );
 };
