@@ -39,14 +39,23 @@ Next-Auth-Template is a comprehensive authentication template built with the lat
 - 🔔 **Enable/disable two-factor auth in Settings page**
 - 🔄 **Change user role in Settings page** (for development purposes only)
 
-## Tech Stack
+## Technologies
 
 - **Auth.js**
-- **Middleware config**
 - **Resend**
-- **Node.js**
 - **ShadcnUI**
 - **Clerk**
+- **PostgreSQL**
+- **Prisma**
+- **Bcrypt**
+- **JWT**
+- **TailwindCSS**
+- **React Hook Form**
+- **Zod**
+- **Next.js**
+- **Typescript**
+- **Node.js**
+- **Middleware config**
 
 ## Getting Started
 
