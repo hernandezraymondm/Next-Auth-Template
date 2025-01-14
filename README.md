@@ -7,9 +7,10 @@ Next-Auth-Template is a comprehensive authentication template built with the lat
 ## Key Features
 
 - 🔐 **Next-auth v5 (Auth.js)**
-- 🚀 **Next.js 14 with server actions**
+- 🔑 **WebAuthen Passkey**
+- 🚀 **Next.js 15 with server actions**
 - 🔑 **Credentials Provider**
-- 🌐 **OAuth Provider** (Social login with Google & GitHub)
+- 🌐 **OAuth Provider** (Social login with Google & Facebook)
 - 🔒 **Forgot password functionality**
 - ✉️ **Email verification**
 - 📱 **Two-factor verification (2FA)**
@@ -45,6 +46,7 @@ Next-Auth-Template is a comprehensive authentication template built with the lat
 - **Resend**
 - **ShadcnUI**
 - **Clerk**
+- **WebAuthn**
 - **PostgreSQL**
 - **Prisma**
 - **Bcrypt**
