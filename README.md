@@ -158,3 +158,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ├── tailwind.config.ts        # Tailwind CSS configuration
 └── tailwind.json             # Tailwind CSS settings (optional)
 ```
+
+### Dev Commands
+
+```bash
+npx prisma studio             # Open Prisma Studio GUI
+npx prisma generate           # Generate Prisma Client based on your schema
+npx prisma db push            # Push the Prisma schema state to the database
+npx prisma migrate reset      # Reset the database by applying all migrations from scratch
+```
+
+💡 **Hint**: After running `npx prisma migrate reset`, you should run `npx prisma db push` to ensure that your schema changes are correctly applied to the database.
