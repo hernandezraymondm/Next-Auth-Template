@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project is a demonstration of authentication using NextAuth. It includes setting up user authentication, managing sessions, and integrating with various providers.
+This project is a template for authentication using NextAuth. It includes setting up user authentication, managing sessions, and integrating with various providers.
 
 ## Key Features
 
@@ -63,6 +63,7 @@ This project is a demonstration of authentication using NextAuth. It includes se
 
 - **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
 - **npm**: Install npm from [npmjs.com](https://www.npmjs.com/)
+- **Git**: Install Git from [git-scm.com](https://git-scm.com/)
 
 ## Getting Started
 
@@ -126,13 +127,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 │   │   ├── login-form.tsx    # Login form component
 │   │   ├── register-form.tsx # Registration form component
 │   │   └── social.tsx        # Social login buttons component
-│   ├── ui                    # ShadcnUI components
-│   │   ├── button.tsx
-│   │   ├── card.tsx
-│   │   ├── form.tsx
-│   │   ├── input.tsx
-│   │   ├── label.tsx
-│   │   └── separator.tsx
+│   ├── ui                    # Directory containing ShadcnUI components
 │   ├── form-error.tsx        # Form error display component
 │   └── form-success.tsx      # Form success display component
 ├── data                      # Directory for data models
