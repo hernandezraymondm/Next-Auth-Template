@@ -1,73 +1,82 @@
+
 # Next-Auth-Template
 
 ## Overview
 
 This project is a template for authentication using NextAuth. It includes setting up user authentication, managing sessions, and integrating with various providers.
 
-## Key Features
 
-- 🔐 **Next-auth v5 (Auth.js)**
-- 🔑 **WebAuthn Passkey**
-- 🚀 **Next.js 15 with server actions**
-- 🔑 **Credentials Provider**
-- 🌐 **OAuth Provider** (Social login with Google & Facebook)
-- 🔒 **Forgot password functionality**
-- ✉️ **Email verification**
-- 📱 **Two-factor verification (2FA)**
-- 👥 **User roles (Admin & User)**
-- 🔓 **Login component** (Opens in redirect or modal)
-- 📝 **Register component**
-- 🤔 **Forgot password component**
-- ✅ **Verification component**
-- ⚠️ **Error component**
-- 🔘 **Login button**
-- 🚪 **Logout button**
-- 🚧 **Role Gate**
-- 🔍 **Exploring next.js middleware**
-- 📈 **Extending & Exploring next-auth session**
-- 🔄 **Exploring next-auth callbacks**
-- 👤 **useCurrentUser hook**
-- 🛂 **useRole hook**
-- 🧑 **currentUser utility**
-- 👮 **currentRole utility**
-- 🖥️ **Example with server component**
-- 💻 **Example with client component**
-- 👑 **Render content for admins using RoleGate component**
-- 🛡️ **Protect API Routes for admins only**
-- 🔐 **Protect Server Actions for admins only**
-- 📧 **Change email with new verification in Settings page**
-- 🔑 **Change password with old password confirmation in Settings page**
-- 🔔 **Enable/disable two-factor auth in Settings page**
-- 🔄 **Change user role in Settings page** (for development purposes only)
 
-## Technologies
+### Key Features
 
-- **Auth.js**
-- **Resend**
-- **ShadcnUI**
-- **Clerk**
-- **WebAuthn**
-- **PostgreSQL**
-- **Prisma**
-- **Bcrypt**
-- **JWT**
-- **TailwindCSS**
-- **React Hook Form**
-- **Zod**
-- **Next.js**
-- **Typescript**
-- **Node.js**
-- **Middleware config**
+| Feature                                  | Description                                |
+|------------------------------------------|--------------------------------------------|
+| Next-auth v5 (Auth.js)                   | Authentication framework                  |
+| WebAuthn Passkey                         | Passwordless login                        |
+| Next.js 15 with server actions           | Latest Next.js with server-side actions   |
+| Credentials Provider                     | Custom login using credentials            |
+| OAuth Provider                           | Social login with Google & Facebook       |
+| Forgot password functionality            | Password recovery                         |
+| Email verification                       | Verify email addresses                    |
+| Two-factor verification (2FA)            | Enhanced security with 2FA                |
+| User roles                               | Admin and User roles                      |
+| Login component                          | Opens as a modal or redirect             |
+| Register component                       | User registration form                   |
+| Forgot password component                | Password reset form                       |
+| Verification component                   | Verification flow                         |
+| Error component                          | Error handling UI                         |
+| Login button                             | Interactive login button                  |
+| Logout button                            | Interactive logout button                 |
+| Role Gate                                | Role-based access control                 |
+| Exploring next.js middleware             | Middleware experimentation                |
+| Extending & exploring next-auth session  | Custom session management                 |
+| Exploring next-auth callbacks            | Custom authentication callbacks           |
+| useCurrentUser hook                      | React hook for current user               |
+| useRole hook                             | React hook for user role                  |
+| currentUser utility                      | Helper to fetch current user              |
+| currentRole utility                      | Helper to fetch current role              |
+| Example with server component            | Server-rendered component example         |
+| Example with client component            | Client-rendered component example         |
+| Render content for admins                | Admin-only content with RoleGate          |
+| Protect API Routes                       | Admin-only API routes                     |
+| Protect Server Actions                   | Admin-only server actions                 |
+| Change email in Settings page            | Email change with verification            |
+| Change password in Settings page         | Password update with old password check   |
+| Enable/disable two-factor auth           | 2FA management in settings                |
+| Change user role in Settings page        | Development-only role changes             |
 
-## Prerequisites Before you begin, ensure you have met the following requirements:
+### Technologies
+
+| Technology       | Purpose                              |
+|------------------|--------------------------------------|
+| Auth.js          | Authentication library              |
+| Resend           | Email service                       |
+| ShadcnUI         | UI components                       |
+| Clerk            | Authentication management           |
+| WebAuthn         | Passwordless login support          |
+| PostgreSQL       | Database                            |
+| Prisma           | ORM for database interaction        |
+| Bcrypt           | Password hashing                    |
+| JWT              | Token-based authentication          |
+| TailwindCSS      | Styling framework                   |
+| React Hook Form  | Form handling                       |
+| Zod              | Schema validation                   |
+| Next.js          | React framework                     |
+| Typescript       | Type-safe JavaScript                |
+| Node.js          | Backend runtime                     |
+| Middleware config| Middleware setup                    |
+
+
+
+## Getting Started
+
+**Prerequisites Before you begin, ensure you have met the following requirements:**
 
 - **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
 - **npm**: Install npm from [npmjs.com](https://www.npmjs.com/)
 - **Git**: Install Git from [git-scm.com](https://git-scm.com/)
 
-## Getting Started
-
-Follow the setup instructions to get your Next-Auth-Template up and running.
+**Follow the setup instructions to get your Next-Auth-Template up and running.**
 
 1. Clone the repository:
 
@@ -82,7 +91,7 @@ cd Next-Auth-Template
 npm install
 ```
 
-2. Run the development server:
+3. Run the development server:
 
 ```bash
 npm run dev
@@ -96,7 +105,7 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Project Structure
+### Project Structure
 
 ```bash
 ├── .next                     # Build output directory created by Next.js (do not modify)
@@ -168,4 +177,6 @@ npx prisma db push            # Push the Prisma schema state to the database
 npx prisma migrate reset      # Reset the database by applying all migrations from scratch
 ```
 
-💡 **Hint**: After running `npx prisma migrate reset`, you should run `npx prisma db push` to ensure that your schema changes are correctly applied to the database.
+> 💡 **Hint**: After running `npx prisma migrate reset`, you should run
+> `npx prisma db push` to ensure that your schema changes are correctly
+> applied to the database.
