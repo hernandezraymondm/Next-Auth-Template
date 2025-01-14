@@ -1,72 +1,28 @@
-
 # Next-Auth-Template
 
 ## Overview
 
 This project is a template for authentication using NextAuth. It includes setting up user authentication, managing sessions, and integrating with various providers.
 
-
-
 ### Key Features
 
-| Feature                                  | Description                                |
-|------------------------------------------|--------------------------------------------|
-| Next-auth v5 (Auth.js)                   | Authentication framework                  |
-| WebAuthn Passkey                         | Passwordless login                        |
-| Next.js 15 with server actions           | Latest Next.js with server-side actions   |
-| Credentials Provider                     | Custom login using credentials            |
-| OAuth Provider                           | Social login with Google & Facebook       |
-| Forgot password functionality            | Password recovery                         |
-| Email verification                       | Verify email addresses                    |
-| Two-factor verification (2FA)            | Enhanced security with 2FA                |
-| User roles                               | Admin and User roles                      |
-| Login component                          | Opens as a modal or redirect             |
-| Register component                       | User registration form                   |
-| Forgot password component                | Password reset form                       |
-| Verification component                   | Verification flow                         |
-| Error component                          | Error handling UI                         |
-| Login button                             | Interactive login button                  |
-| Logout button                            | Interactive logout button                 |
-| Role Gate                                | Role-based access control                 |
-| Exploring next.js middleware             | Middleware experimentation                |
-| Extending & exploring next-auth session  | Custom session management                 |
-| Exploring next-auth callbacks            | Custom authentication callbacks           |
-| useCurrentUser hook                      | React hook for current user               |
-| useRole hook                             | React hook for user role                  |
-| currentUser utility                      | Helper to fetch current user              |
-| currentRole utility                      | Helper to fetch current role              |
-| Example with server component            | Server-rendered component example         |
-| Example with client component            | Client-rendered component example         |
-| Render content for admins                | Admin-only content with RoleGate          |
-| Protect API Routes                       | Admin-only API routes                     |
-| Protect Server Actions                   | Admin-only server actions                 |
-| Change email in Settings page            | Email change with verification            |
-| Change password in Settings page         | Password update with old password check   |
-| Enable/disable two-factor auth           | 2FA management in settings                |
-| Change user role in Settings page        | Development-only role changes             |
+| Feature 1                        | Feature 2                           | Feature 3                         | Feature 4                     |
+| -------------------------------- | ----------------------------------- | --------------------------------- | ----------------------------- |
+| Next-auth v5 (Auth.js)           | WebAuthn Passkey                    | Next.js 15 with server actions    | Credentials Provider          |
+| OAuth Provider                   | Forgot password functionality       | Email verification                | Two-factor verification (2FA) |
+| User roles                       | Login component                     | Register component                | Forgot password component     |
+| Verification component           | Error component                     | Login button                      | Logout button                 |
+| Role Gate                        | Protect Server Actions              | Protect API Routes                | Change email in Settings page |
+| Change password in Settings page | Enable/disable 2FA in Settings page | Change user role in Settings page |                               |
 
 ### Technologies
 
-| Technology       | Purpose                              |
-|------------------|--------------------------------------|
-| Auth.js          | Authentication library              |
-| Resend           | Email service                       |
-| ShadcnUI         | UI components                       |
-| Clerk            | Authentication management           |
-| WebAuthn         | Passwordless login support          |
-| PostgreSQL       | Database                            |
-| Prisma           | ORM for database interaction        |
-| Bcrypt           | Password hashing                    |
-| JWT              | Token-based authentication          |
-| TailwindCSS      | Styling framework                   |
-| React Hook Form  | Form handling                       |
-| Zod              | Schema validation                   |
-| Next.js          | React framework                     |
-| Typescript       | Type-safe JavaScript                |
-| Node.js          | Backend runtime                     |
-| Middleware config| Middleware setup                    |
-
-
+| Technology 1 | Technology 2 | Technology 3    | Technology 4      |
+| ------------ | ------------ | --------------- | ----------------- |
+| Auth.js      | Resend       | ShadcnUI        | Clerk             |
+| WebAuthn     | PostgreSQL   | Prisma          | Bcrypt            |
+| JWT          | TailwindCSS  | React Hook Form | Zod               |
+| Next.js      | Typescript   | Node.js         | Middleware config |
 
 ## Getting Started
 
@@ -103,7 +59,8 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> 💡 **Hint**: Open [http://localhost:3000](http://localhost:3000) with your browser
+> to see the result.
 
 ### Project Structure
 
