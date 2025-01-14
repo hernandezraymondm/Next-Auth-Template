@@ -2,12 +2,12 @@
 
 ## Overview
 
-Next-Auth-Template is a comprehensive authentication template built with the latest technologies to streamline the integration of robust authentication systems in your Next.js projects. It utilizes Auth.js for authentication, middleware configuration for advanced routing and security, Resend for email services, Node.js as the runtime environment, ShaDCN UI for user interface components, and Clerk for user management and authentication services.
+This project is a demonstration of authentication using NextAuth. It includes setting up user authentication, managing sessions, and integrating with various providers.
 
 ## Key Features
 
 - 🔐 **Next-auth v5 (Auth.js)**
-- 🔑 **WebAuthen Passkey**
+- 🔑 **WebAuthn Passkey**
 - 🚀 **Next.js 15 with server actions**
 - 🔑 **Credentials Provider**
 - 🌐 **OAuth Provider** (Social login with Google & Facebook)
@@ -59,19 +59,29 @@ Next-Auth-Template is a comprehensive authentication template built with the lat
 - **Node.js**
 - **Middleware config**
 
+## Prerequisites Before you begin, ensure you have met the following requirements:
+
+- **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
+- **npm**: Install npm from [npmjs.com](https://www.npmjs.com/)
+
 ## Getting Started
 
 Follow the setup instructions to get your Next-Auth-Template up and running.
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/Next-Auth-Template.git
-   cd Next-Auth-Template
-   ```
 
-## Getting Started
+```bash
+git clone https://github.com/yourusername/Next-Auth-Template.git
+cd Next-Auth-Template
+```
 
-First, run the development server:
+2. Install Dependencies:
+
+```bash
+npm install
+```
+
+2. Run the development server:
 
 ```bash
 npm run dev
@@ -85,21 +95,71 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+├── .next                     # Build output directory created by Next.js (do not modify)
+├── actions                   # Directory containing server action files
+│   ├── login.ts              # Logic for handling user login
+│   └── register.ts           # Logic for handling user registration
+├── app                       # Main application directory
+│   ├── api                   # API routes
+│   │   └── auth              # Authentication-related API routes
+│   │       └── {...nextauth}
+│   │           └── route.ts  # NextAuth route handler
+│   ├── auth                  # Authentication pages
+│   │   ├── login
+│   │   │   └── page.tsx      # Login page component
+│   │   ├── register
+│   │   │   └── page.tsx      # Registration page component
+│   │   └── layout.tsx        # Layout component for authentication pages
+│   ├── favicon.ico           # Favicon for the application
+│   ├── globals.css           # Global styles for the application
+│   ├── layout.tsx            # Main layout component
+│   └── page.tsx              # Main page component
+├── components                # Directory containing reusable components
+│   ├── auth                  # Authentication-related components
+│   │   ├── back-button.tsx   # Back button component
+│   │   ├── card-wrapper.tsx  # Card wrapper component
+│   │   ├── header.tsx        # Header component
+│   │   ├── login-button.tsx  # Login button component
+│   │   ├── login-form.tsx    # Login form component
+│   │   ├── register-form.tsx # Registration form component
+│   │   └── social.tsx        # Social login buttons component
+│   ├── ui                    # ShadcnUI components
+│   │   ├── button.tsx
+│   │   ├── card.tsx
+│   │   ├── form.tsx
+│   │   ├── input.tsx
+│   │   ├── label.tsx
+│   │   └── separator.tsx
+│   ├── form-error.tsx        # Form error display component
+│   └── form-success.tsx      # Form success display component
+├── data                      # Directory for data models
+│   └── user.ts               # Functions to fetch user data from the database
+├── lib                       # Library and utility functions
+│   ├── db.ts                 # Database connection and setup using PrismaClient
+│   └── utils.ts              # General utility functions
+├── node_modules              # Directory for npm packages (do not modify)
+├── prisma                    # Prisma schema and configuration
+│   └── schema.prisma         # Prisma schema definition
+├── public                    # Static assets
+│   └── images                # Image assets
+├── schemas                   # Directory for validation schemas
+│   └── index.ts              # Validation schemas entry point
+├── .env                      # Environment variables
+├── .gitignore                # Files and directories to be ignored by git
+├── auth.config.ts            # Authentication configuration
+├── auth.ts                   # Authentication logic
+├── components.json           # Configuration for components (optional)
+├── eslint.config.mjs         # ESLint configuration
+├── middleware.ts             # Middleware functions
+├── next-env.d.ts             # TypeScript environment declarations for Next.js
+├── next-config.ts            # Next.js configuration
+├── package-lock.json         # Exact versions of npm dependencies
+├── package.json              # Project metadata and npm dependencies
+├── postcss.config.mjs        # PostCSS configuration
+├── README.md                 # Project documentation
+├── tailwind.config.ts        # Tailwind CSS configuration
+└── tailwind.json             # Tailwind CSS settings (optional)
+```
