@@ -2,7 +2,7 @@
 
 ## Overview
 
-`Welcome to our comprehensive authentication template built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
+`Welcome to my comprehensive authentication template built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
 
 ### Key Features
 
@@ -163,13 +163,13 @@ npx prisma migrate reset      # Reset the database by applying all migrations fr
 
 ## Code Documentation
 
-`This project implements a robust authentication system with multi-layered validation. It includes credentials validation on the frontend, backend, and middleware using zod to ensure a more secure user authentication.`
+`This project implements a robust authentication system with multi-layered validation. It includes credentials validation on the client component, server action component, and middleware using zod to ensure a more secure user authentication.`
 
 ### Credentials Validation
 
 This application performs credentials validation at three different levels:
 
-1.  **Frontend Validation**:
+1.  **Client Component**:
 
     - Located in the `LoginForm` component, where user inputs are validated using the `LoginSchema` before being submitted.
 
@@ -191,9 +191,9 @@ This application performs credentials validation at three different levels:
 >       });
 >     };
 
-2.  **API Validation**:
+2.  **Server Action Component**:
 
-    - The server action performs a second layer of validation using the same schema before processing the login attempt.
+    - The server action performs a layer of validation using the same schema before processing the login attempt.
 
 >     import { login } from "@/auth";
 >
