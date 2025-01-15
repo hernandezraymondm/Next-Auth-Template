@@ -4,70 +4,35 @@
 
 This project is a template for authentication using NextAuth. It includes setting up user authentication, managing sessions, and integrating with various providers.
 
-## Key Features
+### Key Features
 
-- 🔐 **Next-auth v5 (Auth.js)**
-- 🔑 **WebAuthn Passkey**
-- 🚀 **Next.js 15 with server actions**
-- 🔑 **Credentials Provider**
-- 🌐 **OAuth Provider** (Social login with Google & Facebook)
-- 🔒 **Forgot password functionality**
-- ✉️ **Email verification**
-- 📱 **Two-factor verification (2FA)**
-- 👥 **User roles (Admin & User)**
-- 🔓 **Login component** (Opens in redirect or modal)
-- 📝 **Register component**
-- 🤔 **Forgot password component**
-- ✅ **Verification component**
-- ⚠️ **Error component**
-- 🔘 **Login button**
-- 🚪 **Logout button**
-- 🚧 **Role Gate**
-- 🔍 **Exploring next.js middleware**
-- 📈 **Extending & Exploring next-auth session**
-- 🔄 **Exploring next-auth callbacks**
-- 👤 **useCurrentUser hook**
-- 🛂 **useRole hook**
-- 🧑 **currentUser utility**
-- 👮 **currentRole utility**
-- 🖥️ **Example with server component**
-- 💻 **Example with client component**
-- 👑 **Render content for admins using RoleGate component**
-- 🛡️ **Protect API Routes for admins only**
-- 🔐 **Protect Server Actions for admins only**
-- 📧 **Change email with new verification in Settings page**
-- 🔑 **Change password with old password confirmation in Settings page**
-- 🔔 **Enable/disable two-factor auth in Settings page**
-- 🔄 **Change user role in Settings page** (for development purposes only)
+| Feature 1                        | Feature 2                           | Feature 3                         | Feature 4                     |
+| -------------------------------- | ----------------------------------- | --------------------------------- | ----------------------------- |
+| Next-auth v5 (Auth.js)           | WebAuthn Passkey                    | Next.js 15 with server actions    | Credentials Provider          |
+| OAuth Provider                   | Forgot password functionality       | Email verification                | Two-factor verification (2FA) |
+| User roles                       | Login component                     | Register component                | Forgot password component     |
+| Verification component           | Error component                     | Login button                      | Logout button                 |
+| Role Gate                        | Protect Server Actions              | Protect API Routes                | Change email in Settings page |
+| Change password in Settings page | Enable/disable 2FA in Settings page | Change user role in Settings page |                               |
 
-## Technologies
+### Technologies
 
-- **Auth.js**
-- **Resend**
-- **ShadcnUI**
-- **Clerk**
-- **WebAuthn**
-- **PostgreSQL**
-- **Prisma**
-- **Bcrypt**
-- **JWT**
-- **TailwindCSS**
-- **React Hook Form**
-- **Zod**
-- **Next.js**
-- **Typescript**
-- **Node.js**
-- **Middleware config**
+| Technology 1 | Technology 2 | Technology 3    | Technology 4      |
+| ------------ | ------------ | --------------- | ----------------- |
+| Auth.js      | Resend       | ShadcnUI        | Clerk             |
+| WebAuthn     | PostgreSQL   | Prisma          | Bcrypt            |
+| JWT          | TailwindCSS  | React Hook Form | Zod               |
+| Next.js      | Typescript   | Node.js         | Middleware config |
 
-## Prerequisites Before you begin, ensure you have met the following requirements:
+## Getting Started
+
+**Prerequisites Before you begin, ensure you have met the following requirements:**
 
 - **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
 - **npm**: Install npm from [npmjs.com](https://www.npmjs.com/)
 - **Git**: Install Git from [git-scm.com](https://git-scm.com/)
 
-## Getting Started
-
-Follow the setup instructions to get your Next-Auth-Template up and running.
+**Follow the setup instructions to get your Next-Auth-Template up and running.**
 
 1. Clone the repository:
 
@@ -82,7 +47,7 @@ cd Next-Auth-Template
 npm install
 ```
 
-2. Run the development server:
+3. Run the development server:
 
 ```bash
 npm run dev
@@ -94,9 +59,10 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+> 💡 **Hint**: Open [http://localhost:3000](http://localhost:3000) with your browser
+> to see the result.
 
-## Project Structure
+### Project Structure
 
 ```bash
 ├── .next                     # Build output directory created by Next.js (do not modify)
@@ -108,6 +74,9 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 │   │   └── auth              # Authentication-related API routes
 │   │       └── {...nextauth}
 │   │           └── route.ts  # NextAuth route handler
+│   ├── (protected)           # Protected pages
+│   │   └── settings
+│   │       └── page.tsx      # Settings page component
 │   ├── auth                  # Authentication pages
 │   │   ├── login
 │   │   │   └── page.tsx      # Login page component
@@ -149,12 +118,52 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 ├── components.json           # Configuration for components (optional)
 ├── eslint.config.mjs         # ESLint configuration
 ├── middleware.ts             # Middleware functions
+├── next-auth.d.ts            # TypeScript type declarations for NextAut
 ├── next-env.d.ts             # TypeScript environment declarations for Next.js
 ├── next-config.ts            # Next.js configuration
 ├── package-lock.json         # Exact versions of npm dependencies
 ├── package.json              # Project metadata and npm dependencies
 ├── postcss.config.mjs        # PostCSS configuration
 ├── README.md                 # Project documentation
+├── routes.ts                 # Defines public and authentication-related routes
 ├── tailwind.config.ts        # Tailwind CSS configuration
 └── tailwind.json             # Tailwind CSS settings (optional)
 ```
+
+### Dev Commands
+
+```bash
+npx prisma studio             # Open Prisma Studio GUI
+npx prisma generate           # Generate Prisma Client based on your schema
+npx prisma db push            # Push the Prisma schema state to the database
+npx prisma migrate reset      # Reset the database by applying all migrations from scratch
+```
+
+> 💡 **Hint**: After running `npx prisma migrate reset`, you should run
+> `npx prisma db push` to ensure that your schema changes are correctly
+> applied to the database.
+
+### Setup .env file
+
+    # Database connection URL
+    DATABASE_URL=your_database_url
+
+    # Direct connection URL (optional, used for some specific database setups)
+    DIRECT_URL=your_direct_url
+
+    # Secret key for authentication
+    AUTH_SECRET=your_auth_token
+
+    # Google OAuth credentials
+    AUTH_GOOGLE_ID=your_auth_google_id
+    AUTH_GOOGLE_SECRET=your_auth_google_secret
+
+    # Facebook OAuth credentials
+    AUTH_FACEBOOK_ID=your_auth_facebook_id
+    AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
+
+    # API key for Resend email service
+    RESEND_API_KEY=your_resend_api_key
+
+    # Public URL of your application
+    NEXT_PUBLIC_APP_URL=your_public_app_url

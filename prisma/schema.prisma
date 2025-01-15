@@ -7,6 +7,26 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum UserRole {
+  ADMIN
+  SUPERADMIN
+  USER
+  GUEST
+  MODERATOR
+  EDITOR
+  VIEWER
+  CONTRIBUTOR
+  MANAGER
+  DEVELOPER
+  SUPPORT
+  ANALYST
+  AUDITOR
+  VENDOR
+  CUSTOMER
+  STUDENT
+  TEACHER
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String?
@@ -14,6 +34,7 @@ model User {
   emailVerified DateTime? @map("email_verified")
   image         String?
   password      String?
+  role          UserRole  @default(USER)
   accounts      Account[]
 
   // Optional for WebAuthn support
