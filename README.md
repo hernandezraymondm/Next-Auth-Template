@@ -171,7 +171,7 @@ This application performs credentials validation at three different levels:
 
 1.  **Client Component**:
 
-    - Located in the `LoginForm` component, where user inputs are validated using the `LoginSchema` before being submitted.
+    - Located in the `login-form.tsx` component, where user inputs are validated using the `LoginSchema` before being submitted.
 
 >     import { LoginForm } from "@/components/LoginForm";
 >
@@ -193,7 +193,7 @@ This application performs credentials validation at three different levels:
 
 2.  **Server Action Component**:
 
-    - The server action performs a layer of validation using the same schema before processing the login attempt.
+    - Located in the `actions/login.ts`, the server action performs a layer of validation using the same schema before processing the login attempt.
 
 >     import { login } from "@/auth";
 >
