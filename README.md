@@ -74,6 +74,9 @@ bun dev
 │   │   └── auth              # Authentication-related API routes
 │   │       └── {...nextauth}
 │   │           └── route.ts  # NextAuth route handler
+│   ├── (protected)           # Protected pages
+│   │   └── settings
+│   │       └── page.tsx      # Settings page component
 │   ├── auth                  # Authentication pages
 │   │   ├── login
 │   │   │   └── page.tsx      # Login page component
@@ -115,12 +118,14 @@ bun dev
 ├── components.json           # Configuration for components (optional)
 ├── eslint.config.mjs         # ESLint configuration
 ├── middleware.ts             # Middleware functions
+├── next-auth.d.ts            # TypeScript type declarations for NextAut
 ├── next-env.d.ts             # TypeScript environment declarations for Next.js
 ├── next-config.ts            # Next.js configuration
 ├── package-lock.json         # Exact versions of npm dependencies
 ├── package.json              # Project metadata and npm dependencies
 ├── postcss.config.mjs        # PostCSS configuration
 ├── README.md                 # Project documentation
+├── routes.ts                 # Defines public and authentication-related routes
 ├── tailwind.config.ts        # Tailwind CSS configuration
 └── tailwind.json             # Tailwind CSS settings (optional)
 ```
@@ -137,3 +142,21 @@ npx prisma migrate reset      # Reset the database by applying all migrations fr
 > 💡 **Hint**: After running `npx prisma migrate reset`, you should run
 > `npx prisma db push` to ensure that your schema changes are correctly
 > applied to the database.
+
+### Setup .env file
+
+    DATABASE_URL=your_database_url
+
+    DIRECT_URL=your_direct_url
+
+    AUTH_SECRET=your_auth_secret
+
+    FACEBOOK_CLIENT_ID=your_facebook_client_id
+    FACEBOOK_CLIENT_SECRET=your_facebook_client_secret
+
+    GOOGLE_CLIENT_ID=your_google_client_id
+    GOOGLE_CLIENT_SECRET=your_google_client_secret
+
+    RESEND_API_KEY=your_resend_api_key
+
+    NEXT_PUBLIC_APP_URL=your_public_app_url
