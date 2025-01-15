@@ -1,8 +1,8 @@
-# Next-Auth-Template
+# Next Auth Template
 
 ## Overview
 
-This project is a template for authentication using NextAuth. It includes setting up user authentication, managing sessions, and integrating with various providers.
+`Welcome to our comprehensive authentication template built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
 
 ### Key Features
 
@@ -23,44 +23,6 @@ This project is a template for authentication using NextAuth. It includes settin
 | WebAuthn     | PostgreSQL   | Prisma          | Bcrypt            |
 | JWT          | TailwindCSS  | React Hook Form | Zod               |
 | Next.js      | Typescript   | Node.js         | Middleware config |
-
-## Getting Started
-
-**Prerequisites Before you begin, ensure you have met the following requirements:**
-
-- **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
-- **npm**: Install npm from [npmjs.com](https://www.npmjs.com/)
-- **Git**: Install Git from [git-scm.com](https://git-scm.com/)
-
-**Follow the setup instructions to get your Next-Auth-Template up and running.**
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/Next-Auth-Template.git
-cd Next-Auth-Template
-```
-
-2. Install Dependencies:
-
-```bash
-npm install
-```
-
-3. Run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-> 💡 **Hint**: Open [http://localhost:3000](http://localhost:3000) with your browser
-> to see the result.
 
 ### Project Structure
 
@@ -130,18 +92,28 @@ bun dev
 └── tailwind.json             # Tailwind CSS settings (optional)
 ```
 
-### Dev Commands
+## Getting Started
+
+**Prerequisites Before you begin, ensure you have met the following requirements:**
+
+- **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
+- **npm**: Install npm from [npmjs.com](https://www.npmjs.com/)
+- **Git**: Install Git from [git-scm.com](https://git-scm.com/)
+
+**Follow the setup instructions to get your Next-Auth-Template up and running.**
+
+1. Clone the repository:
 
 ```bash
-npx prisma studio             # Open Prisma Studio GUI
-npx prisma generate           # Generate Prisma Client based on your schema
-npx prisma db push            # Push the Prisma schema state to the database
-npx prisma migrate reset      # Reset the database by applying all migrations from scratch
+git clone https://github.com/yourusername/Next-Auth-Template.git
+cd Next-Auth-Template
 ```
 
-> 💡 **Hint**: After running `npx prisma migrate reset`, you should run
-> `npx prisma db push` to ensure that your schema changes are correctly
-> applied to the database.
+2. Install Dependencies:
+
+```bash
+npm install
+```
 
 ### Setup .env file
 
@@ -160,6 +132,34 @@ npx prisma migrate reset      # Reset the database by applying all migrations fr
     RESEND_API_KEY=your_resend_api_key
 
     NEXT_PUBLIC_APP_URL=your_public_app_url
+
+3. Run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+> 💡 **Hint**: Open [http://localhost:3000](http://localhost:3000) with your browser
+> to see the result.
+
+### Dev Commands
+
+```bash
+npx prisma studio             # Open Prisma Studio GUI
+npx prisma generate           # Generate Prisma Client based on your schema
+npx prisma db push            # Push the Prisma schema state to the database
+npx prisma migrate reset      # Reset the database by applying all migrations from scratch
+```
+
+> 💡 **Hint**: After running `npx prisma migrate reset`, you should run
+> `npx prisma db push` to ensure that your schema changes are correctly
+> applied to the database.
 
 ## Code Documentation
 
@@ -193,7 +193,7 @@ This application performs credentials validation at three different levels:
 
 2.  **API Validation**:
 
-    - The backend performs a second layer of validation using the same schema before processing the login attempt.
+    - The server action performs a second layer of validation using the same schema before processing the login attempt.
 
 >     import { login } from "@/auth";
 >
