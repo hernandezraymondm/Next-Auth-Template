@@ -145,25 +145,105 @@ npx prisma migrate reset      # Reset the database by applying all migrations fr
 
 ### Setup .env file
 
-    # Database connection URL
     DATABASE_URL=your_database_url
 
-    # Direct connection URL (optional, used for some specific database setups)
     DIRECT_URL=your_direct_url
 
-    # Secret key for authentication
     AUTH_SECRET=your_auth_token
 
-    # Google OAuth credentials
     AUTH_GOOGLE_ID=your_auth_google_id
     AUTH_GOOGLE_SECRET=your_auth_google_secret
 
-    # Facebook OAuth credentials
     AUTH_FACEBOOK_ID=your_auth_facebook_id
     AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
 
-    # API key for Resend email service
     RESEND_API_KEY=your_resend_api_key
 
-    # Public URL of your application
     NEXT_PUBLIC_APP_URL=your_public_app_url
+
+## Code Documentation
+
+`This project implements a robust authentication system with multi-layered validation. It includes credentials validation on the frontend, backend, and middleware using zod to ensure a more secure user authentication.`
+
+### Credentials Validation
+
+This application performs credentials validation at three different levels:
+
+1.  **Frontend Validation**:
+
+    - Located in the `LoginForm` component, where user inputs are validated using the `LoginSchema` before being submitted.
+
+>     import { LoginForm } from "@/components/LoginForm";
+>
+>     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+>       setError("");
+>       setSuccess("");
+>
+>       startTransition(() => {
+>         login(values).then((data) => {
+>           if (data) {
+>             setError(data.error);
+>             setSuccess(data.success);
+>           } else {
+>             setError("An unexpected error occurred. Please try again.");
+>           }
+>         });
+>       });
+>     };
+
+2.  **API Validation**:
+
+    - The backend performs a second layer of validation using the same schema before processing the login attempt.
+
+>     import { login } from "@/auth";
+>
+>     export const login = async (values: z.infer<typeof LoginSchema>) => {
+>       const validatedFields = LoginSchema.safeParse(values);
+>
+>       if (!validatedFields.success) {
+>         return { error: "Invalid fields!" };
+>       }
+>
+>       const { email, password } = validatedFields.data;
+>
+>       try {
+>         await signIn("credentials", {
+>           email,
+>           password,
+>           redirectTo: DEFAULT_LOGIN_REDIRECT,
+>         });
+>       } catch (error) {
+>         if (error instanceof AuthError) {
+>           switch (error.type) {
+>             case "CredentialsSignin":
+>               return { error: "Invalid credentials!" };
+>             default:
+>               return { error: "Oops! Something went wrong!" };
+>           }
+>         }
+>         throw error;
+>       }
+>     };
+
+3.  **Middleware Validation**:
+
+    - Middleware ensures users are authenticated before accessing protected routes, and redirects unauthenticated users to the login page. The actual validation logic is imported from `auth.config`.
+
+>     Credentials({
+>       async authorize(credentials) {
+>         const validatedFields = LoginSchema.safeParse(credentials);
+>
+>         if (validatedFields.success) {
+>           const { email, password } = validatedFields.data;
+>
+>           const user = await getUserByEmail(email);
+>           if (!user || !user.password) return null; // if user registered with social
+>
+>           const passwordMatch = await bcrypt.compare(password, user.password);
+>
+>           if (passwordMatch) return user;
+>         }
+>
+>         return null;
+>       },
+>     }),
