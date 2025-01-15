@@ -145,18 +145,25 @@ npx prisma migrate reset      # Reset the database by applying all migrations fr
 
 ### Setup .env file
 
+    # Database connection URL
     DATABASE_URL=your_database_url
 
+    # Direct connection URL (optional, used for some specific database setups)
     DIRECT_URL=your_direct_url
 
-    AUTH_SECRET=your_auth_secret
+    # Secret key for authentication
+    AUTH_SECRET=your_auth_token
 
-    FACEBOOK_CLIENT_ID=your_facebook_client_id
-    FACEBOOK_CLIENT_SECRET=your_facebook_client_secret
+    # Google OAuth credentials
+    AUTH_GOOGLE_ID=your_auth_google_id
+    AUTH_GOOGLE_SECRET=your_auth_google_secret
 
-    GOOGLE_CLIENT_ID=your_google_client_id
-    GOOGLE_CLIENT_SECRET=your_google_client_secret
+    # Facebook OAuth credentials
+    AUTH_FACEBOOK_ID=your_auth_facebook_id
+    AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
 
+    # API key for Resend email service
     RESEND_API_KEY=your_resend_api_key
 
+    # Public URL of your application
     NEXT_PUBLIC_APP_URL=your_public_app_url
