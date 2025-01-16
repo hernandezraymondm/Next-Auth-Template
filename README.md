@@ -1,8 +1,6 @@
-# Next-Auth-Template
-
 ## Overview
 
-This project is a template for authentication using NextAuth. It includes setting up user authentication, managing sessions, and integrating with various providers.
+`Welcome to NextGuard a comprehensive authentication project template built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
 
 ### Key Features
 
@@ -23,44 +21,6 @@ This project is a template for authentication using NextAuth. It includes settin
 | WebAuthn     | PostgreSQL   | Prisma          | Bcrypt            |
 | JWT          | TailwindCSS  | React Hook Form | Zod               |
 | Next.js      | Typescript   | Node.js         | Middleware config |
-
-## Getting Started
-
-**Prerequisites Before you begin, ensure you have met the following requirements:**
-
-- **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
-- **npm**: Install npm from [npmjs.com](https://www.npmjs.com/)
-- **Git**: Install Git from [git-scm.com](https://git-scm.com/)
-
-**Follow the setup instructions to get your Next-Auth-Template up and running.**
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/yourusername/Next-Auth-Template.git
-cd Next-Auth-Template
-```
-
-2. Install Dependencies:
-
-```bash
-npm install
-```
-
-3. Run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-> 💡 **Hint**: Open [http://localhost:3000](http://localhost:3000) with your browser
-> to see the result.
 
 ### Project Structure
 
@@ -130,6 +90,62 @@ bun dev
 └── tailwind.json             # Tailwind CSS settings (optional)
 ```
 
+## Getting Started
+
+**Prerequisites Before you begin, ensure you have met the following requirements:**
+
+- **Node.js**: Install Node.js from [nodejs.org](https://nodejs.org/)
+- **npm**: Install npm from [npmjs.com](https://www.npmjs.com/)
+- **Git**: Install Git from [git-scm.com](https://git-scm.com/)
+
+**Follow the setup instructions to get your Next-Auth-Template up and running.**
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/hernandezraymondm/NextGuard.git
+cd NextGuard
+```
+
+2. Install Dependencies:
+
+```bash
+npm install
+```
+
+3. Setup .env file
+
+   DATABASE_URL=your_database_url
+
+   DIRECT_URL=your_direct_url
+
+   AUTH_SECRET=your_auth_token
+
+   AUTH_GOOGLE_ID=your_auth_google_id
+   AUTH_GOOGLE_SECRET=your_auth_google_secret
+
+   AUTH_FACEBOOK_ID=your_auth_facebook_id
+   AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
+
+   RESEND_API_KEY=your_resend_api_key
+
+   NEXT_PUBLIC_APP_URL=your_public_app_url
+
+4. Run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+> 💡 **Hint**: Open [http://localhost:3000](http://localhost:3000) with your browser
+> to see the result.
+
 ### Dev Commands
 
 ```bash
@@ -143,27 +159,89 @@ npx prisma migrate reset      # Reset the database by applying all migrations fr
 > `npx prisma db push` to ensure that your schema changes are correctly
 > applied to the database.
 
-### Setup .env file
+## Code Documentation
 
-    # Database connection URL
-    DATABASE_URL=your_database_url
+`This project implements a robust authentication system with multi-layered validation. It includes credentials validation on the client component, server action component, and middleware using zod to ensure a more secure user authentication.`
 
-    # Direct connection URL (optional, used for some specific database setups)
-    DIRECT_URL=your_direct_url
+### Credentials Validation
 
-    # Secret key for authentication
-    AUTH_SECRET=your_auth_token
+This application performs credentials validation at three different levels:
 
-    # Google OAuth credentials
-    AUTH_GOOGLE_ID=your_auth_google_id
-    AUTH_GOOGLE_SECRET=your_auth_google_secret
+1.  **Client Component**:
 
-    # Facebook OAuth credentials
-    AUTH_FACEBOOK_ID=your_auth_facebook_id
-    AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
+    - Located in the `login-form.tsx` component, where user inputs are validated using the `LoginSchema` before being submitted.
 
-    # API key for Resend email service
-    RESEND_API_KEY=your_resend_api_key
+>     import { LoginForm } from "@/components/LoginForm";
+>
+>     const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+>       setError("");
+>       setSuccess("");
+>
+>       startTransition(() => {
+>         login(values).then((data) => {
+>           if (data) {
+>             setError(data.error);
+>             setSuccess(data.success);
+>           } else {
+>             setError("An unexpected error occurred. Please try again.");
+>           }
+>         });
+>       });
+>     };
 
-    # Public URL of your application
-    NEXT_PUBLIC_APP_URL=your_public_app_url
+2.  **Server Action Component**:
+
+    - Located in the `actions/login.ts`, the server action performs a layer of validation using the same schema before processing the login attempt.
+
+>     import { login } from "@/auth";
+>
+>     export const login = async (values: z.infer<typeof LoginSchema>) => {
+>       const validatedFields = LoginSchema.safeParse(values);
+>
+>       if (!validatedFields.success) {
+>         return { error: "Invalid fields!" };
+>       }
+>
+>       const { email, password } = validatedFields.data;
+>
+>       try {
+>         await signIn("credentials", {
+>           email,
+>           password,
+>           redirectTo: DEFAULT_LOGIN_REDIRECT,
+>         });
+>       } catch (error) {
+>         if (error instanceof AuthError) {
+>           switch (error.type) {
+>             case "CredentialsSignin":
+>               return { error: "Invalid credentials!" };
+>             default:
+>               return { error: "Oops! Something went wrong!" };
+>           }
+>         }
+>         throw error;
+>       }
+>     };
+
+3.  **Middleware Validation**:
+
+    - Middleware ensures users are authenticated before accessing protected routes, and redirects unauthenticated users to the login page. The actual validation logic is imported from `auth.config`.
+
+>     Credentials({
+>       async authorize(credentials) {
+>         const validatedFields = LoginSchema.safeParse(credentials);
+>
+>         if (validatedFields.success) {
+>           const { email, password } = validatedFields.data;
+>
+>           const user = await getUserByEmail(email);
+>           if (!user || !user.password) return null; // if user registered with social
+>
+>           const passwordMatch = await bcrypt.compare(password, user.password);
+>
+>           if (passwordMatch) return user;
+>         }
+>
+>         return null;
+>       },
+>     }),

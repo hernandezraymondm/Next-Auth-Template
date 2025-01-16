@@ -24,6 +24,7 @@ body,
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
+    --accent-highlight: 252, 100%, 65%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -63,6 +64,11 @@ body,
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+  .glassy {
+    background-color: var(--glassy-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
 }
 
 @layer base {
@@ -71,6 +77,9 @@ body,
   }
   body {
     @apply bg-background text-foreground;
+  }
+  .code {
+    @apply rounded-sm bg-slate-100 p-1 text-xs;
   }
 }
 

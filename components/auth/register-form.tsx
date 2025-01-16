@@ -137,7 +137,7 @@ export const RegisterForm = () => {
           <Button
             type="submit"
             disabled={isPending}
-            className="w-full font-semibold drop-shadow-md"
+            className="w-full font-semibold drop-shadow-md hover:text-accent-highlight"
           >
             Create an account <FaCaretRight />
           </Button>
