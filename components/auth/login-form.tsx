@@ -52,14 +52,8 @@ export const LoginForm = () => {
 
     startTransition(() => {
       login(values).then((data) => {
-        if (data) {
-          setError(data.error);
-          // TODO: add when we add 2FA
-          // setSuccess(data.success);
-        } else {
-          // TODO: fix this error
-          setError("An unexpected error occurred. Please try again.");
-        }
+        setError(data?.error);
+        setSuccess(data?.success);
       });
     });
   };
