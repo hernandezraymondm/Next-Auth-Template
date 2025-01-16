@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams } from "next/navigation";
 import { LoginSchema } from "@/schemas";
 import { FaCaretRight } from "react-icons/fa6";
 import { EyeIcon, EyeOffIcon, Fingerprint } from "lucide-react";
@@ -24,6 +25,11 @@ import { FormSuccess } from "@/components/form-success";
 import { login } from "@/actions/login";
 
 export const LoginForm = () => {
+  const searchParams = useSearchParams();
+  const urlError =
+    searchParams.get("error") === "OAuthAccountNotLinked"
+      ? "This email is already associated with a different provider. Please use a different email or sign in with the correct provider."
+      : "";
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
@@ -48,7 +54,8 @@ export const LoginForm = () => {
       login(values).then((data) => {
         if (data) {
           setError(data.error);
-          setSuccess(data.success);
+          // TODO: add when we add 2FA
+          // setSuccess(data.success);
         } else {
           setError("An unexpected error occurred. Please try again.");
         }
@@ -121,12 +128,12 @@ export const LoginForm = () => {
               )}
             />
           </div>
-          <FormError message={error} />
+          <FormError message={error || urlError} />
           <FormSuccess message={success} />
           <Button
             type="submit"
             disabled={isPending}
-            className="w-full font-semibold drop-shadow-md"
+            className="w-full font-semibold drop-shadow-md hover:text-accent-highlight"
           >
             Continue <FaCaretRight />
           </Button>
@@ -136,7 +143,7 @@ export const LoginForm = () => {
             type="button"
             variant="link"
             disabled={isPending}
-            className="font-semibold mt-4 self-center"
+            className="font-semibold mt-4 self-center text-accent-highlight"
           >
             <Fingerprint /> Use passkey instead
           </Button>

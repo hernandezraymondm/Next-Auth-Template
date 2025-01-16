@@ -16,8 +16,8 @@ export default function Home() {
       <div className="space-y-6 text-center">
         <div className="w-full flex items-center justify-center text-accent drop-shadow-md">
           <ShieldCheck size={60} />
-          <h1 className={cn("text-6xl font-semibold", font.className)}>
-            NextAuth
+          <h1 className={cn("text-6xl font-semibold ", font.className)}>
+            NextGuard
           </h1>
         </div>
         <p className="text-white text-lg">
@@ -25,7 +25,11 @@ export default function Home() {
         </p>
         <div>
           <LoginButton>
-            <Button variant="default" size="lg" className="font-semibold">
+            <Button
+              variant="default"
+              size="lg"
+              className="font-semibold hover:text-accent-highlight"
+            >
               Get started <Play />
             </Button>
           </LoginButton>
