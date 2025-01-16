@@ -33,7 +33,7 @@ export const CardWrapper = ({
   showFooter,
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-2xl bg-glassy">
+    <Card className="w-[400px] shadow-2xl bg-smoke">
       <CardHeader className="bg-card rounded-t-xl">
         <Header label={headerLabel} subLabel={headerSubLabel} />
       </CardHeader>
@@ -51,7 +51,7 @@ export const CardWrapper = ({
       </CardFooter>
       {showFooter && (
         <CardFooter className="border-t-[1px] border-muted rounded-b-xl">
-          <div className="w-full flex place-content-center gap-1 text-secondary text-sm font-semibold">
+          <div className="w-full flex place-content-center gap-1 text-muted-foreground text-sm font-semibold">
             <p>Secured by</p>
 
             <div className="flex place-items-center">

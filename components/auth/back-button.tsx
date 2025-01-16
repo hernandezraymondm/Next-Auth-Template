@@ -12,7 +12,7 @@ interface BackButtonProps {
 export const BackButton = ({ label, link, href }: BackButtonProps) => {
   return (
     <div className="w-full flex place-content-center">
-      <p className="text-secondary text-sm">{label}</p>
+      <p className="text-muted-foreground text-sm">{label}</p>
       <Button variant="link" className="font-normal" size="custom" asChild>
         <Link href={href}>
           <p className="hover:text-accent-highlight">{link}</p>

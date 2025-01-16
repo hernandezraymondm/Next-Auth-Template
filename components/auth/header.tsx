@@ -17,7 +17,7 @@ export const Header = ({ label, subLabel }: HeaderProps) => {
   return (
     <div className="w-full flex flex-col gap-y-4 items-center justify-center">
       <Link href="/">
-        <div className="w-full flex items-center justify-center hover:text-accent-highlight drop-shadow-md">
+        <div className="w-full flex items-center justify-center text-accent-highlight drop-shadow-md">
           <EarthLock size={30} />
           <h1 className={cn("text-3xl font-semibold", font.className)}>
             VeriSafe

@@ -57,6 +57,7 @@ export const LoginForm = () => {
           // TODO: add when we add 2FA
           // setSuccess(data.success);
         } else {
+          // TODO: fix this error
           setError("An unexpected error occurred. Please try again.");
         }
       });
@@ -65,7 +66,7 @@ export const LoginForm = () => {
 
   return (
     <CardWrapper
-      headerLabel="Sign in to NextAuth"
+      headerLabel="Sign in to VeriSafe"
       headerSubLabel="Welcome back! Please sign in to continue"
       backButtonLabel="Don't have an account?"
       backButtonLink="Sign up"
