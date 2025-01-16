@@ -38,11 +38,11 @@ export const CardWrapper = ({
         <Header label={headerLabel} subLabel={headerSubLabel} />
       </CardHeader>
 
-      <CardContent className="bg-card rounded-b-2xl drop-shadow-sm">
+      <CardContent className="bg-card rounded-b-2xl drop-shadow-md">
         {showSocial && <Social />}
         {children}
       </CardContent>
-      <CardFooter>
+      <CardFooter className="shadow-sm">
         <BackButton
           label={backButtonLabel}
           link={backButtonLink}
