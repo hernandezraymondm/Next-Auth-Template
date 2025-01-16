@@ -63,9 +63,12 @@
 │   ├── form-error.tsx        # Form error display component
 │   └── form-success.tsx      # Form success display component
 ├── data                      # Directory for data models
-│   └── user.ts               # Functions to fetch user data from the database
+│   ├── user.ts               # Functions to fetch user data from the database
+│   └── verification-token.ts # Verification token database functions
 ├── lib                       # Library and utility functions
 │   ├── db.ts                 # Database connection and setup using PrismaClient
+│   ├── mail.ts               # Email sending functions
+│   ├── token.ts              # Token Generation functions
 │   └── utils.ts              # General utility functions
 ├── node_modules              # Directory for npm packages (do not modify)
 ├── prisma                    # Prisma schema and configuration

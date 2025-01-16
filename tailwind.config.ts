@@ -49,6 +49,10 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        smoke: {
+          DEFAULT: "hsl(var(--smoke))",
+          foreground: "hsl(var(--smoke-foreground))",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
