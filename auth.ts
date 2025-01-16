@@ -3,6 +3,8 @@ import authConfig from "@/auth.config";
 import { db } from "@/lib/db";
 import { Adapter } from "next-auth/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import { getUserById } from "@/data/user";
+import { delayWithHash } from "@/lib/utils";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   /**
@@ -31,6 +33,48 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   },
 
   callbacks: {
+    async signIn({ user, account }) {
+      try {
+        if (account?.provider !== "credentials") return true;
+
+        if (!user.id) {
+          console.warn("Sign-in attempt with missing user ID");
+          await delayWithHash();
+          return false;
+        }
+
+        const existingUser = await getUserById(user.id);
+        if (!existingUser) {
+          console.warn(`Sign-in attempt with non-existent user ID: ${user.id}`);
+          await delayWithHash();
+          return false;
+        }
+
+        if (!existingUser.emailVerified) {
+          console.warn(
+            `Sign-in blocked for unverified email: ${existingUser.email}`
+          );
+          await delayWithHash();
+          return false;
+        }
+
+        // TODO: Add optional 2FA/MFA check here
+
+        // TODO: Rate Limiting for Failed Logins
+        //Prevent brute force attacks by limiting failed attempts per IP/user.
+        //Use Redis-based rate-limiting with libraries like express-rate-limit (if using an API).
+
+        // TODO: Lock Accounts After Multiple Failed Attempts
+        // Implement logic to temporarily lock an account after too many failed sign-in attempts.
+
+        return true;
+      } catch (error) {
+        console.error("Error during sign-in callback:", error);
+        await delayWithHash();
+        return false;
+      }
+    },
+
     /**
      * Session callback to extend session object
      * with token object's id and role.
