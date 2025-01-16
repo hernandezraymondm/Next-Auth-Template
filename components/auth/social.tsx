@@ -1,14 +1,21 @@
 "use client";
 
+import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { FcGoogle } from "react-icons/fc";
 import { SiFacebook } from "react-icons/si";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { Loader } from "@/components/ui/loader";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 
 export const Social = () => {
+  const [loadingProvider, setLoadingProvider] = useState<
+    "google" | "facebook" | null
+  >(null);
+
   const onClick = (provider: "google" | "facebook") => {
+    setLoadingProvider(provider);
     signIn(provider, {
       callbackUrl: DEFAULT_LOGIN_REDIRECT,
     });
@@ -18,22 +25,30 @@ export const Social = () => {
     <div className="flex w-full flex-col">
       <div className="flex flex-wrap items-center gap-2">
         <Button
-          className="flex flex-grow drop-shadow-md"
+          className="flex flex-grow items-center justify-center drop-shadow-md"
           variant="outline"
-          onClick={() => {
-            onClick("google");
-          }}
+          onClick={() => onClick("google")}
+          disabled={loadingProvider !== null}
         >
-          <FcGoogle className="h-5 w-5 mr-2" /> Google
+          {loadingProvider === "google" ? (
+            <Loader size="sm" className="mr-2" />
+          ) : (
+            <FcGoogle className="h-5 w-5 mr-2" />
+          )}
+          Google
         </Button>
         <Button
-          className="flex flex-grow drop-shadow-md"
+          className="flex flex-grow items-center justify-center drop-shadow-md"
           variant="outline"
-          onClick={() => {
-            onClick("facebook");
-          }}
+          onClick={() => onClick("facebook")}
+          disabled={loadingProvider !== null}
         >
-          <SiFacebook className="h-5 w-5 mr-2" color="#0866ff" /> Facebook
+          {loadingProvider === "facebook" ? (
+            <Loader size="sm" className="mr-2" />
+          ) : (
+            <SiFacebook className="h-5 w-5 mr-2" color="#0866ff" />
+          )}
+          Facebook
         </Button>
       </div>
 

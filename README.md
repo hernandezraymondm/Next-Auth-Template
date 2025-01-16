@@ -59,7 +59,7 @@
 │   │   ├── login-form.tsx    # Login form component
 │   │   ├── register-form.tsx # Registration form component
 │   │   └── social.tsx        # Social login buttons component
-│   ├── ui                    # Directory containing ShadcnUI components
+│   ├── ui                    # Directory containing ShaDCN UI components
 │   ├── form-error.tsx        # Form error display component
 │   └── form-success.tsx      # Form success display component
 ├── data                      # Directory for data models

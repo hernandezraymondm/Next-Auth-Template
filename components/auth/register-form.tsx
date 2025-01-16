@@ -15,7 +15,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-
+import { Loader } from "@/components/ui/loader";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
@@ -139,7 +139,12 @@ export const RegisterForm = () => {
             disabled={isPending}
             className="w-full font-semibold drop-shadow-md hover:text-accent-highlight"
           >
-            Create an account <FaCaretRight />
+            Create an account{" "}
+            {isPending ? (
+              <Loader size="sm" color="secondary" />
+            ) : (
+              <FaCaretRight />
+            )}
           </Button>
         </form>
       </Form>
