@@ -1,8 +1,6 @@
-# Next Auth Template
-
 ## Overview
 
-`Welcome to my comprehensive authentication template built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
+`Welcome to NextGuard a comprehensive authentication project template built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
 
 ### Key Features
 
@@ -105,8 +103,8 @@
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/Next-Auth-Template.git
-cd Next-Auth-Template
+git clone https://github.com/hernandezraymondm/NextGuard.git
+cd NextGuard
 ```
 
 2. Install Dependencies:
@@ -115,25 +113,25 @@ cd Next-Auth-Template
 npm install
 ```
 
-### Setup .env file
+3. Setup .env file
 
-    DATABASE_URL=your_database_url
+   DATABASE_URL=your_database_url
 
-    DIRECT_URL=your_direct_url
+   DIRECT_URL=your_direct_url
 
-    AUTH_SECRET=your_auth_token
+   AUTH_SECRET=your_auth_token
 
-    AUTH_GOOGLE_ID=your_auth_google_id
-    AUTH_GOOGLE_SECRET=your_auth_google_secret
+   AUTH_GOOGLE_ID=your_auth_google_id
+   AUTH_GOOGLE_SECRET=your_auth_google_secret
 
-    AUTH_FACEBOOK_ID=your_auth_facebook_id
-    AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
+   AUTH_FACEBOOK_ID=your_auth_facebook_id
+   AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
 
-    RESEND_API_KEY=your_resend_api_key
+   RESEND_API_KEY=your_resend_api_key
 
-    NEXT_PUBLIC_APP_URL=your_public_app_url
+   NEXT_PUBLIC_APP_URL=your_public_app_url
 
-3. Run the development server:
+4. Run the development server:
 
 ```bash
 npm run dev
