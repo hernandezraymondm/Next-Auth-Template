@@ -114,22 +114,24 @@ npm install
 ```
 
 3. Setup .env file
+   
+```bash
+DATABASE_URL=your_database_url
 
-   DATABASE_URL=your_database_url
+DIRECT_URL=your_direct_url
 
-   DIRECT_URL=your_direct_url
+AUTH_SECRET=your_auth_token
 
-   AUTH_SECRET=your_auth_token
+AUTH_GOOGLE_ID=your_auth_google_id
+AUTH_GOOGLE_SECRET=your_auth_google_secret
 
-   AUTH_GOOGLE_ID=your_auth_google_id
-   AUTH_GOOGLE_SECRET=your_auth_google_secret
+AUTH_FACEBOOK_ID=your_auth_facebook_id
+AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
 
-   AUTH_FACEBOOK_ID=your_auth_facebook_id
-   AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
+RESEND_API_KEY=your_resend_api_key
 
-   RESEND_API_KEY=your_resend_api_key
-
-   NEXT_PUBLIC_APP_URL=your_public_app_url
+NEXT_PUBLIC_APP_URL=your_public_app_url
+```
 
 4. Run the development server:
 
