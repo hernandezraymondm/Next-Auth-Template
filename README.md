@@ -30,14 +30,16 @@
 │   ├── login.ts              # Logic for handling user login
 │   └── register.ts           # Logic for handling user registration
 ├── app                       # Main application directory
+│   ├── (protected)           # Protected pages
+│   │   └── settings
+│   │       └── page.tsx      # Settings page component
 │   ├── api                   # API routes
 │   │   └── auth              # Authentication-related API routes
 │   │       └── {...nextauth}
 │   │           └── route.ts  # NextAuth route handler
-│   ├── (protected)           # Protected pages
-│   │   └── settings
-│   │       └── page.tsx      # Settings page component
 │   ├── auth                  # Authentication pages
+│   │   ├── error
+│   │   │   └── page.tsx      # Custom Auth error page component
 │   │   ├── login
 │   │   │   └── page.tsx      # Login page component
 │   │   ├── register
@@ -51,6 +53,7 @@
 │   ├── auth                  # Authentication-related components
 │   │   ├── back-button.tsx   # Back button component
 │   │   ├── card-wrapper.tsx  # Card wrapper component
+│   │   ├── error-card.tsx    # Auth error card component
 │   │   ├── header.tsx        # Header component
 │   │   ├── login-button.tsx  # Login button component
 │   │   ├── login-form.tsx    # Login form component
@@ -114,7 +117,7 @@ npm install
 ```
 
 3. Setup .env file
-   
+
 ```bash
 DATABASE_URL=your_database_url
 
