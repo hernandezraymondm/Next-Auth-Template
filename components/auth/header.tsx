@@ -1,6 +1,6 @@
 import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
-import { ShieldCheck } from "lucide-react";
+import { EarthLock } from "lucide-react";
 import Link from "next/link";
 
 const font = Poppins({
@@ -18,9 +18,9 @@ export const Header = ({ label, subLabel }: HeaderProps) => {
     <div className="w-full flex flex-col gap-y-4 items-center justify-center">
       <Link href="/">
         <div className="w-full flex items-center justify-center hover:text-accent-highlight drop-shadow-md">
-          <ShieldCheck size={30} />
+          <EarthLock size={30} />
           <h1 className={cn("text-3xl font-semibold", font.className)}>
-            NextGuard
+            VeriSafe
           </h1>
         </div>
       </Link>
