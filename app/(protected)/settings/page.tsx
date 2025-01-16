@@ -1,5 +1,6 @@
 import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
+import { publicRoutes } from "@/routes";
 
 const SettingsPage = async () => {
   const session = await auth();
@@ -10,7 +11,7 @@ const SettingsPage = async () => {
         action={async () => {
           "use server";
 
-          await signOut();
+          await signOut({ redirectTo: publicRoutes[0] });
         }}
       >
         <Button type="submit">Sign out</Button>
