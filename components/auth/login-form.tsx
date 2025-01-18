@@ -130,9 +130,9 @@ export const LoginForm = () => {
             disabled={isPending}
             className="w-full font-semibold drop-shadow-md hover:text-accent-highlight"
           >
-            Continue{" "}
+            Continue
             {isPending ? (
-              <Loader size="sm" color="secondary" />
+              <Loader size="sm" color="white" className="ml-2" />
             ) : (
               <FaCaretRight />
             )}

@@ -8,35 +8,56 @@ import { sendVerificationEmail } from "@/lib/mail";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { generateVerificationToken } from "@/lib/tokens";
 import { getUserByEmail } from "@/data/user";
+import {
+  checkLockoutStatus,
+  handleFailedLogin,
+  checkEmailVerification,
+} from "@/lib/login-utils";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
-
   if (!validatedFields.success) {
     return { error: "Invalid fields!" };
   }
 
   const { email, password } = validatedFields.data;
-
   const existingUser = await getUserByEmail(email);
-  // If user, email does not exist on the db or user don't have a password (for social login)
+
   if (!existingUser || !existingUser.email || !existingUser.password) {
     return { error: "Invalid credentials!" };
   }
-  // TODO: Modify to be Please verify your email page
-  // TODO: Add resend email button
-  if (!existingUser.emailVerified) {
+
+  // Check lockout status
+  const { locked, remainingTime } = await checkLockoutStatus(email);
+  if (locked) {
+    return {
+      error: `Account is locked. Please try again in ${Math.ceil(
+        remainingTime
+      )} seconds.`,
+    };
+  }
+
+  // Handle password verification and failed login attempts
+  const loginResult = await handleFailedLogin(email, password, existingUser);
+  if (loginResult.error) {
+    return loginResult; // Return error if there was a failed attempt
+  }
+
+  // Check if email is verified
+  const verificationResult = await checkEmailVerification(email, existingUser);
+  if (verificationResult.success !== true) {
+    // Resend verification email if needed
     const verificationToken = await generateVerificationToken(
       existingUser.email
     );
-
     await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token
     );
-
-    return { success: "Confirmation email sent again!" };
+    return { success: "Confirmation email sent!" };
   }
+
+  // Proceed with login if everything checks out
   try {
     await signIn("credentials", {
       email,
@@ -55,3 +76,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     throw error;
   }
 };
+
+// TODO: Modify to be Please verify your email page
+// TODO: Add resend email button
+// TODO: Use logging & alerting for suspicious login attempts

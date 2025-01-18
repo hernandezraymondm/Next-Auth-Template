@@ -13,6 +13,7 @@ import { SiClerk } from "react-icons/si";
 
 interface CardWrapperProps {
   children: React.ReactNode;
+  icon?: React.ReactNode;
   headerLabel: string;
   headerSubLabel?: string;
   backButtonLabel?: string;
@@ -24,6 +25,7 @@ interface CardWrapperProps {
 
 export const CardWrapper = ({
   children,
+  icon,
   headerLabel,
   headerSubLabel,
   backButtonLabel,
@@ -34,11 +36,11 @@ export const CardWrapper = ({
 }: CardWrapperProps) => {
   return (
     <Card className="w-[400px] shadow-2xl bg-smoke">
-      <CardHeader className="bg-card rounded-t-xl">
-        <Header label={headerLabel} subLabel={headerSubLabel} />
+      <CardHeader className="card-header">
+        <Header icon={icon} label={headerLabel} subLabel={headerSubLabel} />
       </CardHeader>
 
-      <CardContent className="bg-card rounded-b-2xl drop-shadow-md">
+      <CardContent className="card-content">
         {showSocial && <Social />}
         {children}
       </CardContent>
@@ -50,8 +52,8 @@ export const CardWrapper = ({
         />
       </CardFooter>
       {showFooter && (
-        <CardFooter className="border-t-[1px] border-muted rounded-b-xl">
-          <div className="w-full flex place-content-center gap-1 text-muted-foreground text-sm font-semibold">
+        <CardFooter className="card-footer">
+          <div className="card-footer-content">
             <p>Secured by</p>
 
             <div className="flex place-items-center">

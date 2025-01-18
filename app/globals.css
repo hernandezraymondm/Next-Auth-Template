@@ -24,11 +24,11 @@ body,
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
-    --accent-highlight: 252, 100%, 65%;
+    --accent-highlight: 252 100% 60%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --smoke: 218 10% 92%;
+    --smoke: 227 86% 92%;
     --smoke-foreground: 222.2 47.4% 11.2%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
@@ -89,4 +89,23 @@ body,
   @apply bg-no-repeat bg-center bg-fixed;
   background-image: url("https://img.freepik.com/premium-photo/abstract-blurred-sky-colorful_40299-22.jpg");
   background-size: cover;
+}
+
+.card-header {
+  @apply bg-card rounded-t-xl p-7;
+}
+.card-content {
+  @apply bg-card rounded-b-2xl px-10;
+  box-shadow: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0px 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+.card-footer {
+  @apply border-t-[1px] border-muted rounded-b-xl;
+}
+.card-footer-content {
+  @apply w-full flex place-content-center gap-1 text-muted-foreground text-sm font-semibold;
+}
+.link {
+  @apply hover:text-accent-highlight font-medium drop-shadow-lg;
 }

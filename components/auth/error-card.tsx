@@ -1,7 +1,7 @@
 "use client";
 
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import { BadgeAlert } from "lucide-react";
+import { Frown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 
 enum Error {
@@ -24,12 +24,12 @@ export const ErrorCard = () => {
 
   return (
     <CardWrapper
+      icon={<Frown size="60" className="text-white bg-red-400 rounded-full" />}
       headerLabel="Oops! Something went wrong!"
-      backButtonLink="Back to login"
+      backButtonLink="Return to login"
       backButtonHref="/auth/login"
     >
       <div className="w-full flex flex-col place-items-center gap-4">
-        <BadgeAlert size="40" className="text-red-400" />
         <div className="font-normal text-gray-700 dark:text-gray-400">
           {errorMap[urlError] || "Please contact us if this error persists."}
         </div>
