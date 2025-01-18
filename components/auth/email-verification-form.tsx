@@ -20,7 +20,8 @@ export const EmailVerificationForm = () => {
 
   const onSubmit = useCallback(() => {
     if (!token) {
-      setError("Missing Token!");
+      // If token is missing from searchParams
+      setError("Invalid Link!");
       return;
     }
     emailVerification(token)

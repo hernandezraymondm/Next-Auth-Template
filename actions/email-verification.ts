@@ -9,7 +9,8 @@ export const emailVerification = async (token: string) => {
 
   // TODO: add page to resolve this and send another token
   if (!existingToken) {
-    return { error: "Token does not exist!" };
+    // If token is missing from the database
+    return { error: "Invalid Token!" };
   }
 
   const hasExpired = new Date(existingToken.expires) < new Date();
