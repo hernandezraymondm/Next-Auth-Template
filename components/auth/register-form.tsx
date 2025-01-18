@@ -87,7 +87,12 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email address</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isPending} type="email" />
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="email"
+                      placeholder="e.g. name@yourcompany.com"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

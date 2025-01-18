@@ -88,7 +88,8 @@ model Authenticator {
 model VerificationToken {
   id      String   @id @default(cuid())
   email   String
-  token   String
+  token   String   @unique
+  code    String   @map("verification_code")
   expires DateTime
 
   @@unique([email, token])
