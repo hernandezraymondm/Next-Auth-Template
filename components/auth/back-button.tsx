@@ -15,7 +15,7 @@ export const BackButton = ({ label, link, href }: BackButtonProps) => {
       <p className="text-muted-foreground text-sm">{label}</p>
       <Button variant="link" className="font-normal" size="custom" asChild>
         <Link href={href}>
-          <p className="hover:text-accent-highlight">{link}</p>
+          <p className="link">{link}</p>
         </Link>
       </Button>
     </div>

@@ -254,5 +254,5 @@ This application performs credentials validation at three different levels:
 >       },
 >     }),
 
-> 💡 **Data Flow**:  
+> 🔍 **Data Flow**:  
 > `LoginForm.tsx` > `login.ts` > `auth.config.ts` > `auth.ts` > `middleware.ts`
