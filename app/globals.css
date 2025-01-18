@@ -90,3 +90,16 @@ body,
   background-image: url("https://img.freepik.com/premium-photo/abstract-blurred-sky-colorful_40299-22.jpg");
   background-size: cover;
 }
+
+.card-header {
+  @apply bg-card rounded-t-xl p-7;
+}
+.card-content {
+  @apply bg-card rounded-b-2xl drop-shadow-md px-10;
+}
+.card-footer {
+  @apply border-t-[1px] border-muted rounded-b-xl;
+}
+.card-footer-content {
+  @apply w-full flex place-content-center gap-1 text-muted-foreground text-sm font-semibold;
+}
