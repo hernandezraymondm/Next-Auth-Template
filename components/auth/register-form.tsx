@@ -139,9 +139,9 @@ export const RegisterForm = () => {
             disabled={isPending}
             className="w-full font-semibold drop-shadow-md hover:text-accent-highlight"
           >
-            Create an account{" "}
+            Create an account
             {isPending ? (
-              <Loader size="sm" color="secondary" />
+              <Loader size="sm" color="white" className="ml-2" />
             ) : (
               <FaCaretRight />
             )}
