@@ -1,55 +1,79 @@
+"use client";
+
 import * as React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
-export interface LoaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: "sm" | "md" | "lg";
-  color?: "primary" | "secondary" | "accent";
+const loaderVariants = cva("flex justify-center items-center", {
+  variants: {
+    size: {
+      sm: "gap-1",
+      md: "gap-2",
+      lg: "gap-2",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+});
+
+const lineVariants = cva("transform rotate-45", {
+  variants: {
+    size: {
+      sm: "w-[2px] h-3",
+      md: "w-1 h-6",
+      lg: "w-[4.5px] h-7",
+    },
+  },
+  defaultVariants: {
+    size: "md",
+  },
+});
+
+export interface LoaderProps
+  extends React.HTMLAttributes<HTMLDivElement>,
+    VariantProps<typeof loaderVariants> {
+  color?: string;
 }
 
 const Loader = React.forwardRef<HTMLDivElement, LoaderProps>(
-  ({ className, size = "md", color = "primary", ...props }, ref) => {
+  ({ className, size = "md", color = "gray", ...props }, ref) => {
+    const lines = [0, 1, 2];
+    const translateYValue = size === "sm" ? 5 : size === "md" ? 7 : 10;
+
     return (
       <div
-        className={cn(
-          "inline-flex items-center justify-center",
-          {
-            "h-6 w-6": size === "sm",
-            "h-10 w-10": size === "md",
-            "h-16 w-16": size === "lg",
-          },
-          className
-        )}
+        className={cn(loaderVariants({ size, className }))}
         ref={ref}
         {...props}
       >
-        <svg
-          className={cn("animate-spin", {
-            "text-primary": color === "primary",
-            "text-secondary": color === "secondary",
-            "text-accent": color === "accent",
-          })}
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-        >
-          <circle
-            className="opacity-25"
-            cx="12"
-            cy="12"
-            r="10"
-            stroke="currentColor"
-            strokeWidth="4"
-          ></circle>
-          <path
-            className="opacity-75"
-            fill="currentColor"
-            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          ></path>
-        </svg>
+        {lines.map((index) => (
+          <div
+            key={index}
+            className={cn(lineVariants({ size }))}
+            style={{
+              backgroundColor: color,
+              animation: `bounce .5s ${index * 0.3}s infinite alternate`,
+            }}
+          ></div>
+        ))}
+        <style jsx>{`
+          @keyframes bounce {
+            from {
+              transform: rotate(45deg) translateY(-${translateYValue}px);
+              opacity: 0.5;
+            }
+            to {
+              transform: rotate(45deg) translateY(${translateYValue}px);
+              opacity: 1;
+            }
+          }
+        `}</style>
       </div>
     );
   }
 );
+
 Loader.displayName = "Loader";
 
 export { Loader };
