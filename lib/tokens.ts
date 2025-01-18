@@ -14,7 +14,7 @@ export const generateVerificationToken = async (
   email: string
 ): Promise<VerificationToken> => {
   const token = uuidv4();
-  const expires = new Date(new Date().getTime() + 3600 * 1000);
+  const expires = new Date(new Date().getTime() + 3600 * 1000); // 1 hour
 
   const existingToken = await getVerificationTokenByEmail(email);
 
