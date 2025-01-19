@@ -53,7 +53,7 @@ export const LoginForm = () => {
     startTransition(() => {
       login(values).then((data) => {
         setError(data?.error);
-        setSuccess(data?.success);
+        // setSuccess(data?.success);
       });
     });
   };
@@ -125,11 +125,7 @@ export const LoginForm = () => {
           </div>
           <FormError message={error || urlError} />
           <FormSuccess message={success} />
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="w-full font-semibold drop-shadow-md hover:text-accent-highlight"
-          >
+          <Button type="submit" disabled={isPending} className="button">
             Continue
             {isPending ? (
               <Loader size="sm" color="white" className="ml-2" />

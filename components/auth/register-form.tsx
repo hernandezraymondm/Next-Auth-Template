@@ -139,11 +139,7 @@ export const RegisterForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="w-full font-semibold drop-shadow-md hover:text-accent-highlight"
-          >
+          <Button type="submit" disabled={isPending} className="button">
             Create an account
             {isPending ? (
               <Loader size="sm" color="white" className="ml-2" />
