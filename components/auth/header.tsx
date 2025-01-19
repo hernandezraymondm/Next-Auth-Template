@@ -2,6 +2,7 @@ import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { EarthLock } from "lucide-react";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -10,11 +11,17 @@ const font = Poppins({
 
 interface HeaderProps {
   icon?: React.ReactNode;
+  separator?: boolean;
   label: string;
   subLabel?: string;
 }
 
-export const Header = ({ icon, label, subLabel }: HeaderProps) => {
+export const Header = ({
+  icon,
+  separator = false,
+  label,
+  subLabel,
+}: HeaderProps) => {
   return (
     <div className="w-full flex flex-col gap-y-3 items-center justify-center">
       <Link href="/">
@@ -28,7 +35,8 @@ export const Header = ({ icon, label, subLabel }: HeaderProps) => {
 
       <div className="w-full flex flex-col items-center justify-center gap-1">
         <div className={icon ? "p-1" : ""}>{icon}</div>
-        <p className="font-semibold text-gray-800">{label}</p>
+        <p className="font-semibold text-gray-800 uppercase">{label}</p>
+        {separator && <Separator className="mt-5" />}
         <p className="text-muted-foreground text-sm">{subLabel}</p>
       </div>
     </div>
