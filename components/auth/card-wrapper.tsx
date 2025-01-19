@@ -15,6 +15,7 @@ interface CardWrapperProps {
   children: React.ReactNode;
   icon?: React.ReactNode;
   headerLabel: string;
+  separator?: boolean;
   headerSubLabel?: string;
   backButtonLabel?: string;
   backButtonLink: string;
@@ -27,6 +28,7 @@ export const CardWrapper = ({
   children,
   icon,
   headerLabel,
+  separator,
   headerSubLabel,
   backButtonLabel,
   backButtonLink,
@@ -37,7 +39,12 @@ export const CardWrapper = ({
   return (
     <Card className="w-[400px] shadow-2xl bg-smoke">
       <CardHeader className="card-header">
-        <Header icon={icon} label={headerLabel} subLabel={headerSubLabel} />
+        <Header
+          icon={icon}
+          label={headerLabel}
+          separator={separator}
+          subLabel={headerSubLabel}
+        />
       </CardHeader>
 
       <CardContent className="card-content">
