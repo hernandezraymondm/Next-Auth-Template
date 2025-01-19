@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from "uuid";
+import crypto from "crypto";
 import { VerificationToken } from "@prisma/client";
 import { db } from "@/lib/db";
 import { getVerificationTokenByEmail } from "@/data/verification-token";
@@ -14,6 +15,7 @@ export const generateVerificationToken = async (
   email: string
 ): Promise<VerificationToken> => {
   const token = uuidv4();
+  const code = crypto.randomInt(100000, 999999).toString(); // Generate a 6-digit code
   const expires = new Date(new Date().getTime() + 3600 * 1000); // 1 hour
 
   const existingToken = await getVerificationTokenByEmail(email);
@@ -32,6 +34,7 @@ export const generateVerificationToken = async (
     data: {
       email,
       token,
+      code,
       expires,
     },
   });
