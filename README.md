@@ -11,7 +11,7 @@
 | User roles                       | Login component                     | Register component                | Forgot password component     |
 | Verification component           | Error component                     | Login button                      | Logout button                 |
 | Role Gate                        | Protect Server Actions              | Protect API Routes                | Change email in Settings page |
-| Change password in Settings page | Enable/disable 2FA in Settings page | Change user role in Settings page |                               |
+| Change password in Settings page | Enable/disable 2FA in Settings page | Change user role in Settings page | OTP Verification              |
 
 ### Technologies
 
