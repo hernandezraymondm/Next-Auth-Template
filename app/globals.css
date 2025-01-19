@@ -109,3 +109,9 @@ body,
 .link {
   @apply hover:text-accent-highlight font-medium drop-shadow-lg;
 }
+.button {
+  @apply w-full font-semibold drop-shadow-md hover:text-violet-400;
+}
+.paragraph {
+  @apply font-normal text-gray-700 dark:text-gray-400;
+}
