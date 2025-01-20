@@ -32,7 +32,7 @@ import { FormSuccess } from "@/components/form-success";
 import { FormError } from "@/components/form-error";
 import { OtpSchema } from "@/schemas";
 import {
-  ExpirationCountdown,
+  TokenExpirationCountdown,
   ResendCodeCountdown,
 } from "@/components/auth/countdown";
 
@@ -43,10 +43,9 @@ export const VerifyEmailForm = () => {
   const [isResending, setIsResending] = useState(false); // Email has been resent and running countdown
   const [resendEnabled, setResendEnabled] = useState(false); // Resend Button Enabled
   const [showCaptcha, setShowCaptcha] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const token = searchParams.get("token") || "";
   const email = searchParams.get("email") || "you";
   const expires = searchParams.get("expires");
 
@@ -101,7 +100,7 @@ export const VerifyEmailForm = () => {
   };
 
   // Function to resend the verification code
-  const handleResendCode = async () => {
+  const handleResendCode = async (captchaToken: string | null) => {
     if (!captchaToken) {
       setError("Please complete the CAPTCHA");
       return;
@@ -109,14 +108,24 @@ export const VerifyEmailForm = () => {
 
     setIsResending(true);
     setError("");
-    try {
-      await resendCode(email, captchaToken);
-      setResendEnabled(false);
-      setShowCaptcha(false);
-    } catch {
-      setError("Error resending code!");
-    } finally {
-      setIsResending(false);
+
+    await resendCode(email, token, captchaToken)
+      .then((data) => {
+        setResendEnabled(false);
+        setShowCaptcha(false);
+        setError(data.error);
+      })
+      .catch(() => {
+        setError("Resend code issue encountered!");
+      })
+      .finally(() => {
+        setIsResending(false);
+      });
+  };
+
+  const handleCaptchaSuccess = (token: string | null) => {
+    if (token) {
+      handleResendCode(token);
     }
   };
 
@@ -186,7 +195,7 @@ export const VerifyEmailForm = () => {
                   Enter the 6-digit code we sent to {email} to continue. This
                   code will expire in
                 </p>
-                <ExpirationCountdown expiration={Number(expires)} />
+                <TokenExpirationCountdown expiration={Number(expires)} />
               </div>
             ) : (
               <Loader size="lg" />
@@ -239,15 +248,8 @@ export const VerifyEmailForm = () => {
               <div className="flex flex-col items-center gap-4">
                 <ReCAPTCHA
                   sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
-                  onChange={(token) => setCaptchaToken(token)}
+                  onChange={handleCaptchaSuccess}
                 />
-                <Button
-                  className="button"
-                  onClick={handleResendCode}
-                  disabled={!captchaToken}
-                >
-                  Confirm & Resend Code
-                </Button>
               </div>
             )}
             {error && !showCaptcha && (
