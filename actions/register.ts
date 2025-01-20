@@ -36,8 +36,6 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
   const expiration = verificationToken.expires.getTime(); // convert to milliseconds
 
-  console.log(expiration);
-
   // Send verification email
   await sendVerificationEmail(
     verificationToken.email,
