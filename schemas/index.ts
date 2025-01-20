@@ -18,3 +18,7 @@ export const RegisterSchema = z.object({
     message: "Name is required",
   }),
 });
+
+export const OtpSchema = z.object({
+  code: z.string(),
+});

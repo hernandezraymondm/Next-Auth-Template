@@ -24,7 +24,7 @@ body,
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
     --accent: 210 40% 96.1%;
-    --accent-highlight: 252 100% 60%;
+    --accent-highlight: 252 82% 62%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
@@ -108,4 +108,10 @@ body,
 }
 .link {
   @apply hover:text-accent-highlight font-medium drop-shadow-lg;
+}
+.button {
+  @apply w-full font-semibold drop-shadow-md hover:text-violet-400;
+}
+.paragraph {
+  @apply font-normal text-gray-700 dark:text-gray-400;
 }

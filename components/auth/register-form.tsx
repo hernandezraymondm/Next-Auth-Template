@@ -87,7 +87,12 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email address</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isPending} type="email" />
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      type="email"
+                      placeholder="e.g. name@yourcompany.com"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -134,11 +139,7 @@ export const RegisterForm = () => {
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button
-            type="submit"
-            disabled={isPending}
-            className="w-full font-semibold drop-shadow-md hover:text-accent-highlight"
-          >
+          <Button type="submit" disabled={isPending} className="button">
             Create an account
             {isPending ? (
               <Loader size="sm" color="white" className="ml-2" />

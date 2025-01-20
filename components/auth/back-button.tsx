@@ -1,21 +1,30 @@
 "use client";
 
 import Link from "next/link";
+import { MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface BackButtonProps {
   label?: string;
   link: string;
   href: string;
+  isArrowed?: boolean;
 }
 
-export const BackButton = ({ label, link, href }: BackButtonProps) => {
+export const BackButton = ({
+  label,
+  link,
+  href,
+  isArrowed = false,
+}: BackButtonProps) => {
   return (
     <div className="w-full flex place-content-center">
       <p className="text-muted-foreground text-sm">{label}</p>
-      <Button variant="link" className="font-normal" size="custom" asChild>
+      <Button variant="ghost" className="font-normal" size="custom" asChild>
         <Link href={href}>
-          <p className="link">{link}</p>
+          <span className="link flex items-center gap-1">
+            {link} {isArrowed && <MoveRight />}
+          </span>
         </Link>
       </Button>
     </div>

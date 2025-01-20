@@ -1,6 +1,6 @@
 ## Overview
 
-`Welcome to VeriSafe a comprehensive authentication project template built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
+`Welcome to VeriSafe a comprehensive authentication project built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
 
 ### Key Features
 
@@ -11,7 +11,7 @@
 | User roles                       | Login component                     | Register component                | Forgot password component     |
 | Verification component           | Error component                     | Login button                      | Logout button                 |
 | Role Gate                        | Protect Server Actions              | Protect API Routes                | Change email in Settings page |
-| Change password in Settings page | Enable/disable 2FA in Settings page | Change user role in Settings page |                               |
+| Change password in Settings page | Enable/disable 2FA in Settings page | Change user role in Settings page | OTP Verification              |
 
 ### Technologies
 
@@ -25,75 +25,81 @@
 ### Project Structure
 
 ```bash
-├── .next                     # Build output directory created by Next.js (do not modify)
-├── actions                   # Directory containing server action files
-│   ├── login.ts              # Logic for handling user login
-│   └── register.ts           # Logic for handling user registration
-├── app                       # Main application directory
-│   ├── (protected)           # Protected pages
+├── .next                               # Build output directory created by Next.js (do not modify)
+├── actions                             # Directory containing server action files
+│   ├── email-verification.ts           # Logic for handling email verification
+│   ├── login.ts                        # Logic for handling user login
+│   └── register.ts                     # Logic for handling user registration
+├── app                                 # Main application directory
+│   ├── (protected)                     # Protected pages
 │   │   └── settings
-│   │       └── page.tsx      # Settings page component
-│   ├── api                   # API routes
-│   │   └── auth              # Authentication-related API routes
+│   │       └── page.tsx                # Settings page component
+│   ├── api                             # API routes
+│   │   └── auth                        # Authentication-related API routes
 │   │       └── {...nextauth}
-│   │           └── route.ts  # NextAuth route handler
-│   ├── auth                  # Authentication pages
+│   │           └── route.ts            # NextAuth route handler
+│   ├── auth                            # Authentication pages
+│   │   ├── email-verification
+│   │   │   └── page.tsx                # Email verification page component
 │   │   ├── error
-│   │   │   └── page.tsx      # Custom Auth error page component
+│   │   │   └── page.tsx                # Custom Auth error page component
 │   │   ├── login
-│   │   │   └── page.tsx      # Login page component
+│   │   │   └── page.tsx                # Login page component
 │   │   ├── register
-│   │   │   └── page.tsx      # Registration page component
-│   │   └── layout.tsx        # Layout component for authentication pages
-│   ├── favicon.ico           # Favicon for the application
-│   ├── globals.css           # Global styles for the application
-│   ├── layout.tsx            # Main layout component
-│   └── page.tsx              # Main page component
-├── components                # Directory containing reusable components
-│   ├── auth                  # Authentication-related components
-│   │   ├── back-button.tsx   # Back button component
-│   │   ├── card-wrapper.tsx  # Card wrapper component
-│   │   ├── error-card.tsx    # Auth error card component
-│   │   ├── header.tsx        # Header component
-│   │   ├── login-button.tsx  # Login button component
-│   │   ├── login-form.tsx    # Login form component
-│   │   ├── register-form.tsx # Registration form component
-│   │   └── social.tsx        # Social login buttons component
-│   ├── ui                    # Directory containing ShaDCN UI components
-│   ├── form-error.tsx        # Form error display component
-│   └── form-success.tsx      # Form success display component
-├── data                      # Directory for data models
-│   ├── user.ts               # Functions to fetch user data from the database
-│   └── verification-token.ts # Verification token database functions
-├── lib                       # Library and utility functions
-│   ├── db.ts                 # Database connection and setup using PrismaClient
-│   ├── mail.ts               # Email sending functions
-│   ├── token.ts              # Token Generation functions
-│   └── utils.ts              # General utility functions
-├── node_modules              # Directory for npm packages (do not modify)
-├── prisma                    # Prisma schema and configuration
-│   └── schema.prisma         # Prisma schema definition
-├── public                    # Static assets
-│   └── images                # Image assets
-├── schemas                   # Directory for validation schemas
-│   └── index.ts              # Validation schemas entry point
-├── .env                      # Environment variables
-├── .gitignore                # Files and directories to be ignored by git
-├── auth.config.ts            # Authentication configuration
-├── auth.ts                   # Authentication logic
-├── components.json           # Configuration for components (optional)
-├── eslint.config.mjs         # ESLint configuration
-├── middleware.ts             # Middleware functions
-├── next-auth.d.ts            # TypeScript type declarations for NextAut
-├── next-env.d.ts             # TypeScript environment declarations for Next.js
-├── next-config.ts            # Next.js configuration
-├── package-lock.json         # Exact versions of npm dependencies
-├── package.json              # Project metadata and npm dependencies
-├── postcss.config.mjs        # PostCSS configuration
-├── README.md                 # Project documentation
-├── routes.ts                 # Defines public and authentication-related routes
-├── tailwind.config.ts        # Tailwind CSS configuration
-└── tailwind.json             # Tailwind CSS settings (optional)
+│   │   │   └── page.tsx                # Registration page component
+│   │   └── layout.tsx                  # Layout component for authentication pages
+│   ├── favicon.ico                     # Favicon for the application
+│   ├── globals.css                     # Global styles for the application
+│   ├── layout.tsx                      # Main layout component
+│   └── page.tsx                        # Main page component
+├── components                          # Directory containing reusable components
+│   ├── auth                            # Authentication-related components
+│   │   ├── back-button.tsx             # Back button component
+│   │   ├── card-wrapper.tsx            # Card wrapper component
+│   │   ├── email-verification-from.tsx # Email verification form component
+│   │   ├── error-card.tsx              # Auth error card component
+│   │   ├── header.tsx                  # Header component
+│   │   ├── login-button.tsx            # Login button component
+│   │   ├── login-form.tsx              # Login form component
+│   │   ├── register-form.tsx           # Registration form component
+│   │   └── social.tsx                  # Social login buttons component
+│   ├── ui                              # Directory containing ShaDCN UI components
+│   ├── form-error.tsx                  # Form error display component
+│   └── form-success.tsx                # Form success display component
+├── data                                # Directory for data models
+│   ├── user.ts                         # Functions to fetch user data from the database
+│   └── verification-token.ts           # Verification token database functions
+├── lib                                 # Library and utility functions
+│   ├── db.ts                           # Database connection and setup using PrismaClient
+│   ├── login-utils.ts                  # Utility functions for login server component
+│   ├── mail.ts                         # Email sending functions
+│   ├── token.ts                        # Token Generation functions
+│   ├── unlock.ts                       # Locked account unlocking functions
+│   └── utils.ts                        # General utility functions
+├── node_modules                        # Directory for npm packages (do not modify)
+├── prisma                              # Prisma schema and configuration
+│   └── schema.prisma                   # Prisma schema definition
+├── public                              # Static assets
+│   └── images                          # Image assets
+├── schemas                             # Directory for validation schemas
+│   └── index.ts                        # Validation schemas entry point
+├── .env                                # Environment variables
+├── .gitignore                          # Files and directories to be ignored by git
+├── auth.config.ts                      # Authentication configuration
+├── auth.ts                             # Authentication logic
+├── components.json                     # Configuration for components (optional)
+├── eslint.config.mjs                   # ESLint configuration
+├── middleware.ts                       # Middleware functions
+├── next-auth.d.ts                      # TypeScript type declarations for NextAut
+├── next-env.d.ts                       # TypeScript environment declarations for Next.js
+├── next-config.ts                      # Next.js configuration
+├── package-lock.json                   # Exact versions of npm dependencies
+├── package.json                        # Project metadata and npm dependencies
+├── postcss.config.mjs                  # PostCSS configuration
+├── README.md                           # Project documentation
+├── routes.ts                           # Defines public and authentication-related routes
+├── tailwind.config.ts                  # Tailwind CSS configuration
+└── tailwind.json                       # Tailwind CSS settings (optional)
 ```
 
 ## Getting Started

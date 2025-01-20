@@ -1,4 +1,4 @@
-import { sendLockoutEmail } from "@/lib/mail";
+import { sendLockoutEmailAlert } from "@/lib/mail";
 import bcrypt from "bcryptjs";
 
 export const loginAttempts = new Map<
@@ -39,11 +39,11 @@ export const handleFailedLogin = async (
     if (userAttempts.attempts >= MAX_ATTEMPTS) {
       userAttempts.lockoutUntil = now + LOCKOUT_DURATION;
 
-      // Send lockout email only if not sent before (within 24 hours)
+      // Send lockout email alert only if not sent before (within 24 hours)
       if (!userAttempts.emailSent) {
         console.log("Lockout Email Sent!");
 
-        await sendLockoutEmail(email);
+        await sendLockoutEmailAlert(email);
         userAttempts.emailSent = true;
       }
     }

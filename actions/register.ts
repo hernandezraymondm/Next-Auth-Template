@@ -33,8 +33,16 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   });
   // Generate verification token
   const verificationToken = await generateVerificationToken(email);
-  // Send verification email
-  await sendVerificationEmail(verificationToken.email, verificationToken.token);
 
-  return { success: "Confirmation email sent!" };
+  const expiration = verificationToken.expires.getTime(); // convert to milliseconds
+
+  // Send verification email
+  await sendVerificationEmail(
+    verificationToken.email,
+    verificationToken.token,
+    verificationToken.code,
+    expiration.toString()
+  );
+
+  return { success: `Verification email sent to ${verificationToken.email}` };
 };

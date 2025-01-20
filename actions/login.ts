@@ -4,9 +4,9 @@ import * as z from "zod";
 import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/schemas";
-import { sendVerificationEmail } from "@/lib/mail";
+// import { sendVerificationEmail } from "@/lib/mail";
+// import { generateVerificationToken } from "@/lib/tokens";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
-import { generateVerificationToken } from "@/lib/tokens";
 import { getUserByEmail } from "@/data/user";
 import {
   checkLockoutStatus,
@@ -45,16 +45,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   // Check if email is verified
   const verificationResult = await checkEmailVerification(email, existingUser);
-  if (verificationResult.success !== true) {
-    // Resend verification email if needed
-    const verificationToken = await generateVerificationToken(
-      existingUser.email
-    );
-    await sendVerificationEmail(
-      verificationToken.email,
-      verificationToken.token
-    );
-    return { success: "Confirmation email sent!" };
+  if (verificationResult.error) {
+    return verificationResult;
   }
 
   // Proceed with login if everything checks out
@@ -76,7 +68,3 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     throw error;
   }
 };
-
-// TODO: Modify to be Please verify your email page
-// TODO: Add resend email button
-// TODO: Use logging & alerting for suspicious login attempts

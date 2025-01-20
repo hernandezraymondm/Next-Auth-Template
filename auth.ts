@@ -60,13 +60,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         // TODO: Add optional 2FA/MFA check here
 
-        // TODO: Rate Limiting for Failed Logins
-        //Prevent brute force attacks by limiting failed attempts per IP/user.
-        //Use Redis-based rate-limiting with libraries like express-rate-limit (if using an API).
-
-        // TODO: Lock Accounts After Multiple Failed Attempts
-        // Implement logic to temporarily lock an account after too many failed sign-in attempts.
-
         return true;
       } catch (error) {
         console.error("Error during sign-in callback:", error);
