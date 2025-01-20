@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 
-interface ExpirationCountdownProps {
+interface TokenExpirationCountdownProps {
   expiration: number; // milliseconds
 }
 
-export const ExpirationCountdown = ({
+export const TokenExpirationCountdown = ({
   expiration,
-}: ExpirationCountdownProps) => {
+}: TokenExpirationCountdownProps) => {
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {

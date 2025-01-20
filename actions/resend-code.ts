@@ -1,9 +1,13 @@
 "use server";
 
 import { sendVerificationEmail } from "@/lib/mail";
-import { generateVerificationToken } from "@/lib/tokens";
+import { updateVerificationCode } from "@/lib/tokens";
 
-export const resendCode = async (email: string, captchaToken: string) => {
+export const resendCode = async (
+  email: string,
+  token: string,
+  captchaToken: string
+) => {
   try {
     // Verify reCAPTCHA using fetch instead of axios
     const response = await fetch(
@@ -20,11 +24,16 @@ export const resendCode = async (email: string, captchaToken: string) => {
 
     const data = await response.json();
     if (!data.success) {
-      return { error: "reCAPTCHA verification failed!" };
+      return { error: "CAPTCHA verification failed!" };
     }
 
     // Generate a new verification token
-    const verificationToken = await generateVerificationToken(email);
+    const verificationToken = await updateVerificationCode(email, token);
+
+    if (!verificationToken) {
+      return { error: "Code generation failed!" };
+    }
+
     const expiration = verificationToken.expires.getTime();
 
     // Send the email
@@ -35,8 +44,8 @@ export const resendCode = async (email: string, captchaToken: string) => {
       expiration.toString()
     );
 
-    return { success: "Verification code resent successfully" };
+    return { success: true };
   } catch {
-    return { error: "Failed to resend verification code" };
+    return { error: "Error resending code!" };
   }
 };

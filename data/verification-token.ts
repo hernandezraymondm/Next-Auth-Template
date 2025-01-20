@@ -62,3 +62,25 @@ export const getVerificationTokenByTokenAndCode = async (
     return null;
   }
 };
+
+/**
+ * Retrieves a verification token by token and code.
+ *
+ * @param {string} email - The email value to search for.
+ * @param {string} token - The token value to search for.
+ * @returns {Promise<Object|null>} - A promise that resolves to the verification token object or null if not found.
+ */
+export const getVerificationTokenByEmailAndToken = async (
+  email: string,
+  token: string
+): Promise<VerificationToken | null> => {
+  try {
+    const verificationToken = await db.verificationToken.findFirst({
+      where: { email, token },
+    });
+
+    return verificationToken;
+  } catch {
+    return null;
+  }
+};
