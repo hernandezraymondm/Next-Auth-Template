@@ -24,12 +24,12 @@ export const sendVerificationEmail = async (
 };
 
 // Lockout email alert
-export const sendLockoutEmail = async (email: string) => {
+export const sendLockoutEmailAlert = async (email: string) => {
   await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
     subject: "Your Account Has Been Locked",
     html: `<p>Your account has been locked due to multiple failed login attempts.</p>
-    <p> If this was you, you don’t need to do anything. If not, please secure your account.</p>`,
+    <p> If this is not you, please secure your account.</p>`,
   });
 };
