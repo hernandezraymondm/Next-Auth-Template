@@ -1,16 +1,14 @@
 "use server";
 
+import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { getVerificationTokenByTokenAndCode } from "@/data/verification-token";
-import { db } from "@/lib/db";
 
 export const verifyCode = async (token: string, code: string) => {
   const verificationRecord = await getVerificationTokenByTokenAndCode(
     token,
     code
   );
-
-  console.log({ verificationRecord });
 
   if (!verificationRecord) {
     return { error: "Invalid code!" };
@@ -24,7 +22,7 @@ export const verifyCode = async (token: string, code: string) => {
 
   const existingUser = await getUserByEmail(verificationRecord.email);
 
-  if (!existingUser) {
+  if (!existingUser || existingUser.emailVerified) {
     // If email does not exist
     return { error: "Unexpected error occurred!" };
   }
