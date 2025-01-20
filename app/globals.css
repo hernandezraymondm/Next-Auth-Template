@@ -107,7 +107,7 @@ body,
   @apply w-full flex place-content-center gap-1 text-muted-foreground text-sm font-semibold;
 }
 .link {
-  @apply hover:text-accent-highlight font-medium drop-shadow-lg;
+  @apply text-gray-800 hover:text-accent-highlight font-medium drop-shadow-lg;
 }
 .button {
   @apply w-full font-semibold drop-shadow-md hover:text-violet-400;

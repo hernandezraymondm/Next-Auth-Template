@@ -1,10 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
+import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import ReCAPTCHA from "react-google-recaptcha";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+import { IoIosMail } from "react-icons/io";
+import { CircleCheckBig } from "lucide-react";
+import { Frown } from "lucide-react";
+
 import {
   Form,
   FormControl,
@@ -18,23 +24,23 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
-import { IoIosMail } from "react-icons/io";
-import { CircleCheckBig } from "lucide-react";
-import { Frown } from "lucide-react";
-import { useSearchParams } from "next/navigation";
-import { verifyEmail } from "@/actions/verify-email";
-import { verifyCode } from "@/actions/verify-code";
-import { resendCode } from "@/actions/resend-code";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
-import { CardWrapper } from "@/components/auth/card-wrapper";
-import { FormSuccess } from "@/components/form-success";
-import { FormError } from "@/components/form-error";
-import { OtpSchema } from "@/schemas";
+
 import {
   TokenExpirationCountdown,
   ResendCodeCountdown,
 } from "@/components/auth/countdown";
+import { CardWrapper } from "@/components/auth/card-wrapper";
+import { FormSuccess } from "@/components/form-success";
+import { FormError } from "@/components/form-error";
+
+import { ButtonVariant } from "@/lib/enums";
+import { OtpSchema } from "@/schemas";
+
+import { verifyEmail } from "@/actions/verify-email";
+import { verifyCode } from "@/actions/verify-code";
+import { resendCode } from "@/actions/resend-code";
 
 export const VerifyEmailForm = () => {
   const [error, setError] = useState<string | undefined>();
@@ -173,7 +179,7 @@ export const VerifyEmailForm = () => {
       }
       backButtonLink="Return to Login"
       backButtonHref="/auth/login"
-      isBackArrowed
+      backVariant={ButtonVariant.Secondary}
     >
       <div className="w-full flex flex-col place-content-center gap-5">
         {success ? (

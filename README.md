@@ -21,6 +21,7 @@
 | WebAuthn     | PostgreSQL   | Prisma          | Bcrypt            |
 | JWT          | TailwindCSS  | React Hook Form | Zod               |
 | Next.js      | Typescript   | Node.js         | Middleware config |
+| Crypto       | reCAPTCHA    |                 |                   |
 
 ### Project Structure
 
