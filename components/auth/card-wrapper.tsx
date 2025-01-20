@@ -20,6 +20,7 @@ interface CardWrapperProps {
   backButtonLabel?: string;
   backButtonLink: string;
   backButtonHref: string;
+  isBackArrowed?: boolean;
   showSocial?: boolean;
   showFooter?: boolean;
 }
@@ -33,6 +34,7 @@ export const CardWrapper = ({
   backButtonLabel,
   backButtonLink,
   backButtonHref,
+  isBackArrowed,
   showSocial,
   showFooter,
 }: CardWrapperProps) => {
@@ -56,6 +58,7 @@ export const CardWrapper = ({
           label={backButtonLabel}
           link={backButtonLink}
           href={backButtonHref}
+          isArrowed={isBackArrowed}
         />
       </CardFooter>
       {showFooter && (
