@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 
-interface CountdownProps {
+interface ExpirationCountdownProps {
   expiration: number; // milliseconds
 }
 
-export const Countdown = ({ expiration }: CountdownProps) => {
+export const ExpirationCountdown = ({
+  expiration,
+}: ExpirationCountdownProps) => {
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
@@ -44,4 +46,40 @@ export const Countdown = ({ expiration }: CountdownProps) => {
       {formattedTime()}
     </span>
   );
+};
+
+interface ResendCodeCountdownProps {
+  initialCount: number;
+  onComplete: () => void;
+}
+
+export const ResendCodeCountdown = ({
+  initialCount,
+  onComplete,
+}: ResendCodeCountdownProps) => {
+  const [timeLeft, setTimeLeft] = useState(initialCount);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      onComplete();
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, onComplete]);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
+  const formattedTime = () => {
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
+  return <span className="ml-2">{formattedTime()}</span>;
 };
