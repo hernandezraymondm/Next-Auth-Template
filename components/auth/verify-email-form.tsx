@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -41,6 +42,8 @@ export const VerifyEmailForm = () => {
   const [isCodeSubmitted, setIsCodeSubmitted] = useState(false);
   const [isResending, setIsResending] = useState(false); // Email has been resent and running countdown
   const [resendEnabled, setResendEnabled] = useState(false); // Resend Button Enabled
+  const [showCaptcha, setShowCaptcha] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -99,11 +102,17 @@ export const VerifyEmailForm = () => {
 
   // Function to resend the verification code
   const handleResendCode = async () => {
+    if (!captchaToken) {
+      setError("Please complete the CAPTCHA");
+      return;
+    }
+
     setIsResending(true);
     setError("");
     try {
-      await resendCode(email);
+      await resendCode(email, captchaToken);
       setResendEnabled(false);
+      setShowCaptcha(false);
     } catch {
       setError("Error resending code!");
     } finally {
@@ -226,7 +235,22 @@ export const VerifyEmailForm = () => {
 
         {!success && (
           <div className="w-full flex justify-evenly">
-            {error && (
+            {showCaptcha && (
+              <div className="flex flex-col items-center gap-4">
+                <ReCAPTCHA
+                  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY!}
+                  onChange={(token) => setCaptchaToken(token)}
+                />
+                <Button
+                  className="button"
+                  onClick={handleResendCode}
+                  disabled={!captchaToken}
+                >
+                  Confirm & Resend Code
+                </Button>
+              </div>
+            )}
+            {error && !showCaptcha && (
               <Button
                 variant="link"
                 className="link text-accent-highlight !font-semibold"
@@ -235,26 +259,37 @@ export const VerifyEmailForm = () => {
                 Go back
               </Button>
             )}
-            <Button
-              variant="link"
-              className="link text-accent-highlight !font-semibold"
-              onClick={handleResendCode}
-              disabled={isResending || !resendEnabled} // Disable button while resending and until countdown completes
-            >
-              {isResending ? (
-                "Resending..."
-              ) : !resendEnabled ? (
-                <span>
-                  Resend code in
-                  <ResendCodeCountdown
-                    initialCount={120}
-                    onComplete={handleResendComplete}
-                  />
-                </span>
-              ) : (
-                "Resend code"
-              )}
-            </Button>
+            {!isResending && resendEnabled && !showCaptcha && (
+              <Button
+                variant="link"
+                className="link text-accent-highlight !font-semibold"
+                onClick={() => setShowCaptcha(true)}
+                disabled={isResending || !resendEnabled}
+              >
+                Resend code
+              </Button>
+            )}
+
+            {isResending && !showCaptcha && (
+              <span className="flex gap-4 link text-sm text-accent-highlight/50 !font-semibold">
+                Resending
+                <Loader size="sm" />
+              </span>
+            )}
+
+            {!resendEnabled && !showCaptcha && (
+              <Button
+                variant="link"
+                className="link text-accent-highlight !font-semibold"
+                disabled={isResending || !resendEnabled}
+              >
+                Resend code in
+                <ResendCodeCountdown
+                  initialCount={120}
+                  onComplete={handleResendComplete}
+                />
+              </Button>
+            )}
           </div>
         )}
       </div>

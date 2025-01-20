@@ -3,19 +3,40 @@
 import { sendVerificationEmail } from "@/lib/mail";
 import { generateVerificationToken } from "@/lib/tokens";
 
-export const resendCode = async (email: string) => {
-  const verificationToken = await generateVerificationToken(email);
+export const resendCode = async (email: string, captchaToken: string) => {
+  try {
+    // Verify reCAPTCHA using fetch instead of axios
+    const response = await fetch(
+      "https://www.google.com/recaptcha/api/siteverify",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret: process.env.RECAPTCHA_SECRET_KEY!,
+          response: captchaToken,
+        }).toString(),
+      }
+    );
 
-  // convert to milliseconds
-  const expiration = verificationToken.expires.getTime();
+    const data = await response.json();
+    if (!data.success) {
+      return { error: "reCAPTCHA verification failed!" };
+    }
 
-  // Send verification email
-  await sendVerificationEmail(
-    verificationToken.email,
-    verificationToken.token,
-    verificationToken.code,
-    expiration.toString()
-  );
+    // Generate a new verification token
+    const verificationToken = await generateVerificationToken(email);
+    const expiration = verificationToken.expires.getTime();
 
-  return;
+    // Send the email
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
+      verificationToken.code,
+      expiration.toString()
+    );
+
+    return { success: "Verification code resent successfully" };
+  } catch {
+    return { error: "Failed to resend verification code" };
+  }
 };

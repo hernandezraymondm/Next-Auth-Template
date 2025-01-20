@@ -81,5 +81,5 @@ export const ResendCodeCountdown = ({
       .padStart(2, "0")}`;
   };
 
-  return <span className="ml-2">{formattedTime()}</span>;
+  return <p>{formattedTime()}</p>;
 };

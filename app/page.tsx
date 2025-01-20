@@ -25,11 +25,7 @@ export default function Home() {
         </p>
         <div>
           <LoginButton>
-            <Button
-              variant="default"
-              size="lg"
-              className="font-semibold hover:text-accent-highlight"
-            >
+            <Button variant="default" size="lg" className="button">
               Get started <Play />
             </Button>
           </LoginButton>

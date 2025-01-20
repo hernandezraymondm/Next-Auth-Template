@@ -1,6 +1,6 @@
 ## Overview
 
-`Welcome to VeriSafe a comprehensive authentication project template built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
+`Welcome to VeriSafe a comprehensive authentication project built with NextAuth. This project provides a robust setup for user authentication, session management, and integration with various providers. This project combines latest technologies and best practices to streamline the development of secure authentication systems. Whether you're building a new application or enhancing an existing one, this template offers a solid foundation with flexible and scalable solutions.`
 
 ### Key Features
 
