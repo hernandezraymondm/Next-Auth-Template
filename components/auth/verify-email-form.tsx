@@ -23,18 +23,24 @@ import { Frown } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { verifyEmail } from "@/actions/verify-email";
 import { verifyCode } from "@/actions/verify-code";
+import { resendCode } from "@/actions/resend-code";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/form-success";
 import { FormError } from "@/components/form-error";
 import { OtpSchema } from "@/schemas";
-import { Countdown } from "@/components/auth/countdown";
+import {
+  ExpirationCountdown,
+  ResendCodeCountdown,
+} from "@/components/auth/countdown";
 
 export const VerifyEmailForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isCodeSubmitted, setIsCodeSubmitted] = useState(false);
+  const [isResending, setIsResending] = useState(false); // Email has been resent and running countdown
+  const [resendEnabled, setResendEnabled] = useState(false); // Resend Button Enabled
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -84,6 +90,32 @@ export const VerifyEmailForm = () => {
       });
   };
 
+  // Function to reset the form
+  const handleReset = () => {
+    form.reset();
+    setError(undefined);
+    setIsCodeSubmitted(false);
+  };
+
+  // Function to resend the verification code
+  const handleResendCode = async () => {
+    setIsResending(true);
+    setError("");
+    try {
+      await resendCode(email);
+      setResendEnabled(false);
+    } catch {
+      setError("Error resending code!");
+    } finally {
+      setIsResending(false);
+    }
+  };
+
+  // Function to enable the resend button
+  const handleResendComplete = () => {
+    setResendEnabled(true);
+  };
+
   useEffect(() => {
     onSubmitToken();
   }, [onSubmitToken]);
@@ -99,7 +131,7 @@ export const VerifyEmailForm = () => {
         ) : error ? (
           <Frown size="60" className="text-white bg-red-400 rounded-full" />
         ) : (
-          <IoIosMail size="60" color="#9e85ed" />
+          <IoIosMail size="60" color="#6e4fee" />
         )
       }
       headerLabel={
@@ -123,6 +155,7 @@ export const VerifyEmailForm = () => {
       }
       backButtonLink="Return to Login"
       backButtonHref="/auth/login"
+      isBackArrowed
     >
       <div className="w-full flex flex-col place-content-center gap-5">
         {success ? (
@@ -144,7 +177,7 @@ export const VerifyEmailForm = () => {
                   Enter the 6-digit code we sent to {email} to continue. This
                   code will expire in
                 </p>
-                <Countdown expiration={Number(expires)} />
+                <ExpirationCountdown expiration={Number(expires)} />
               </div>
             ) : (
               <Loader size="lg" />
@@ -193,18 +226,34 @@ export const VerifyEmailForm = () => {
 
         {!success && (
           <div className="w-full flex justify-evenly">
+            {error && (
+              <Button
+                variant="link"
+                className="link text-accent-highlight !font-semibold"
+                onClick={handleReset}
+              >
+                Go back
+              </Button>
+            )}
             <Button
               variant="link"
               className="link text-accent-highlight !font-semibold"
-              // TODO: Implement resend code logic here
+              onClick={handleResendCode}
+              disabled={isResending || !resendEnabled} // Disable button while resending and until countdown completes
             >
-              Resend code
-            </Button>
-            <Button
-              variant="link"
-              className="link text-accent-highlight !font-semibold"
-            >
-              {error ? "Go back" : "Change email"}
+              {isResending ? (
+                "Resending..."
+              ) : !resendEnabled ? (
+                <span>
+                  Resend code in
+                  <ResendCodeCountdown
+                    initialCount={120}
+                    onComplete={handleResendComplete}
+                  />
+                </span>
+              ) : (
+                "Resend code"
+              )}
             </Button>
           </div>
         )}
