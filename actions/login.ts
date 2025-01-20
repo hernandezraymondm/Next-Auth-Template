@@ -45,24 +45,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   // Check if email is verified
   const verificationResult = await checkEmailVerification(email, existingUser);
-
-  // const expiration = new Date(verificationToken.expires.getTime() * 1000);
-
-  if (verificationResult.success !== true) {
-    // Resend verification email if needed
-    // const verificationToken = await generateVerificationToken(
-    //   existingUser.email
-    // );
-    // await sendVerificationEmail(
-    //   verificationToken.email,
-    //   verificationToken.token,
-    //   verificationToken.code,
-    //   expiration.toString()
-    // );
-    return {
-      error:
-        "Account not verified. Please check your email for the verification link and follow the instructions to verify your account.",
-    };
+  if (verificationResult.error) {
+    return verificationResult;
   }
 
   // Proceed with login if everything checks out
@@ -84,7 +68,3 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     throw error;
   }
 };
-
-// TODO: Modify to be Please verify your email page
-// TODO: Add resend email button
-// TODO: Use logging & alerting for suspicious login attempts
