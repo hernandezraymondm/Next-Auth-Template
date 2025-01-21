@@ -7,7 +7,7 @@ export const verifyEmail = async (token: string) => {
 
   if (!verificationRecord) {
     // If token is missing from the database
-    return { error: "Invalid token!" };
+    return { error: "Invalid verification link!" };
   }
 
   return;

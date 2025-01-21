@@ -46,13 +46,13 @@ export const VerifyEmailForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isCodeSubmitted, setIsCodeSubmitted] = useState(false);
-  const [isResending, setIsResending] = useState(false); // Email has been resent and running countdown
-  const [resendEnabled, setResendEnabled] = useState(false); // Resend Button Enabled
+  const [isResending, setIsResending] = useState(false);
+  const [resendEnabled, setResendEnabled] = useState(true);
   const [showCaptcha, setShowCaptcha] = useState(false);
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "";
-  const email = searchParams.get("email") || "you";
+  const email = searchParams.get("email") || "";
   const expires = searchParams.get("expires");
 
   // Initialize form with Zod schema resolver
@@ -64,7 +64,7 @@ export const VerifyEmailForm = () => {
   const onSubmitToken = useCallback(() => {
     if (!token) {
       // If token is missing from searchParams
-      setError("Invalid Link!");
+      setError("Invalid verification link!");
       return;
     }
     verifyEmail(token)
@@ -72,7 +72,7 @@ export const VerifyEmailForm = () => {
         setError(data?.error);
       })
       .catch(() => {
-        setError("Verification issue encountered!");
+        setError("Email verification issue encountered!");
       });
   }, [token]);
 
@@ -94,7 +94,7 @@ export const VerifyEmailForm = () => {
         setError(data.error);
       })
       .catch(() => {
-        setError("Error verifying code!");
+        setError("Code verification issue encountered!");
       });
   };
 
@@ -181,7 +181,7 @@ export const VerifyEmailForm = () => {
       backButtonHref="/auth/login"
       backVariant={ButtonVariant.Secondary}
     >
-      <div className="w-full flex flex-col place-content-center gap-5">
+      <div className="w-full flex flex-col text-center place-content-center gap-5">
         {success ? (
           <p className="paragraph">
             Thank you for your support, we are pleased to inform you that your
@@ -190,13 +190,18 @@ export const VerifyEmailForm = () => {
           </p>
         ) : error ? (
           <p className="paragraph">
-            Please contact us if this error persists. Unique error code:{" "}
+            Please contact us if this error persists. When reaching out, be sure
+            to provide the unique error code so we can quickly identify and
+            address the problem. Your unique error code is:{" "}
             <code className="rounded-sm bg-slate-100 p-1 text-xs">{error}</code>
           </p>
         ) : (
           <>
             {!isCodeSubmitted ? (
-              <div>
+              <div className="text-center">
+                <p className="paragraph mb-1">
+                  Thanks for helping us keep your account secure!
+                </p>
                 <p className="paragraph inline">
                   Enter the 6-digit code we sent to {email} to continue. This
                   code will expire in
@@ -293,7 +298,7 @@ export const VerifyEmailForm = () => {
               >
                 Resend code in
                 <ResendCodeCountdown
-                  initialCount={120}
+                  initialCount={2}
                   onComplete={handleResendComplete}
                 />
               </Button>
@@ -304,3 +309,5 @@ export const VerifyEmailForm = () => {
     </CardWrapper>
   );
 };
+
+// TODO: code splitting

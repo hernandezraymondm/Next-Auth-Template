@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 import { RegisterSchema } from "@/schemas";
 import { getUserByEmail } from "@/data/user";
 import { sendVerificationEmail } from "@/lib/mail";
-import { generateVerificationToken } from "@/lib/tokens";
+import { generateVerificationLink } from "@/lib/verification";
 
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
@@ -32,7 +32,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     },
   });
   // Generate verification token
-  const verificationToken = await generateVerificationToken(email);
+  const verificationToken = await generateVerificationLink(email);
 
   const expiration = verificationToken.expires.getTime(); // convert to milliseconds
 
@@ -44,5 +44,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     expiration.toString()
   );
 
-  return { success: `Verification email sent to ${verificationToken.email}` };
+  return {
+    success: `A Verification email has been sent to ${verificationToken.email}. `,
+  };
 };

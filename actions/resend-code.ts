@@ -1,7 +1,8 @@
 "use server";
 
+import { verifyReCAPTCHA } from "@/lib/captcha";
 import { sendVerificationEmail } from "@/lib/mail";
-import { updateVerificationCode } from "@/lib/tokens";
+import { updateVerificationCode } from "@/lib/verification";
 
 export const resendCode = async (
   email: string,
@@ -9,43 +10,31 @@ export const resendCode = async (
   captchaToken: string
 ) => {
   try {
-    // Verify reCAPTCHA using fetch instead of axios
-    const response = await fetch(
-      "https://www.google.com/recaptcha/api/siteverify",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams({
-          secret: process.env.RECAPTCHA_SECRET_KEY!,
-          response: captchaToken,
-        }).toString(),
-      }
-    );
-
-    const data = await response.json();
-    if (!data.success) {
+    // Verify reCAPTCHA if captchaToken is provided
+    const reCaptcha = await verifyReCAPTCHA(captchaToken);
+    if (!reCaptcha) {
       return { error: "CAPTCHA verification failed!" };
     }
 
-    // Generate a new verification token
+    // Update verification code
     const verificationToken = await updateVerificationCode(email, token);
 
     if (!verificationToken) {
       return { error: "Code generation failed!" };
     }
 
-    const expiration = verificationToken.expires.getTime();
+    const expiration = verificationToken.expires.getTime().toString();
 
     // Send the email
     await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token,
       verificationToken.code,
-      expiration.toString()
+      expiration
     );
 
     return { success: true };
   } catch {
-    return { error: "Error resending code!" };
+    return { error: "Invalid verification link!" };
   }
 };
