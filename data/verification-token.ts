@@ -2,24 +2,25 @@ import { VerificationToken } from "@prisma/client";
 import { db } from "@/lib/db";
 
 /**
+ * NOT IN USE BECAUSE WE CREATED A BATCH GET AND DELETE
  * Retrieves a verification token by the associated email address.
  *
  * @param {string} email - The email address to search for.
  * @returns {Promise<Object|null>} - A promise that resolves to the verification token object or null if not found.
  */
-export const getVerificationTokenByEmail = async (
-  email: string
-): Promise<VerificationToken | null> => {
-  try {
-    const verificationToken = await db.verificationToken.findFirst({
-      where: { email },
-    });
+// export const getVerificationTokenByEmail = async (
+//   email: string
+// ): Promise<VerificationToken | null> => {
+//   try {
+//     const verificationToken = await db.verificationToken.findFirst({
+//       where: { email },
+//     });
 
-    return verificationToken;
-  } catch {
-    return null;
-  }
-};
+//     return verificationToken;
+//   } catch {
+//     return null;
+//   }
+// };
 
 /**
  * Retrieves a verification token by its token value.
@@ -75,12 +76,46 @@ export const getVerificationTokenByEmailAndToken = async (
   token: string
 ): Promise<VerificationToken | null> => {
   try {
-    const verificationToken = await db.verificationToken.findFirst({
+    const verificationToken = await db.verificationToken.findUnique({
       where: { email, token },
     });
 
     return verificationToken;
   } catch {
     return null;
+  }
+};
+
+/**
+ * Retrieves all verification tokens for a given email.
+ *
+ * @param {string} email - The email address to search for.
+ * @returns {Promise<VerificationToken[]>} - A promise that resolves to an array of verification tokens.
+ */
+export const getVerificationTokensByEmail = async (
+  email: string
+): Promise<VerificationToken[]> => {
+  try {
+    const verificationTokens = await db.verificationToken.findMany({
+      where: { email },
+    });
+    return verificationTokens;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+/**
+ * Deletes all verification tokens for a given email.
+ *
+ * @param {string} email - The email address to search for.
+ */
+export const deleteVerificationTokensByEmail = async (email: string) => {
+  try {
+    await db.verificationToken.deleteMany({ where: { email } });
+    console.log(`All verification tokens for ${email} have been deleted.`);
+  } catch (error) {
+    console.error(`Failed to delete verification tokens for ${email}:`, error);
   }
 };
