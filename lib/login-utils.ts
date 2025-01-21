@@ -93,7 +93,7 @@ export const checkEmailVerification = async (
     };
   }
   return {
-    error: `Unexpected error occurred!`,
+    success: true,
   };
 };
 
