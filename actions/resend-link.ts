@@ -2,13 +2,9 @@
 
 import { verifyReCAPTCHA } from "@/lib/captcha";
 import { sendVerificationEmail } from "@/lib/mail";
-import { updateVerificationCode } from "@/lib/verification";
+import { generateVerificationLink } from "@/lib/verification";
 
-export const resendCode = async (
-  email: string,
-  token: string,
-  captchaToken: string
-) => {
+export const resendLink = async (email: string, captchaToken: string) => {
   try {
     // Verify reCAPTCHA if captchaToken is provided
     const reCaptcha = await verifyReCAPTCHA(captchaToken);
@@ -16,11 +12,11 @@ export const resendCode = async (
       return { error: "CAPTCHA verification failed!" };
     }
 
-    // Update verification code
-    const verificationToken = await updateVerificationCode(email, token);
+    // Generate a new verification token
+    const verificationToken = await generateVerificationLink(email);
 
     if (!verificationToken) {
-      return { error: "Code generation failed!" };
+      return { error: "Link generation failed!" };
     }
 
     const expiration = verificationToken.expires.getTime().toString();
@@ -35,6 +31,6 @@ export const resendCode = async (
 
     return { success: true };
   } catch {
-    return { error: "Invalid verification link!" };
+    return { error: "Error resending link!" };
   }
 };

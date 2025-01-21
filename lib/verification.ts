@@ -1,8 +1,9 @@
 import { VerificationToken } from "@prisma/client";
 import { db } from "@/lib/db";
 import {
-  getVerificationTokenByEmail,
+  getVerificationTokensByEmail,
   getVerificationTokenByEmailAndToken,
+  deleteVerificationTokensByEmail,
 } from "@/data/verification-token";
 import {
   generateUUID,
@@ -17,22 +18,18 @@ import {
  * @param {string} email - The email address for which to generate the verification token.
  * @returns {Promise<VerificationToken>} - A promise that resolves to the newly created verification token.
  */
-export const generateVerificationToken = async (
+export const generateVerificationLink = async (
   email: string
 ): Promise<VerificationToken> => {
   const token = generateUUID();
   const code = generateVerificationCode(); // Generate a 6-digit code
-  const expires = generateExpirationDate(1); // 1 hour
+  const expires = generateExpirationDate(24); // 1 hour
 
-  const existingToken = await getVerificationTokenByEmail(email);
+  const existingTokens = await getVerificationTokensByEmail(email);
 
-  // Delete existing token
-  if (existingToken) {
-    await db.verificationToken.delete({
-      where: {
-        id: existingToken.id,
-      },
-    });
+  // Delete existing tokens
+  if (existingTokens.length > 0) {
+    await deleteVerificationTokensByEmail(email);
   }
 
   // Create a new token
@@ -60,25 +57,15 @@ export const updateVerificationCode = async (
   email: string,
   token: string
 ): Promise<VerificationToken> => {
-  const newToken = generateUUID();
   const code = generateVerificationCode(); // Generate a 6-digit code
   const expires = generateExpirationDate(1); // 1 hour
 
   const existingToken = await getVerificationTokenByEmailAndToken(email, token);
 
-  const verificationToken = existingToken
-    ? await db.verificationToken.update({
-        where: { id: existingToken.id },
-        data: { code, expires },
-      })
-    : await db.verificationToken.create({
-        data: {
-          email,
-          token: newToken,
-          code,
-          expires,
-        },
-      });
+  const verificationToken = await db.verificationToken.update({
+    where: { id: existingToken?.id },
+    data: { code, expires },
+  });
 
   return verificationToken;
 };

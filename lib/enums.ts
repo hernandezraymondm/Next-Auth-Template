@@ -1,3 +1,6 @@
+/**
+ * Back Button Variant
+ */
 export enum ButtonVariant {
   Link = "link",
   Default = "default",

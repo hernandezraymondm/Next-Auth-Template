@@ -40,7 +40,7 @@ export const CardWrapper = ({
   showFooter,
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[400px] shadow-2xl bg-smoke">
+    <Card className="w-[500px] shadow-2xl bg-smoke">
       <CardHeader className="card-header">
         <Header
           icon={icon}

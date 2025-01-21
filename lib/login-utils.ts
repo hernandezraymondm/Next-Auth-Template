@@ -1,5 +1,6 @@
-import { sendLockoutEmailAlert } from "@/lib/mail";
 import bcrypt from "bcryptjs";
+import { generateVerificationLink } from "@/lib/verification";
+import { sendLockoutEmailAlert, sendVerificationEmail } from "@/lib/mail";
 
 export const loginAttempts = new Map<
   string,
@@ -76,9 +77,24 @@ export const checkEmailVerification = async (
   existingUser: any
 ) => {
   if (!existingUser.emailVerified) {
-    return { error: "Please verify your email address!" };
+    // Generate verification token
+    const verificationToken = await generateVerificationLink(email);
+    // convert to milliseconds
+    const expiration = verificationToken.expires.getTime();
+    // Send verification email
+    await sendVerificationEmail(
+      verificationToken.email,
+      verificationToken.token,
+      verificationToken.code,
+      expiration.toString()
+    );
+    return {
+      error: "UNVERIFIED",
+    };
   }
-  return { success: true };
+  return {
+    error: `Unexpected error occurred!`,
+  };
 };
 
 // Cleanup Task: Remove old entries every 10 minutes
