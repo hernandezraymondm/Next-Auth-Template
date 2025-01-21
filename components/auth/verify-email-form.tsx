@@ -35,7 +35,6 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { FormSuccess } from "@/components/form-success";
 import { FormError } from "@/components/form-error";
 
-import { ButtonVariant } from "@/lib/enums";
 import { OtpSchema } from "@/schemas";
 
 import { verifyEmail } from "@/actions/verify-email";
@@ -47,8 +46,9 @@ export const VerifyEmailForm = () => {
   const [success, setSuccess] = useState<string | undefined>();
   const [isCodeSubmitted, setIsCodeSubmitted] = useState(false);
   const [isResending, setIsResending] = useState(false);
-  const [resendEnabled, setResendEnabled] = useState(true);
+  const [resendEnabled, setResendEnabled] = useState(false);
   const [showCaptcha, setShowCaptcha] = useState(false);
+  const [resendCount, setResendCount] = useState(120);
 
   const searchParams = useSearchParams();
   const token = searchParams.get("token") || "";
@@ -120,6 +120,7 @@ export const VerifyEmailForm = () => {
         setResendEnabled(false);
         setShowCaptcha(false);
         setError(data.error);
+        setResendCount((prev) => prev * 2);
       })
       .catch(() => {
         setError("Resend code issue encountered!");
@@ -178,22 +179,23 @@ export const VerifyEmailForm = () => {
           ? "Please wait while we process your request."
           : ""
       }
-      backButtonLink="Return to Login"
+      backButtonLink="Back to Login"
       backButtonHref="/auth/login"
-      backVariant={ButtonVariant.Secondary}
+      isBackArrowed={true}
+      className="font-semibold !text-gray-600"
     >
-      <div className="w-full flex flex-col text-center place-content-center gap-5">
+      <div className="w-full flex flex-col place-content-center gap-5">
         {success ? (
-          <p className="paragraph">
+          <p className="paragraph text-center ">
             Thank you for your support, we are pleased to inform you that your
-            account is now ready for use. You can now sign in with your email
-            address.
+            account is now ready for use. <br /> You can now sign in with your
+            email address.
           </p>
         ) : error ? (
-          <p className="paragraph">
-            Please contact us if this error persists. When reaching out, be sure
-            to provide the unique error code so we can quickly identify and
-            address the problem. Your unique error code is:{" "}
+          <p className="paragraph text-center ">
+            Please contact us if this error persists. <br /> When reaching out,
+            be sure to provide the unique error code so we can quickly identify
+            and address the problem. <br /> Your unique error code is:{" "}
             <code className="rounded-sm bg-slate-100 p-1 text-xs">{error}</code>
           </p>
         ) : (
@@ -266,8 +268,8 @@ export const VerifyEmailForm = () => {
             )}
             {error && !showCaptcha && (
               <Button
-                variant="link"
-                className="link text-accent-highlight !font-semibold"
+                variant="ghost"
+                className="text-md !font-semibold"
                 onClick={handleReset}
               >
                 Go back
@@ -275,8 +277,8 @@ export const VerifyEmailForm = () => {
             )}
             {!isResending && resendEnabled && !showCaptcha && (
               <Button
-                variant="link"
-                className="link text-accent-highlight !font-semibold"
+                variant="ghost"
+                className="text-md !font-semibold"
                 onClick={() => setShowCaptcha(true)}
                 disabled={isResending || !resendEnabled}
               >
@@ -293,13 +295,13 @@ export const VerifyEmailForm = () => {
 
             {!resendEnabled && !showCaptcha && (
               <Button
-                variant="link"
-                className="link text-accent-highlight !font-semibold"
+                variant="ghost"
+                className="text-md !font-semibold"
                 disabled={isResending || !resendEnabled}
               >
                 Resend code in
                 <ResendCodeCountdown
-                  initialCount={2}
+                  initialCount={resendCount}
                   onComplete={handleResendComplete}
                 />
               </Button>

@@ -11,7 +11,6 @@ import { Header } from "@/components/auth/header";
 import { Social } from "@/components/auth/social";
 import { BackButton } from "@/components/auth/back-button";
 import { SiClerk } from "react-icons/si";
-import { ButtonVariant } from "@/lib/enums";
 
 interface CardWrapperProps {
   children: React.ReactNode;
@@ -23,7 +22,8 @@ interface CardWrapperProps {
   backButtonLabel?: string;
   backButtonLink: string;
   backButtonHref: string;
-  backVariant?: ButtonVariant;
+  isBackArrowed?: boolean;
+  className?: string | undefined;
   showSocial?: boolean;
   showFooter?: boolean;
 }
@@ -38,7 +38,8 @@ export const CardWrapper = ({
   backButtonLabel,
   backButtonLink,
   backButtonHref,
-  backVariant,
+  isBackArrowed,
+  className,
   showSocial,
   showFooter,
 }: CardWrapperProps) => {
@@ -62,7 +63,8 @@ export const CardWrapper = ({
           label={backButtonLabel}
           link={backButtonLink}
           href={backButtonHref}
-          variant={backVariant}
+          isArrowed={isBackArrowed}
+          className={className}
         />
       </CardFooter>
       {showFooter && (

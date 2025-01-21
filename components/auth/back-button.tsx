@@ -1,28 +1,39 @@
 "use client";
 
 import Link from "next/link";
+import { HiMiniArrowSmallLeft } from "react-icons/hi2";
 import { Button } from "@/components/ui/button";
-import { ButtonVariant } from "@/lib/enums"; // Update the import path as needed
+import { cn } from "@/lib/utils";
 
 interface BackButtonProps {
   label?: string;
   link: string;
   href: string;
-  variant?: ButtonVariant;
+  isArrowed?: boolean;
+  className?: string | undefined;
 }
 
 export const BackButton = ({
   label,
   link,
   href,
-  variant = ButtonVariant.Link,
+  isArrowed = false,
+  className,
 }: BackButtonProps) => {
   return (
     <div className="w-full flex place-content-center">
       <p className="text-muted-foreground text-sm">{label}</p>
-      <Button variant={variant} className="font-normal" size="custom" asChild>
+      <Button variant={"link"} size="custom" asChild>
         <Link href={href}>
-          <span className="link flex items-center gap-1">{link}</span>
+          <span
+            className={cn(
+              "drop-shadow-md link flex items-center gap-1 ",
+              className
+            )}
+          >
+            {isArrowed && <HiMiniArrowSmallLeft />}
+            {link}
+          </span>
         </Link>
       </Button>
     </div>

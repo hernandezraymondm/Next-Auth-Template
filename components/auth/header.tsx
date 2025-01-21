@@ -37,7 +37,9 @@ export const Header = ({
         <div className={icon ? "p-1" : ""}>{icon}</div>
         <p className="font-semibold text-gray-800 text-lg">{label}</p>
         {separator && <Separator className="mt-5" />}
-        <p className="text-muted-foreground text-sm text-center">{subLabel}</p>
+        <div className="text-muted-foreground text-sm text-center">
+          {subLabel}
+        </div>
       </div>
     </div>
   );

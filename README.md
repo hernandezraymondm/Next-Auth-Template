@@ -79,7 +79,6 @@
 ├── lib                                 # Library and utility functions
 │   ├── captcha.ts                      # Utility functions for CAPTCHAs
 │   ├── db.ts                           # Database connection and setup using PrismaClient
-│   ├── enum.ts                         # Utility enum declarations
 │   ├── login-utils.ts                  # Utility functions for login server component
 │   ├── mail.ts                         # Email sending functions
 │   ├── unlock.ts                       # Locked account unlocking functions

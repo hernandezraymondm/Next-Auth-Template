@@ -48,8 +48,9 @@ export const LoginForm = () => {
     },
   });
   const [isResending, setIsResending] = useState(false);
-  const [resendEnabled, setResendEnabled] = useState(true);
+  const [resendEnabled, setResendEnabled] = useState(false);
   const [showCaptcha, setShowCaptcha] = useState(false);
+  const [resendCount, setResendCount] = useState(120);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -84,6 +85,7 @@ export const LoginForm = () => {
         setResendEnabled(false);
         setShowCaptcha(false);
         setError(data.error);
+        setResendCount((prev) => prev * 2);
       })
       .catch(() => {
         setError("Resend link issue encountered!");
@@ -103,7 +105,7 @@ export const LoginForm = () => {
   const handleResendComplete = () => {
     setResendEnabled(true);
   };
-  // error !== "UNVERIFIED";
+
   return (
     <CardWrapper
       cardSize={!isUnverified ? "w-[400px]" : "w-[500px]"}
@@ -114,7 +116,9 @@ export const LoginForm = () => {
         !isUnverified ? "Sign in to VeriSafe" : "Please verify your email"
       }
       headerSubLabel={
-        !isUnverified ? "Welcome back! Please sign in to continue" : ""
+        !isUnverified
+          ? "Welcome back! Please sign in to continue"
+          : "Your email has not been verified yet"
       }
       backButtonLabel={!isUnverified ? "Don't have an account?" : ""}
       backButtonLink={!isUnverified ? "Sign up" : ""}
@@ -247,7 +251,7 @@ export const LoginForm = () => {
             >
               Resend code in
               <ResendCodeCountdown
-                initialCount={120}
+                initialCount={resendCount}
                 onComplete={handleResendComplete}
               />
             </Button>

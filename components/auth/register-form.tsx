@@ -43,8 +43,9 @@ export const RegisterForm = () => {
   });
 
   const [isResending, setIsResending] = useState(false);
-  const [resendEnabled, setResendEnabled] = useState(true);
+  const [resendEnabled, setResendEnabled] = useState(false);
   const [showCaptcha, setShowCaptcha] = useState(false);
+  const [resendCount, setResendCount] = useState(120);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -78,6 +79,7 @@ export const RegisterForm = () => {
         setResendEnabled(false);
         setShowCaptcha(false);
         setError(data.error);
+        setResendCount((prev) => prev * 2);
       })
       .catch(() => {
         setError("Resend link issue encountered!");
@@ -249,7 +251,7 @@ export const RegisterForm = () => {
             >
               Resend code in
               <ResendCodeCountdown
-                initialCount={120}
+                initialCount={resendCount}
                 onComplete={handleResendComplete}
               />
             </Button>
