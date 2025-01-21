@@ -146,6 +146,7 @@ export const VerifyEmailForm = () => {
 
   return (
     <CardWrapper
+      cardSize="w-[500px]"
       icon={
         success ? (
           <CircleCheckBig

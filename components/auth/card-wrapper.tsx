@@ -6,6 +6,7 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { Header } from "@/components/auth/header";
 import { Social } from "@/components/auth/social";
 import { BackButton } from "@/components/auth/back-button";
@@ -14,6 +15,7 @@ import { ButtonVariant } from "@/lib/enums";
 
 interface CardWrapperProps {
   children: React.ReactNode;
+  cardSize: string;
   icon?: React.ReactNode;
   headerLabel: string;
   separator?: boolean;
@@ -28,6 +30,7 @@ interface CardWrapperProps {
 
 export const CardWrapper = ({
   children,
+  cardSize,
   icon,
   headerLabel,
   separator,
@@ -40,7 +43,7 @@ export const CardWrapper = ({
   showFooter,
 }: CardWrapperProps) => {
   return (
-    <Card className="w-[500px] shadow-2xl bg-smoke">
+    <Card className={cn("shadow-2xl bg-smoke", cardSize)}>
       <CardHeader className="card-header">
         <Header
           icon={icon}

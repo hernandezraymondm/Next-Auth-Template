@@ -28,9 +28,12 @@
 ```bash
 ├── .next                               # Build output directory created by Next.js (do not modify)
 ├── actions                             # Directory containing server action files
-│   ├── email-verification.ts           # Logic for handling email verification
 │   ├── login.ts                        # Logic for handling user login
-│   └── register.ts                     # Logic for handling user registration
+│   ├── register.ts                     # Logic for handling user registration
+│   ├── resend-code.ts                  # Logic for resending verification code
+│   ├── resend-link.ts                  # Logic for resending verification link
+│   ├── verify-code.ts                  # Logic for handling code verification
+│   └── verify-email.ts                 # Logic for handling email verification
 ├── app                                 # Main application directory
 │   ├── (protected)                     # Protected pages
 │   │   └── settings
@@ -40,15 +43,17 @@
 │   │       └── {...nextauth}
 │   │           └── route.ts            # NextAuth route handler
 │   ├── auth                            # Authentication pages
-│   │   ├── email-verification
-│   │   │   └── page.tsx                # Email verification page component
 │   │   ├── error
 │   │   │   └── page.tsx                # Custom Auth error page component
 │   │   ├── login
 │   │   │   └── page.tsx                # Login page component
 │   │   ├── register
 │   │   │   └── page.tsx                # Registration page component
+│   │   ├── verify-email
+│   │   │   └── page.tsx                # Email verification page component
 │   │   └── layout.tsx                  # Layout component for authentication pages
+│   ├── contact-us
+│   │   └── page.tsx                    # Contact Us page component
 │   ├── favicon.ico                     # Favicon for the application
 │   ├── globals.css                     # Global styles for the application
 │   ├── layout.tsx                      # Main layout component
@@ -57,13 +62,14 @@
 │   ├── auth                            # Authentication-related components
 │   │   ├── back-button.tsx             # Back button component
 │   │   ├── card-wrapper.tsx            # Card wrapper component
-│   │   ├── email-verification-from.tsx # Email verification form component
+│   │   ├── countdown.tsx               # Countdown timer component
 │   │   ├── error-card.tsx              # Auth error card component
 │   │   ├── header.tsx                  # Header component
 │   │   ├── login-button.tsx            # Login button component
 │   │   ├── login-form.tsx              # Login form component
 │   │   ├── register-form.tsx           # Registration form component
-│   │   └── social.tsx                  # Social login buttons component
+│   │   ├── social.tsx                  # Social login buttons component
+│   │   └── verify-email-from.tsx       # Email verification form component
 │   ├── ui                              # Directory containing ShaDCN UI components
 │   ├── form-error.tsx                  # Form error display component
 │   └── form-success.tsx                # Form success display component
@@ -71,12 +77,14 @@
 │   ├── user.ts                         # Functions to fetch user data from the database
 │   └── verification-token.ts           # Verification token database functions
 ├── lib                                 # Library and utility functions
+│   ├── captcha.ts                      # Utility functions for CAPTCHAs
 │   ├── db.ts                           # Database connection and setup using PrismaClient
+│   ├── enum.ts                         # Utility enum declarations
 │   ├── login-utils.ts                  # Utility functions for login server component
 │   ├── mail.ts                         # Email sending functions
-│   ├── token.ts                        # Token Generation functions
 │   ├── unlock.ts                       # Locked account unlocking functions
-│   └── utils.ts                        # General utility functions
+│   ├── utils.ts                        # General utility functions
+│   └── verification.ts                 # Token Generation functions
 ├── node_modules                        # Directory for npm packages (do not modify)
 ├── prisma                              # Prisma schema and configuration
 │   └── schema.prisma                   # Prisma schema definition
@@ -129,21 +137,28 @@ npm install
 3. Setup .env file
 
 ```bash
-DATABASE_URL=your_database_url
+NEXT_PUBLIC_APP_URL=your_public_app_url
 
+DATABASE_URL=your_database_url
 DIRECT_URL=your_direct_url
 
+# AuthJs/NextAuth
 AUTH_SECRET=your_auth_token
 
+# Google OAuth
 AUTH_GOOGLE_ID=your_auth_google_id
 AUTH_GOOGLE_SECRET=your_auth_google_secret
 
+# Facebook OAuth
 AUTH_FACEBOOK_ID=your_auth_facebook_id
 AUTH_FACEBOOK_SECRET=your_auth_facebook_secret
 
-RESEND_API_KEY=your_resend_api_key
+# Google reCAPTCHA
+NEXT_PUBLIC_RECAPTCHA_SITE_KEY=your_recaptcha_site_key
+RECAPTCHA_SECRET_KEY=your_recaptcha_secret_key
 
-NEXT_PUBLIC_APP_URL=your_public_app_url
+# Resend email service
+RESEND_API_KEY=your_resend_api_key
 ```
 
 4. Run the development server:

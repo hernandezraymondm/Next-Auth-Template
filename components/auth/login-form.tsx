@@ -106,7 +106,10 @@ export const LoginForm = () => {
   // error !== "UNVERIFIED";
   return (
     <CardWrapper
-      icon={isUnverified && <MailWarning size="60" className="text-red-400" />}
+      cardSize={!isUnverified ? "w-[400px]" : "w-[500px]"}
+      icon={
+        isUnverified && <MailWarning size="60" className="text-yellow-400" />
+      }
       headerLabel={
         !isUnverified ? "Sign in to VeriSafe" : "Please verify your email"
       }
@@ -224,7 +227,7 @@ export const LoginForm = () => {
           )}
           {!isResending && resendEnabled && !showCaptcha && (
             <Button
-              className="button"
+              className="button !max-w-[413px]"
               onClick={() => setShowCaptcha(true)}
               disabled={isResending || !resendEnabled}
             >
@@ -238,7 +241,10 @@ export const LoginForm = () => {
             </span>
           )}
           {!resendEnabled && !showCaptcha && (
-            <Button className="button" disabled={isResending || !resendEnabled}>
+            <Button
+              className="button !max-w-[413px]"
+              disabled={isResending || !resendEnabled}
+            >
               Resend code in
               <ResendCodeCountdown
                 initialCount={120}

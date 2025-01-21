@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import * as z from "zod";
-import { MailWarning } from "lucide-react";
+import { RiMailSendFill } from "react-icons/ri";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@/schemas";
@@ -102,7 +102,8 @@ export const RegisterForm = () => {
 
   return (
     <CardWrapper
-      icon={success && <MailWarning size="60" color="#4ade80" />}
+      cardSize={!success ? "w-[400px]" : "w-[500px]"}
+      icon={success && <RiMailSendFill size="60" className="text-sky-400" />}
       headerLabel={
         !success ? "Create your account" : "Please verify your email"
       }
@@ -228,7 +229,7 @@ export const RegisterForm = () => {
           )}
           {!isResending && resendEnabled && !showCaptcha && (
             <Button
-              className="button"
+              className="button !max-w-[383px]"
               onClick={() => setShowCaptcha(true)}
               disabled={isResending || !resendEnabled}
             >
@@ -242,7 +243,10 @@ export const RegisterForm = () => {
             </span>
           )}
           {!resendEnabled && !showCaptcha && (
-            <Button className="button" disabled={isResending || !resendEnabled}>
+            <Button
+              className="button !max-w-[383px]"
+              disabled={isResending || !resendEnabled}
+            >
               Resend code in
               <ResendCodeCountdown
                 initialCount={120}
