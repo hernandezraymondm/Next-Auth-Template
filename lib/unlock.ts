@@ -1,4 +1,4 @@
-import { loginAttempts } from "@/lib/login-utils";
+import { loginAttempts } from "@/lib/auth";
 
 export const unlockAccount = (email: string) => {
   if (loginAttempts.has(email)) {

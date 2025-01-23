@@ -114,7 +114,7 @@ export const getVerificationTokensByEmail = async (
 export const deleteVerificationTokensByEmail = async (email: string) => {
   try {
     await db.verificationToken.deleteMany({ where: { email } });
-    console.log(`All verification tokens for ${email} have been deleted.`);
+    console.log(`Deleted all verification tokens for ${email}.`);
   } catch (error) {
     console.error(`Failed to delete verification tokens for ${email}:`, error);
   }

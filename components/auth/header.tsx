@@ -1,7 +1,7 @@
 import { Poppins } from "next/font/google";
-import { cn } from "@/lib/utils";
-import { EarthLock } from "lucide-react";
 import Link from "next/link";
+import { EarthLock } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { Separator } from "@/components/ui/separator";
 
 const font = Poppins({

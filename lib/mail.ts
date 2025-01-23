@@ -5,10 +5,9 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendVerificationEmail = async (
   email: string,
   token: string,
-  code: string,
-  expires: string
+  code: string
 ) => {
-  const confirmLink = `${process.env.BASE_URL}/auth/verify-email?token=${token}&expires=${expires}&email=${email}`;
+  const confirmLink = `${process.env.BASE_URL}/auth/email-verification?token=${token}`;
 
   // Send verification email
   await resend.emails.send({

@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { HiMiniArrowSmallLeft } from "react-icons/hi2";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 interface BackButtonProps {
   label?: string;
