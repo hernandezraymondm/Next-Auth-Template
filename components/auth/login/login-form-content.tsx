@@ -48,7 +48,7 @@ export const LoginFormContent = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <LoginFormFields form={form} isPending={isPending} />
         <FormAlert message={error || urlError} variant="error" />
         <Button type="submit" disabled={isPending} className="button">
@@ -64,7 +64,7 @@ export const LoginFormContent = ({
             type="button"
             variant="link"
             disabled={isPending}
-            className="font-semibold mt-4 self-center text-accent-highlight"
+            className="font-semibold self-center text-accent-highlight"
           >
             <Fingerprint /> Use passkey instead
           </Button>

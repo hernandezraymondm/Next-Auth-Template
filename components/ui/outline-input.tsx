@@ -3,12 +3,12 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-export interface FloatingInputProps
+export interface OutlineInputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string;
 }
 
-const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputProps>(
+const OutlineInput = React.forwardRef<HTMLInputElement, OutlineInputProps>(
   ({ className, type, label, id, ...props }, ref) => {
     const [isFocused, setIsFocused] = React.useState(false);
     const [hasContent, setHasContent] = React.useState(false);
@@ -56,6 +56,6 @@ const FloatingInput = React.forwardRef<HTMLInputElement, FloatingInputProps>(
     );
   }
 );
-FloatingInput.displayName = "FloatingInput";
+OutlineInput.displayName = "OutlineInput";
 
-export { FloatingInput };
+export { OutlineInput };

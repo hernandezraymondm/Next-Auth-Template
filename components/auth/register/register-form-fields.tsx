@@ -1,15 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { EyeIcon, EyeOffIcon, IdCard, UserPen } from "lucide-react";
 import type { UseFormReturn } from "react-hook-form";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { OutlineInput } from "@/components/ui/outline-input";
 import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 
@@ -35,9 +34,13 @@ export const RegisterFormFields = ({
         name="name"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Name</FormLabel>
             <FormControl>
-              <Input {...field} disabled={isPending} />
+              <div className="relative">
+                <OutlineInput label="Name" {...field} disabled={isPending} />
+                <div className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent flex items-center">
+                  <UserPen className="h-4 w-4 text-gray-500" strokeWidth="3" />
+                </div>
+              </div>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -49,14 +52,18 @@ export const RegisterFormFields = ({
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Email address</FormLabel>
             <FormControl>
-              <Input
-                {...field}
-                disabled={isPending}
-                type="email"
-                placeholder="e.g. name@yourcompany.com"
-              />
+              <div className="relative">
+                <OutlineInput
+                  label="Email address"
+                  {...field}
+                  disabled={isPending}
+                  type="email"
+                />
+                <div className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent flex items-center">
+                  <IdCard className="h-4 w-4 text-gray-500" strokeWidth="3" />
+                </div>
+              </div>
             </FormControl>
             <FormMessage />
           </FormItem>
@@ -68,10 +75,10 @@ export const RegisterFormFields = ({
         name="password"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Password</FormLabel>
             <FormControl>
               <div className="relative">
-                <Input
+                <OutlineInput
+                  label="Password"
                   {...field}
                   disabled={isPending}
                   type={showPassword ? "text" : "password"}
@@ -86,9 +93,15 @@ export const RegisterFormFields = ({
                   disabled={isPending}
                 >
                   {showPassword ? (
-                    <EyeOffIcon className="h-4 w-4 text-gray-500" />
+                    <EyeOffIcon
+                      className="h-4 w-4 text-gray-500"
+                      strokeWidth="3"
+                    />
                   ) : (
-                    <EyeIcon className="h-4 w-4 text-gray-500" />
+                    <EyeIcon
+                      className="h-4 w-4 text-gray-500"
+                      strokeWidth="3"
+                    />
                   )}
                   <span className="sr-only">
                     {showPassword ? "Hide password" : "Show password"}

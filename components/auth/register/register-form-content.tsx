@@ -48,7 +48,7 @@ export const RegisterFormContent = ({
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pb-3">
         <RegisterFormFields form={form} isPending={isPending} />
         <FormAlert message={error} variant="error" />
         <Button type="submit" disabled={isPending} className="button">
