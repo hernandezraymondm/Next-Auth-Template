@@ -91,3 +91,18 @@ export const generateVerificationCode = (): string => {
 export const generateExpirationDate = (hours: number): Date => {
   return new Date(new Date().getTime() + hours * 3600 * 1000);
 };
+
+/**
+ * Converts a date to milliseconds since the Unix Epoch (January 1, 1970).
+ * @param {Date|string} date - The date to convert. It can be a Date object or a string.
+ * @returns {number} The number of milliseconds since the Unix Epoch.
+ */
+export const dateToMilliseconds = (date: Date) => {
+  // If the input is a string, convert it to a Date object
+  const dateObject = typeof date === "string" ? new Date(date) : date;
+  // Check if the dateObject is non-valid Date
+  if (isNaN(dateObject.getTime())) {
+    throw new Error("Invalid date format");
+  }
+  return dateObject.getTime();
+};
