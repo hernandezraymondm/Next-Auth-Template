@@ -23,18 +23,15 @@ export const resendCode = async (
       return { error: "Code generation failed!" };
     }
 
-    const expiration = verificationToken.expires.getTime().toString();
-
     // Send the email
     await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token,
-      verificationToken.code,
-      expiration
+      verificationToken.code
     );
 
     return { success: true };
   } catch {
-    return { error: "Invalid verification link!" };
+    return { error: "Unexpected error occurred!" };
   }
 };

@@ -19,18 +19,15 @@ export const resendLink = async (email: string, captchaToken: string) => {
       return { error: "Link generation failed!" };
     }
 
-    const expiration = verificationToken.expires.getTime().toString();
-
     // Send the email
     await sendVerificationEmail(
       verificationToken.email,
       verificationToken.token,
-      verificationToken.code,
-      expiration
+      verificationToken.code
     );
 
     return { success: true };
   } catch {
-    return { error: "Error resending link!" };
+    return { error: "Unexpected error occurred!" };
   }
 };
