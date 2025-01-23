@@ -1,7 +1,9 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 interface TokenExpirationCountdownProps {
-  expiration: number; // milliseconds
+  expiration: number | undefined; // milliseconds
 }
 
 export const TokenExpirationCountdown = ({
@@ -10,6 +12,8 @@ export const TokenExpirationCountdown = ({
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
+    if (!expiration) return;
+
     const calculateTimeLeft = () => {
       const difference = expiration - Date.now(); // using Date.now() for current time in ms
       if (difference > 0) {
@@ -49,7 +53,7 @@ export const TokenExpirationCountdown = ({
 };
 
 interface ResendCodeCountdownProps {
-  initialCount: number;
+  initialCount: number; // seconds
   onComplete: () => void;
 }
 
