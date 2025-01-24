@@ -1,14 +1,37 @@
+import Verification from "@/components/emails/verification";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-// TODO: Make a better template
+const appName = process.env.NEXT_PUBLIC_APP_NAME;
+const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL;
+
+export const sendVerificationEmail = async (
+  email: string,
+  token: string,
+  code: string
+) => {
+  const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/email-verification?token=${token}`;
+
+  // Send verification email
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Verify Your Email",
+    react: Verification({
+      verificationLink,
+      verificationCode: code,
+      appName,
+      supportEmail,
+    }),
+  });
+};
 
 export const sendPasswordResetEmail = async (
   email: string,
   token: string,
   code: string
 ) => {
-  const resetLink = `${process.env.BASE_URL}/auth/new-password?token=${token}`;
+  const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/new-password?token=${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",
@@ -18,26 +41,6 @@ export const sendPasswordResetEmail = async (
       <p><strong>Someone requested that the password be reset for the following account: </strong></p>
       <p>To reset your password, visit the following address:</p>
       <button><a href="${resetLink}">Set a new password</a></button>
-      <p>Then enter this 6-digit code: <strong>${code}</strong></p>
-    `,
-  });
-};
-
-export const sendVerificationEmail = async (
-  email: string,
-  token: string,
-  code: string
-) => {
-  const confirmLink = `${process.env.BASE_URL}/auth/email-verification?token=${token}`;
-
-  // Send verification email
-  await resend.emails.send({
-    from: "onboarding@resend.dev",
-    to: email,
-    subject: "Verify your email",
-    html: `
-      <p>Keep your account secure by verifying your email address.</p>
-      <p>Click the link to verify: <a href="${confirmLink}">Verify Email</a></p>
       <p>Then enter this 6-digit code: <strong>${code}</strong></p>
     `,
   });
