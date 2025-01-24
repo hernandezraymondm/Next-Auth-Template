@@ -2,7 +2,7 @@
 
 import { verifyReCAPTCHA } from "@/lib/captcha";
 import { sendVerificationEmail } from "@/lib/mail";
-import { generateVerificationLink } from "@/lib/verification";
+import { generateVerificationLink } from "@/lib/token";
 
 export const resendLink = async (email: string, captchaToken: string) => {
   try {
@@ -26,7 +26,7 @@ export const resendLink = async (email: string, captchaToken: string) => {
       verificationToken.code
     );
 
-    return { success: true };
+    return { success: true, message: "Link has been reset!" };
   } catch {
     return { error: "Unexpected error occurred!" };
   }

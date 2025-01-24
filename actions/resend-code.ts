@@ -2,7 +2,7 @@
 
 import { verifyReCAPTCHA } from "@/lib/captcha";
 import { sendVerificationEmail } from "@/lib/mail";
-import { updateVerificationCode } from "@/lib/verification";
+import { updateVerificationCode } from "@/lib/token";
 
 export const resendCode = async (
   email: string,
@@ -30,7 +30,7 @@ export const resendCode = async (
       verificationToken.code
     );
 
-    return { success: true };
+    return { success: true, message: "Code has been reset!" };
   } catch {
     return { error: "Unexpected error occurred!" };
   }

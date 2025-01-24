@@ -42,5 +42,5 @@ export const verifyOtp = async (token: string, code: string) => {
     where: { id: verificationRecord.id },
   });
 
-  return { success: true };
+  return { success: true, message: "Email verified" };
 };

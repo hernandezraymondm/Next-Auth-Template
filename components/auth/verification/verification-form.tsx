@@ -53,13 +53,15 @@ export const VerificationForm = () => {
     e.preventDefault();
     setError(undefined);
     setIsVerifying(true);
-    const result = await verifyOtp(token, otp);
-    if (result.success) {
-      setSuccess(true);
-    } else {
-      setError(result.error);
-    }
-    setIsVerifying(false);
+    setTimeout(async () => {
+      const result = await verifyOtp(token, otp);
+      if (result.success) {
+        setSuccess(true);
+      } else {
+        setError(result.error);
+      }
+      setIsVerifying(false);
+    }, 2000);
   };
 
   if (isLoading) {
@@ -77,7 +79,7 @@ export const VerificationForm = () => {
   return (
     <CardWrapper
       size="md"
-      icon={<IoIosMail size="60" color="#6e4fee" />}
+      icon={<IoIosMail size="60" color="#8b70f5" />}
       headerLabel={
         isVerifying ? "Verifying your Information" : "Verify your Email Address"
       }
@@ -95,7 +97,7 @@ export const VerificationForm = () => {
       <form onSubmit={handleSubmit} className="space-y-5">
         {isVerifying ? (
           <div className="mb-10">
-            <Loader size="lg" />
+            <Loader size="lg" color="#8b70f5" />
           </div>
         ) : (
           <div className="text-center">
@@ -110,11 +112,7 @@ export const VerificationForm = () => {
         )}
         <OtpInput value={otp} onChange={setOtp} loading={isVerifying} />
         {error && <FormAlert message={error} variant="error" />}
-        <Button
-          type="submit"
-          disabled={otp.length !== 6 || isVerifying}
-          className="button"
-        >
+        <Button type="submit" disabled={isVerifying} className="button">
           Verify Email
         </Button>
         <ResendCodeSection email={email} token={token} setError={setError} />
