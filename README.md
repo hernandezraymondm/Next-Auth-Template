@@ -17,11 +17,11 @@
 
 | Technology 1 | Technology 2 | Technology 3    | Technology 4      |
 | ------------ | ------------ | --------------- | ----------------- |
-| Auth.js      | Resend       | ShadcnUI        | Clerk             |
+| Auth.js      | Resend       | React Email     | Clerk             |
 | WebAuthn     | PostgreSQL   | Prisma          | Bcrypt            |
 | JWT          | TailwindCSS  | React Hook Form | Zod               |
 | Next.js      | Typescript   | Node.js         | Middleware config |
-| Crypto       | reCAPTCHA    |                 |                   |
+| Crypto       | reCAPTCHA    | ShadcnUI        |                   |
 
 ### Project Structure
 
