@@ -14,7 +14,7 @@ export const VerificationError = ({ error }: VerificationErrorProps) => (
     backButtonLink="Back to login"
     backButtonHref="/auth/login"
     isBackArrowed={true}
-    className="font-semibold !text-gray-600"
+    className="!text-gray-600"
   >
     <div className="w-full flex flex-col place-items-center gap-4">
       <p className="paragraph text-center">

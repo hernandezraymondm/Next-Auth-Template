@@ -17,12 +17,12 @@ const loaderVariants = cva("flex justify-center items-center", {
   },
 });
 
-const lineVariants = cva("transform rotate-45", {
+const lineVariants = cva("transform rotate-45 rounded-full", {
   variants: {
     size: {
       sm: "w-[2px] h-3",
       md: "w-1 h-6",
-      lg: "w-[4.5px] h-7",
+      lg: "w-[4px] h-7",
     },
   },
   defaultVariants: {

@@ -31,7 +31,7 @@ export const ErrorCard = () => {
       backButtonLink="Back to login"
       backButtonHref="/auth/login"
       isBackArrowed={true}
-      className="font-semibold !text-gray-600"
+      className="!text-gray-600"
     >
       <div className="w-full flex flex-col place-items-center gap-4">
         <div className="font-normal text-gray-700 dark:text-gray-400">

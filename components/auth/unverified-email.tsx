@@ -61,7 +61,7 @@ export const UnverifiedEmail = ({ email, message }: UnverifiedEmailProps) => {
         </Button>
       )}
       {isLoading && !showCaptcha && (
-        <span className="flex gap-4 link text-sm text-accent-highlight/50 !font-semibold">
+        <span className="flex gap-4 link text-sm text-accent/50 !font-semibold">
           Sending
           <Loader size="sm" />
         </span>
@@ -82,7 +82,7 @@ export const UnverifiedEmail = ({ email, message }: UnverifiedEmailProps) => {
       <p className="text-muted-foreground text-sm inline">
         Need help?
         <Button variant="link" className="font-normal" size="custom" asChild>
-          <Link href="/contact-us" className="!text-accent-highlight underline">
+          <Link href="/contact-us" className="!text-accent underline">
             Contact Us
           </Link>
         </Button>

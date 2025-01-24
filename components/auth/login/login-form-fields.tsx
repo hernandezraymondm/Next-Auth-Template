@@ -41,7 +41,7 @@ export const LoginFormFields = ({ isPending, form }: LoginFormFieldsProps) => {
                   type="email"
                 />
                 <div className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent flex items-center">
-                  <IdCard className="h-4 w-4 text-gray-500" strokeWidth="3" />
+                  <IdCard className="h-4 w-4 text-gray-600" strokeWidth="3" />
                 </div>
               </div>
             </FormControl>
@@ -74,12 +74,12 @@ export const LoginFormFields = ({ isPending, form }: LoginFormFieldsProps) => {
                 >
                   {showPassword ? (
                     <EyeOffIcon
-                      className="h-4 w-4 text-gray-500"
+                      className="h-4 w-4 text-gray-600"
                       strokeWidth="3"
                     />
                   ) : (
                     <EyeIcon
-                      className="h-4 w-4 text-gray-500"
+                      className="h-4 w-4 text-gray-600"
                       strokeWidth="3"
                     />
                   )}
@@ -89,6 +89,7 @@ export const LoginFormFields = ({ isPending, form }: LoginFormFieldsProps) => {
                 </Button>
               </div>
             </FormControl>
+            <FormMessage />
           </FormItem>
         )}
       />

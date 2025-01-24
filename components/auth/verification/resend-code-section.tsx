@@ -58,7 +58,7 @@ export const ResendCodeSection = ({
       )}
 
       {isLoading && !showCaptcha && (
-        <span className="flex gap-4 link text-sm text-accent-highlight/50 !font-semibold">
+        <span className="flex gap-4 link text-sm text-accent/50 !font-semibold">
           <Loader size="sm" />
         </span>
       )}

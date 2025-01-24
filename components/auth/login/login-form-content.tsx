@@ -64,7 +64,7 @@ export const LoginFormContent = ({
             type="button"
             variant="link"
             disabled={isPending}
-            className="font-semibold self-center text-accent-highlight"
+            className="font-semibold self-center text-accent"
           >
             <Fingerprint /> Use passkey instead
           </Button>
