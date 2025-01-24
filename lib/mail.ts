@@ -2,6 +2,27 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 // TODO: Make a better template
+
+export const sendPasswordResetEmail = async (
+  email: string,
+  token: string,
+  code: string
+) => {
+  const resetLink = `${process.env.BASE_URL}/auth/new-password?token=${token}`;
+
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Reset your password",
+    html: `
+      <p><strong>Someone requested that the password be reset for the following account: </strong></p>
+      <p>To reset your password, visit the following address:</p>
+      <button><a href="${resetLink}">Set a new password</a></button>
+      <p>Then enter this 6-digit code: <strong>${code}</strong></p>
+    `,
+  });
+};
+
 export const sendVerificationEmail = async (
   email: string,
   token: string,
