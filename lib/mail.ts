@@ -10,7 +10,7 @@ export const sendVerificationEmail = async (
   token: string,
   code: string
 ) => {
-  const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/email-verification?token=${token}`;
+  const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/email-verification/${token}`;
 
   // Send verification email
   await resend.emails.send({
@@ -31,7 +31,7 @@ export const sendPasswordResetEmail = async (
   token: string,
   code: string
 ) => {
-  const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/new-password?token=${token}`;
+  const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/new-password/${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",

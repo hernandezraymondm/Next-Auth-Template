@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useSearchParams } from "next/navigation";
 import { IoIosMail } from "react-icons/io";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
@@ -15,10 +14,11 @@ import { VerificationSuccess } from "@/components/auth/verification/verification
 import { verifyEmailToken } from "@/actions/verify-email-token";
 import { verifyOtp } from "@/actions/verify-otp";
 
-export const VerificationForm = () => {
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token") || "";
+interface VerificationFormProps {
+  token: string;
+}
 
+export const VerificationForm = ({ token }: VerificationFormProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isVerifying, setIsVerifying] = useState(false);
   const [isTokenValid, setIsTokenValid] = useState(false);
