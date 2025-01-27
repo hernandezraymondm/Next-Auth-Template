@@ -14,10 +14,15 @@ import * as React from "react";
 
 interface ResetEmailProps {
   resetLink?: string;
+  resetCode?: string;
   supportEmail?: string;
 }
 
-export const ResetEmail = ({ resetLink, supportEmail }: ResetEmailProps) => {
+export const ResetEmail = ({
+  resetLink,
+  resetCode,
+  supportEmail,
+}: ResetEmailProps) => {
   return (
     <Html>
       <Head />
@@ -35,8 +40,13 @@ export const ResetEmail = ({ resetLink, supportEmail }: ResetEmailProps) => {
             <Text style={heading}>Reset your Password</Text>
             <Text style={text}>
               We&apos;re sending you this email because you requested a password
-              reset. Click the button below to set a new password:
+              reset.
             </Text>
+            <Text style={bold}>Here is your 6-digit code:</Text>
+            <Section style={codeContainer}>
+              <Text style={code}> {resetCode}</Text>
+            </Section>
+            <Text style={bold}>Please copy it and click the button below.</Text>
             <Button style={button} href={resetLink}>
               Set a new password
             </Button>
@@ -63,6 +73,7 @@ export const ResetEmail = ({ resetLink, supportEmail }: ResetEmailProps) => {
 };
 
 ResetEmail.PreviewProps = {
+  resetCode: "144833",
   resetLink: "https://example.com/a3f8b58a-7d3a-49b2-ba3b-0d5211bba0ad",
   supportEmail: "support@verisafe.com",
 } as ResetEmailProps;
@@ -95,6 +106,30 @@ const button = {
   verticalAlign: "middle",
 };
 
+const codeContainer = {
+  background: "rgba(0,0,0,.05)",
+  borderRadius: "4px",
+  margin: "16px auto 14px",
+  verticalAlign: "middle",
+  width: "280px",
+};
+
+const code = {
+  color: "#6e4fee",
+  display: "inline-block",
+  fontFamily:
+    "'Open Sans', 'HelveticaNeue-Light', 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif",
+  fontSize: "32px",
+  fontWeight: 700,
+  letterSpacing: "6px",
+  lineHeight: "40px",
+  paddingBottom: "8px",
+  paddingTop: "8px",
+  margin: "0 auto",
+  width: "100%",
+  textAlign: "center" as const,
+};
+
 const anchor = {
   textDecoration: "underline",
 };
@@ -122,6 +157,13 @@ const text = {
   fontWeight: "300",
   color: "#404040",
   lineHeight: "26px",
+};
+
+const bold = {
+  ...text,
+  margin: 0,
+  fontWeight: "bold",
+  textAlign: "center" as const,
 };
 
 const footer = {

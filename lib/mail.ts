@@ -27,7 +27,11 @@ export const sendVerificationEmail = async (
   });
 };
 
-export const sendPasswordResetEmail = async (email: string, token: string) => {
+export const sendPasswordResetEmail = async (
+  email: string,
+  token: string,
+  code: string
+) => {
   const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset/${token}`;
 
   await resend.emails.send({
@@ -36,6 +40,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
     subject: "Reset your password",
     react: ResetEmail({
       resetLink,
+      resetCode: code,
       supportEmail,
     }),
   });
