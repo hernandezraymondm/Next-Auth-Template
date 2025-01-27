@@ -50,7 +50,6 @@ export const LoginForm = () => {
       backButtonLink="Sign up"
       backButtonHref="/auth/register"
       showSocial
-      showFooter
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">

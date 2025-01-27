@@ -4,20 +4,20 @@
 
 ### Key Features
 
-| Feature 1                        | Feature 2                           | Feature 3                         | Feature 4                     |
-| -------------------------------- | ----------------------------------- | --------------------------------- | ----------------------------- |
-| Next-auth v5 (Auth.js)           | WebAuthn Passkey                    | Next.js 15 with server actions    | Credentials Provider          |
-| OAuth Provider                   | Forgot password functionality       | Email verification                | Two-factor verification (2FA) |
-| User roles                       | Login component                     | Register component                | Forgot password component     |
-| Verification component           | Error component                     | Login button                      | Logout button                 |
-| Role Gate                        | Protect Server Actions              | Protect API Routes                | Change email in Settings page |
-| Change password in Settings page | Enable/disable 2FA in Settings page | Change user role in Settings page | OTP Verification              |
+| Feature 1                        | Feature 2                           | Feature 3                         | Feature 4                      |
+| -------------------------------- | ----------------------------------- | --------------------------------- | ------------------------------ |
+| Next-auth v5 (Auth.js)           | WebAuthn Passkey                    | Next.js v15 with server actions   | Credentials Provider           |
+| OAuth Provider                   | Forgot password functionality       | Email verification                | Two-factor authentication(2FA) |
+| User roles                       | Login component                     | Register component                | Forgot password component      |
+| Verification component           | Error component                     | Login button                      | Logout button                  |
+| Role Gate                        | Protect Server Actions              | Protect API Routes                | Change email in Settings page  |
+| Change password in Settings page | Enable/disable 2FA in Settings page | Change user role in Settings page | OTP Verification               |
 
 ### Technologies
 
 | Technology 1 | Technology 2 | Technology 3    | Technology 4      |
 | ------------ | ------------ | --------------- | ----------------- |
-| Auth.js      | Resend       | React Email     | Clerk             |
+| Auth.js      | Resend       | React Email     | otpauth TOTP      |
 | WebAuthn     | PostgreSQL   | Prisma          | Bcrypt            |
 | JWT          | TailwindCSS  | React Hook Form | Zod               |
 | Next.js      | Typescript   | Node.js         | Middleware config |
