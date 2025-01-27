@@ -31,7 +31,7 @@ export const Social = () => {
           disabled={loadingProvider !== null}
         >
           {loadingProvider === "google" ? (
-            <Loader size="sm" className="mr-2" />
+            <Loader size="sm" color="#6e4fee" className="mr-2" />
           ) : (
             <FcGoogle className="h-5 w-5 mr-2" />
           )}
@@ -44,7 +44,7 @@ export const Social = () => {
           disabled={loadingProvider !== null}
         >
           {loadingProvider === "facebook" ? (
-            <Loader size="sm" className="mr-2" />
+            <Loader size="sm" color="#6e4fee" className="mr-2" />
           ) : (
             <SiFacebook className="h-5 w-5 mr-2" color="#0866ff" />
           )}

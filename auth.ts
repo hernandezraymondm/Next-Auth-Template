@@ -3,7 +3,6 @@ import authConfig from "@/auth.config";
 import { db } from "@/lib/db";
 import { Adapter } from "next-auth/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import { getUserById } from "@/data/user";
 import { delayWithHash } from "@/lib/utils";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -43,20 +42,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return false;
         }
 
-        const existingUser = await getUserById(user.id);
-        if (!existingUser) {
-          console.warn(`Sign-in attempt with non-existent user ID: ${user.id}`);
+        if (!user.emailVerified) {
+          console.warn(`Sign-in blocked for unverified email: ${user.email}`);
           await delayWithHash();
           return false;
         }
 
-        if (!existingUser.emailVerified) {
-          console.warn(
-            `Sign-in blocked for unverified email: ${existingUser.email}`
-          );
-          await delayWithHash();
-          return false;
-        }
+        console.log(user);
 
         // TODO: Add optional 2FA/MFA check here
 

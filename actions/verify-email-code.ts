@@ -4,41 +4,43 @@ import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { getVerificationTokenByTokenAndCode } from "@/data/verification-token";
 
-export const verifyCode = async (token: string, code: string) => {
+export const verifyEmailCode = async (token: string, code: string) => {
   const verificationRecord = await getVerificationTokenByTokenAndCode(
     token,
     code
   );
 
   if (!verificationRecord) {
-    return { error: "Invalid code!" };
+    return { error: "Invalid 6-digit code" };
   }
 
   const hasExpired = new Date(verificationRecord.expires) < new Date();
 
   if (hasExpired) {
-    return { error: "Verification code has expired!" };
+    return { error: "Verification code has expired" };
   }
 
   const existingUser = await getUserByEmail(verificationRecord.email);
 
-  if (!existingUser || existingUser.emailVerified) {
-    // If email does not exist
-    return { error: "Unexpected error occurred!" };
+  if (!existingUser) {
+    return { error: "User not found" };
+  }
+
+  if (existingUser.emailVerified) {
+    return { error: "Email already verified" };
   }
 
   await db.user.update({
     where: { id: existingUser.id },
     data: {
       emailVerified: new Date(),
-      email: verificationRecord.email, // for updating email
+      email: verificationRecord.email,
     },
   });
 
-  // Delete verification record after successful verification
   await db.verificationToken.delete({
     where: { id: verificationRecord.id },
   });
 
-  return { success: "Your email has been verified!" };
+  return { success: true, message: "Email verified" };
 };

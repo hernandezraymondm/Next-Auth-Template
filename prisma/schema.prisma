@@ -95,3 +95,14 @@ model VerificationToken {
   @@unique([email, token])
   @@map("verification_tokens")
 }
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  code    String   @map("reset_code")
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("password_reset_token")
+}

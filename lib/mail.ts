@@ -1,25 +1,48 @@
+import VerificationEmail from "@/components/emails/email-verification";
+import ResetEmail from "@/components/emails/reset-password";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-// TODO: Make a better template
+const appName = process.env.NEXT_PUBLIC_APP_NAME;
+const supportEmail = process.env.NEXT_PUBLIC_SUPPORT_EMAIL;
+
 export const sendVerificationEmail = async (
   email: string,
   token: string,
-  code: string,
-  expires: string
+  code: string
 ) => {
-  const confirmLink = `${process.env.BASE_URL}/auth/verify-email?token=${token}&expires=${expires}&email=${email}`;
+  const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/verification/${token}`;
 
   // Send verification email
   await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
-    subject: "Verify your email",
-    html: `
-      <p>Keep your account secure by verifying your email address.</p>
-      <p>Click the link to verify: <a href="${confirmLink}">Verify Email</a></p>
-      <p>Then enter this 6-digit code: <strong>${code}</strong></p>
-    `,
+    subject: "Verify Your Email",
+    react: VerificationEmail({
+      verificationLink,
+      verificationCode: code,
+      appName,
+      supportEmail,
+    }),
+  });
+};
+
+export const sendPasswordResetEmail = async (
+  email: string,
+  token: string,
+  code: string
+) => {
+  const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset/${token}`;
+
+  await resend.emails.send({
+    from: "onboarding@resend.dev",
+    to: email,
+    subject: "Reset your password",
+    react: ResetEmail({
+      resetLink,
+      resetCode: code,
+      supportEmail,
+    }),
   });
 };
 

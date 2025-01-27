@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
-import { generateVerificationLink } from "@/lib/verification";
 import { sendLockoutEmailAlert, sendVerificationEmail } from "@/lib/mail";
+import { getVerificationTokenByEmail } from "@/data/verification-token";
+import { generateVerificationToken } from "./token";
 
 export const loginAttempts = new Map<
   string,
@@ -42,7 +43,7 @@ export const handleFailedLogin = async (
 
       // Send lockout email alert only if not sent before (within 24 hours)
       if (!userAttempts.emailSent) {
-        console.log("Lockout Email Sent!");
+        console.log(`Lockout Email Sent to ${email}!`);
 
         await sendLockoutEmailAlert(email);
         userAttempts.emailSent = true;
@@ -58,6 +59,26 @@ export const handleFailedLogin = async (
   return { success: true };
 };
 
+export const handleUnverifiedEmail = async (email: string) => {
+  const verificationToken = await getVerificationTokenByEmail(email);
+
+  if (!verificationToken) {
+    // Generate verification token
+    const newVerificationToken = await generateVerificationToken(email);
+
+    // Send verification email
+    await sendVerificationEmail(
+      newVerificationToken.email,
+      newVerificationToken.token,
+      newVerificationToken.code
+    );
+
+    return newVerificationToken;
+  }
+
+  return verificationToken;
+};
+
 // Check if account is locked
 export const checkLockoutStatus = (email: string) => {
   const userAttempts = loginAttempts.get(email);
@@ -69,32 +90,6 @@ export const checkLockoutStatus = (email: string) => {
   }
 
   return { locked: false, remainingTime: 0 };
-};
-
-// Check if the user's email is verified
-export const checkEmailVerification = async (
-  email: string,
-  existingUser: any
-) => {
-  if (!existingUser.emailVerified) {
-    // Generate verification token
-    const verificationToken = await generateVerificationLink(email);
-    // convert to milliseconds
-    const expiration = verificationToken.expires.getTime();
-    // Send verification email
-    await sendVerificationEmail(
-      verificationToken.email,
-      verificationToken.token,
-      verificationToken.code,
-      expiration.toString()
-    );
-    return {
-      error: "UNVERIFIED",
-    };
-  }
-  return {
-    error: `Unexpected error occurred!`,
-  };
 };
 
 // Cleanup Task: Remove old entries every 10 minutes

@@ -1,7 +1,9 @@
+"use client";
+
 import { useState, useEffect } from "react";
 
 interface TokenExpirationCountdownProps {
-  expiration: number; // milliseconds
+  expiration: number | undefined; // milliseconds
 }
 
 export const TokenExpirationCountdown = ({
@@ -10,6 +12,8 @@ export const TokenExpirationCountdown = ({
   const [timeLeft, setTimeLeft] = useState(0);
 
   useEffect(() => {
+    if (!expiration) return;
+
     const calculateTimeLeft = () => {
       const difference = expiration - Date.now(); // using Date.now() for current time in ms
       if (difference > 0) {
@@ -42,14 +46,14 @@ export const TokenExpirationCountdown = ({
   };
 
   return (
-    <span className="font-mono text-lg text-accent-highlight ml-2">
+    <span className="font-mono text-lg text-accent ml-2">
       {formattedTime()}
     </span>
   );
 };
 
 interface ResendCodeCountdownProps {
-  initialCount: number;
+  initialCount: number; // seconds
   onComplete: () => void;
 }
 
@@ -57,29 +61,56 @@ export const ResendCodeCountdown = ({
   initialCount,
   onComplete,
 }: ResendCodeCountdownProps) => {
-  const [timeLeft, setTimeLeft] = useState(initialCount);
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const storedEndTime = localStorage.getItem("resendCodeEndTime");
+    const now = Math.floor(Date.now() / 1000);
 
-  useEffect(() => {
-    if (timeLeft <= 0) {
-      onComplete();
-      return;
+    if (storedEndTime) {
+      const remainingTime = parseInt(storedEndTime) - now;
+      return remainingTime > 0 ? remainingTime : initialCount;
     }
 
-    const timer = setInterval(() => {
-      setTimeLeft((prev) => prev - 1);
-    }, 1000);
+    return initialCount;
+  });
+
+  useEffect(() => {
+    const storedEndTime = localStorage.getItem("resendCodeEndTime");
+    const now = Math.floor(Date.now() / 1000);
+    let endTime: number;
+
+    if (storedEndTime) {
+      endTime = parseInt(storedEndTime);
+    } else {
+      endTime = now + initialCount;
+      localStorage.setItem("resendCodeEndTime", endTime.toString());
+    }
+
+    const updateCountdown = () => {
+      const remainingTime = Math.max(
+        endTime - Math.floor(Date.now() / 1000),
+        0
+      );
+      setTimeLeft(remainingTime);
+
+      if (remainingTime === 0) {
+        localStorage.removeItem("resendCodeEndTime");
+        onComplete();
+      }
+    };
+
+    updateCountdown(); // Call immediately to sync with stored time
+    const timer = setInterval(updateCountdown, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, onComplete]);
+  }, [initialCount, onComplete]);
 
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
 
-  const formattedTime = () => {
-    return `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
-  };
-
-  return <p>{formattedTime()}</p>;
+  return (
+    <p>
+      {minutes.toString().padStart(2, "0")}:
+      {seconds.toString().padStart(2, "0")}
+    </p>
+  );
 };

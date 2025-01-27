@@ -23,9 +23,8 @@ body,
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-highlight: 252 82% 62%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 252, 82%, 62%;
+    --accent-foreground: 252 72% 70%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
     --smoke: 227 86% 92%;
@@ -107,7 +106,7 @@ body,
   @apply w-full flex place-content-center gap-1 text-muted-foreground text-sm font-semibold;
 }
 .link {
-  @apply text-gray-800 hover:text-accent-highlight font-medium drop-shadow-lg;
+  @apply text-gray-800 hover:text-accent hover:drop-shadow-md;
 }
 .button {
   @apply w-full font-semibold drop-shadow-md hover:text-violet-400;
