@@ -1,4 +1,5 @@
-import Verification from "@/components/emails/verification";
+import VerificationEmail from "@/components/emails/email-verification";
+import ResetEmail from "@/components/emails/reset-password";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -10,14 +11,14 @@ export const sendVerificationEmail = async (
   token: string,
   code: string
 ) => {
-  const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/email-verification/${token}`;
+  const verificationLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/verification/${token}`;
 
   // Send verification email
   await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
     subject: "Verify Your Email",
-    react: Verification({
+    react: VerificationEmail({
       verificationLink,
       verificationCode: code,
       appName,
@@ -26,23 +27,17 @@ export const sendVerificationEmail = async (
   });
 };
 
-export const sendPasswordResetEmail = async (
-  email: string,
-  token: string,
-  code: string
-) => {
-  const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/new-password/${token}`;
+export const sendPasswordResetEmail = async (email: string, token: string) => {
+  const resetLink = `${process.env.NEXT_PUBLIC_APP_URL}/auth/reset/${token}`;
 
   await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
     subject: "Reset your password",
-    html: `
-      <p><strong>Someone requested that the password be reset for the following account: </strong></p>
-      <p>To reset your password, visit the following address:</p>
-      <button><a href="${resetLink}">Set a new password</a></button>
-      <p>Then enter this 6-digit code: <strong>${code}</strong></p>
-    `,
+    react: ResetEmail({
+      resetLink,
+      supportEmail,
+    }),
   });
 };
 
