@@ -59,6 +59,7 @@ export const handleFailedLogin = async (
   return { success: true };
 };
 
+// Handle unverified email accounts
 export const handleUnverifiedEmail = async (email: string) => {
   const verificationToken = await getVerificationTokenByEmail(email);
 
