@@ -12,7 +12,7 @@ import { OtpInput } from "@/components/auth/verification/otp-input";
 import { VerificationError } from "@/components/auth/verification/verification-error";
 import { VerificationSuccess } from "@/components/auth/verification/verification-success";
 import { verifyEmailToken } from "@/actions/verify-email-token";
-import { verifyOtp } from "@/actions/verify-otp";
+import { verifyCode } from "@/actions/verify-code";
 
 interface VerificationFormProps {
   token: string;
@@ -54,7 +54,7 @@ export const VerificationForm = ({ token }: VerificationFormProps) => {
     setError(undefined);
     setIsVerifying(true);
     setTimeout(async () => {
-      const result = await verifyOtp(token, otp);
+      const result = await verifyCode(token, otp);
       if (result.success) {
         setSuccess(true);
       } else {

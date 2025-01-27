@@ -1,11 +1,20 @@
 "use client";
 
-import { useState } from "react";
-import { MailWarning } from "lucide-react";
+import * as z from "zod";
 import { useSearchParams } from "next/navigation";
-import { LoginFormContent } from "@/components/auth/login/login-form-content";
+import { useState, useTransition } from "react";
+import { Form } from "@/components/ui/form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FaCaretRight } from "react-icons/fa6";
+import { Fingerprint } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { LoginSchema } from "@/schemas";
+import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
+import { FormAlert } from "@/components/form-alert";
+import { LoginFormFields } from "@/components/auth/login/login-form-fields";
+import { login } from "@/actions/login";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import { UnverifiedEmail } from "@/components/auth/unverified-email";
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
@@ -13,23 +22,24 @@ export const LoginForm = () => {
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "This email is already associated with a different provider. Please use a different email or sign in with the correct provider."
       : "";
-  const [isUnverified, setIsUnverified] = useState<boolean | undefined>();
-  const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
+  const form = useForm({
+    resolver: zodResolver(LoginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-  if (isUnverified) {
-    return (
-      <CardWrapper
-        size="md"
-        icon={<MailWarning size="60" className="text-yellow-400" />}
-        headerLabel="Please verify it's you"
-        headerSubLabel="Get a verification link"
-        backButtonLink=""
-        backButtonHref="/auth/login"
-      >
-        <UnverifiedEmail email={email} message="We will send an email to" />
-      </CardWrapper>
-    );
-  }
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    startTransition(() => {
+      login(values).then((data) => {
+        setError(data?.error);
+      });
+    });
+  };
 
   return (
     <CardWrapper
@@ -42,11 +52,30 @@ export const LoginForm = () => {
       showSocial
       showFooter
     >
-      <LoginFormContent
-        urlError={urlError}
-        setIsUnverified={setIsUnverified}
-        setEmail={setEmail}
-      />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <LoginFormFields form={form} isPending={isPending} />
+          <FormAlert message={error || urlError} variant="error" />
+          <Button type="submit" disabled={isPending} className="button">
+            Continue
+            {isPending ? (
+              <Loader size="sm" color="white" className="ml-2" />
+            ) : (
+              <FaCaretRight />
+            )}
+          </Button>
+          <div className="w-full flex place-content-center">
+            <Button
+              type="button"
+              variant="link"
+              disabled={isPending}
+              className="font-semibold self-center text-accent"
+            >
+              <Fingerprint /> Use passkey instead
+            </Button>
+          </div>
+        </form>
+      </Form>
     </CardWrapper>
   );
 };

@@ -1,31 +1,44 @@
 "use client";
 
-import { useState } from "react";
-import { RiMailSendFill } from "react-icons/ri";
-import { RegisterFormContent } from "@/components/auth/register/register-form-content";
+import * as z from "zod";
+import { useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FaCaretRight } from "react-icons/fa6";
+import { RegisterSchema } from "@/schemas";
+import { register } from "@/actions/register";
+import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
+import { Form } from "@/components/ui/form";
+import { FormAlert } from "@/components/form-alert";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import { UnverifiedEmail } from "@/components/auth/unverified-email";
+import { RegisterFormFields } from "@/components/auth/register/register-form-fields";
 
 export const RegisterForm = () => {
-  const [success, setSuccess] = useState<boolean | undefined>(false);
-  const [email, setEmail] = useState<string>("");
+  const router = useRouter();
+  const [error, setError] = useState<string | undefined>("");
+  const [isPending, startTransition] = useTransition();
+  const form = useForm<z.infer<typeof RegisterSchema>>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      name: "",
+    },
+  });
 
-  if (success) {
-    return (
-      <CardWrapper
-        size="md"
-        icon={<RiMailSendFill size="60" className="text-sky-400" />}
-        headerLabel="Please verify your email"
-        backButtonLink=""
-        backButtonHref="/auth/login"
-      >
-        <UnverifiedEmail
-          email={email}
-          message="You're almost there! We've sent an email to"
-        />
-      </CardWrapper>
-    );
-  }
+  const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
+    setError("");
+    startTransition(() => {
+      register(values).then((response) => {
+        setError(response.error);
+        if (response.data) {
+          router.push(`/auth/verification/${response.data.token}`);
+        }
+      });
+    });
+  };
 
   return (
     <CardWrapper
@@ -38,11 +51,20 @@ export const RegisterForm = () => {
       showSocial
       showFooter
     >
-      <RegisterFormContent
-        success={success}
-        setSuccess={setSuccess}
-        setEmail={setEmail}
-      />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pb-3">
+          <RegisterFormFields form={form} isPending={isPending} />
+          <FormAlert message={error} variant="error" />
+          <Button type="submit" disabled={isPending} className="button">
+            Create an account
+            {isPending ? (
+              <Loader size="sm" color="white" className="ml-2" />
+            ) : (
+              <FaCaretRight />
+            )}
+          </Button>
+        </form>
+      </Form>
     </CardWrapper>
   );
 };

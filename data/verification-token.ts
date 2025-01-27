@@ -20,6 +20,24 @@ export const getVerificationTokenByToken = async (
 };
 
 /**
+ * @One
+ * Retrieves a verification token by a given email.
+ */
+export const getVerificationTokenByEmail = async (
+  email: string
+): Promise<VerificationToken | null> => {
+  try {
+    const verificationToken = await db.verificationToken.findFirst({
+      where: { email },
+    });
+
+    return verificationToken;
+  } catch {
+    return null;
+  }
+};
+
+/**
  * @Many
  * Retrieves all verification tokens for a given email.
  */
