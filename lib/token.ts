@@ -9,6 +9,7 @@ import { generateUUID, generateOTP, generateExpirationDate } from "@/lib/utils";
 
 export const generatePasswordResetToken = async (email: string) => {
   const token = generateUUID();
+  const code = generateOTP(); // Generate a 6-digit code
   const expires = generateExpirationDate(24); // 1 hour
 
   const existingTokens = await getPasswordResetTokensByEmail(email);
@@ -24,18 +25,19 @@ export const generatePasswordResetToken = async (email: string) => {
         error
       );
     }
-
-    // Create a new token
-    const passwordResetToken = await db.passwordResetToken.create({
-      data: {
-        email,
-        token,
-        expires,
-      },
-    });
-
-    return passwordResetToken;
   }
+
+  // Create a new token
+  const passwordResetToken = await db.passwordResetToken.create({
+    data: {
+      email,
+      token,
+      expires,
+      code,
+    },
+  });
+
+  return passwordResetToken;
 };
 
 /**
