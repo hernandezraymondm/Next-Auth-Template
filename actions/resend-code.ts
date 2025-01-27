@@ -2,7 +2,7 @@
 
 import { verifyReCAPTCHA } from "@/lib/captcha";
 import { sendVerificationEmail } from "@/lib/mail";
-import { updateVerificationCode } from "@/lib/token";
+import { updateVerificationToken } from "@/lib/token";
 
 export const resendCode = async (
   email: string,
@@ -17,7 +17,7 @@ export const resendCode = async (
     }
 
     // Update verification code
-    const verificationToken = await updateVerificationCode(email, token);
+    const verificationToken = await updateVerificationToken(email, token);
 
     if (!verificationToken) {
       return { error: "Code generation failed!" };

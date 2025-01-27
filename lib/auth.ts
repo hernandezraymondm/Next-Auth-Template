@@ -1,5 +1,7 @@
 import bcrypt from "bcryptjs";
-import { sendLockoutEmailAlert } from "@/lib/mail";
+import { sendLockoutEmailAlert, sendVerificationEmail } from "@/lib/mail";
+import { getVerificationTokenByEmail } from "@/data/verification-token";
+import { generateVerificationToken } from "./token";
 
 export const loginAttempts = new Map<
   string,
@@ -55,6 +57,25 @@ export const handleFailedLogin = async (
   // Reset attempts on successful login
   loginAttempts.delete(email);
   return { success: true };
+};
+
+export const handleUnverifiedEmail = async (email: string) => {
+  const verificationToken = await getVerificationTokenByEmail(email);
+  if (!verificationToken) {
+    // Generate verification token
+    const newVerificationToken = await generateVerificationToken(email);
+
+    // Send verification email
+    await sendVerificationEmail(
+      newVerificationToken.email,
+      newVerificationToken.token,
+      newVerificationToken.code
+    );
+
+    return newVerificationToken;
+  }
+
+  return verificationToken;
 };
 
 // Check if account is locked

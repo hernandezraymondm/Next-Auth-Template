@@ -78,7 +78,7 @@ export const generateUUID = (): string => {
  *
  * @returns {string} - A 6-digit verification code.
  */
-export const generateVerificationCode = (): string => {
+export const generateOTP = (): string => {
   return crypto.randomInt(100000, 999999).toString();
 };
 

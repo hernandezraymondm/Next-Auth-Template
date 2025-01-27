@@ -1,12 +1,17 @@
 "use server";
 
 import * as z from "zod";
+import { redirect } from "next/navigation";
 import { AuthError } from "next-auth";
 import { signIn } from "@/auth";
 import { LoginSchema } from "@/schemas";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { getUserByEmail } from "@/data/user";
-import { checkLockoutStatus, handleFailedLogin } from "@/lib/auth";
+import {
+  checkLockoutStatus,
+  handleFailedLogin,
+  handleUnverifiedEmail,
+} from "@/lib/auth";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
@@ -39,10 +44,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
 
   // Check if email is verified
   if (!existingUser.emailVerified) {
-    return {
-      unverified: true,
-      message: "Email not verified",
-    };
+    const verificationToken = await handleUnverifiedEmail(email);
+    redirect(`/auth/verification/${verificationToken?.token}`);
   }
 
   // Proceed with login if everything checks out
