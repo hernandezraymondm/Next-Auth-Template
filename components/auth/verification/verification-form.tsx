@@ -9,10 +9,10 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 import { TokenExpirationCountdown } from "@/components/auth/countdown";
 import { ResendCodeSection } from "@/components/auth/verification/resend-code-section";
 import { OtpInput } from "@/components/auth/verification/otp-input";
-import { VerificationError } from "@/components/auth/verification/verification-error";
-import { VerificationSuccess } from "@/components/auth/verification/verification-success";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
 import { verifyEmailToken } from "@/actions/verify-email-token";
-import { verifyCode } from "@/actions/verify-code";
+import { verifyEmailCode } from "@/actions/verify-email-code";
 
 interface VerificationFormProps {
   token: string;
@@ -54,7 +54,7 @@ export const VerificationForm = ({ token }: VerificationFormProps) => {
     setError(undefined);
     setIsVerifying(true);
     setTimeout(async () => {
-      const result = await verifyCode(token, otp);
+      const result = await verifyEmailCode(token, otp);
       if (result.success) {
         setSuccess(true);
       } else {
@@ -69,11 +69,18 @@ export const VerificationForm = ({ token }: VerificationFormProps) => {
   }
 
   if (success) {
-    return <VerificationSuccess />;
+    return (
+      <FormSuccess
+        headerLabel="Verification Success!"
+        mainMessage=" Thank you for your support, we are pleased to inform you that your
+        account is now ready for use."
+        subMessage="You can now sign in with your email address."
+      />
+    );
   }
 
   if (!isTokenValid) {
-    return <VerificationError error={error || "Invalid verification link"} />;
+    return <FormError error={error || "Invalid verification link"} />;
   }
 
   return (

@@ -19,7 +19,7 @@ const errorMap = {
   ),
 };
 
-export const ErrorCard = () => {
+export const AuthError = () => {
   const searchParams = useSearchParams();
   const urlError = searchParams.get("error") as Error;
 

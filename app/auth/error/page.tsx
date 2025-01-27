@@ -1,8 +1,8 @@
 import React from "react";
-import { ErrorCard } from "@/components/auth/error-card";
+import { AuthError } from "@/components/auth/auth-error";
 
 const AuthErrorPage = () => {
-  return <ErrorCard />;
+  return <AuthError />;
 };
 
 export default AuthErrorPage;

@@ -2,11 +2,11 @@ import { Frown } from "lucide-react";
 import { FormAlert } from "@/components/form-alert";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 
-interface VerificationErrorProps {
+interface FormErrorProps {
   error: string;
 }
 
-export const VerificationError = ({ error }: VerificationErrorProps) => (
+export const FormError = ({ error }: FormErrorProps) => (
   <CardWrapper
     size="md"
     icon={<Frown size="60" className="text-white bg-red-400 rounded-full" />}

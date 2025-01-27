@@ -34,7 +34,7 @@ export const Header = ({
       </Link>
 
       <div className="w-full flex flex-col items-center justify-center gap-1">
-        <div className={icon ? "p-1" : ""}>{icon}</div>
+        <div className={icon ? "p-3" : ""}>{icon}</div>
         <p className="font-semibold text-gray-800 text-lg">{label}</p>
         {separator && <Separator className="mt-5" />}
         <div className="text-muted-foreground text-sm text-center">

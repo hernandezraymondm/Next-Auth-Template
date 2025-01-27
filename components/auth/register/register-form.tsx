@@ -13,7 +13,7 @@ import { Loader } from "@/components/ui/loader";
 import { Form } from "@/components/ui/form";
 import { FormAlert } from "@/components/form-alert";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import { RegisterFormFields } from "@/components/auth/register/register-form-fields";
+import { RegisterFields } from "@/components/auth/register/register-fields";
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -22,19 +22,20 @@ export const RegisterForm = () => {
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
-      name: "",
+      confirmPassword: "",
     },
   });
 
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
     startTransition(() => {
-      register(values).then((response) => {
-        setError(response.error);
-        if (response.data) {
-          router.push(`/auth/verification/${response.data.token}`);
+      register(values).then((data) => {
+        setError(data.error);
+        if (data.data) {
+          router.push(`/auth/verification/${data.data.token}`);
         }
       });
     });
@@ -53,7 +54,7 @@ export const RegisterForm = () => {
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pb-3">
-          <RegisterFormFields form={form} isPending={isPending} />
+          <RegisterFields form={form} isPending={isPending} />
           <FormAlert message={error} variant="error" />
           <Button type="submit" disabled={isPending} className="button">
             Create an account

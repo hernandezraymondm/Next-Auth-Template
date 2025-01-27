@@ -61,6 +61,7 @@ export const handleFailedLogin = async (
 
 export const handleUnverifiedEmail = async (email: string) => {
   const verificationToken = await getVerificationTokenByEmail(email);
+
   if (!verificationToken) {
     // Generate verification token
     const newVerificationToken = await generateVerificationToken(email);

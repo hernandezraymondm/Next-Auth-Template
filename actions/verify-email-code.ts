@@ -4,14 +4,14 @@ import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
 import { getVerificationTokenByTokenAndCode } from "@/data/verification-token";
 
-export const verifyCode = async (token: string, code: string) => {
+export const verifyEmailCode = async (token: string, code: string) => {
   const verificationRecord = await getVerificationTokenByTokenAndCode(
     token,
     code
   );
 
   if (!verificationRecord) {
-    return { error: "Invalid code" };
+    return { error: "Invalid 6-digit code" };
   }
 
   const hasExpired = new Date(verificationRecord.expires) < new Date();

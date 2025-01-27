@@ -12,7 +12,7 @@ import { LoginSchema } from "@/schemas";
 import { Button } from "@/components/ui/button";
 import { Loader } from "@/components/ui/loader";
 import { FormAlert } from "@/components/form-alert";
-import { LoginFormFields } from "@/components/auth/login/login-form-fields";
+import { LoginFields } from "@/components/auth/login/login-fields";
 import { login } from "@/actions/login";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 
@@ -54,7 +54,7 @@ export const LoginForm = () => {
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <LoginFormFields form={form} isPending={isPending} />
+          <LoginFields form={form} isPending={isPending} />
           <FormAlert message={error || urlError} variant="error" />
           <Button type="submit" disabled={isPending} className="button">
             Continue
