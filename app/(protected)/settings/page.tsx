@@ -2,10 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { logout } from "@/actions/logout";
-import { useCurrentUser } from "@/hooks/use-current-user";
+// import { useCurrentUser } from "@/hooks/use-current-user";
 
 const SettingsPage = () => {
-  const user = useCurrentUser();
+  // const user = useCurrentUser();
 
   const handleSignOut = () => {
     logout();
