@@ -7,11 +7,13 @@ declare module "next-auth" {
   interface User {
     role: UserRole;
     emailVerified: Date | null;
+    isTwoFactorEnabled: boolean;
   }
 
   interface Session {
     user: {
       role: UserRole;
+      isTwoFactorEnabled: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -19,5 +21,6 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     role: UserRole;
+    isTwoFactorEnabled: boolean;
   }
 }

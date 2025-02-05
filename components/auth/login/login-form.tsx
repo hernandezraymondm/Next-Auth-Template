@@ -22,6 +22,7 @@ export const LoginForm = () => {
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "This email is already associated with a different provider. Please use a different email or sign in with the correct provider."
       : "";
+  const [showTwoFactor, setShowTwoFactor] = useState(false);
   const [error, setError] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
   const form = useForm({
@@ -29,15 +30,26 @@ export const LoginForm = () => {
     defaultValues: {
       email: "",
       password: "",
+      code: "",
     },
   });
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
     startTransition(() => {
-      login(values).then((data) => {
-        setError(data?.error);
-      });
+      login(values)
+        .then((data) => {
+          if (data?.error) {
+            form.reset();
+            setError(data.error);
+          }
+          if (data?.twoFactor) {
+            setShowTwoFactor(true);
+          }
+        })
+        .catch(() => {
+          setError("Something went wrong");
+        });
     });
   };
 
@@ -50,11 +62,14 @@ export const LoginForm = () => {
       backButtonLink="Sign up"
       backButtonHref="/auth/register"
       showSocial
-      showFooter
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-          <LoginFields form={form} isPending={isPending} />
+          <LoginFields
+            form={form}
+            isPending={isPending}
+            showTwoFactor={showTwoFactor}
+          />
           <FormAlert message={error || urlError} variant="error" />
           <Button type="submit" disabled={isPending} className="button">
             Continue

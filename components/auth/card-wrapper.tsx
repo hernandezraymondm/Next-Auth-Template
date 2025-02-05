@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { SiClerk } from "react-icons/si";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import {
@@ -41,7 +40,6 @@ export interface CardWrapperProps
   backButtonHref: string;
   isBackArrowed?: boolean;
   showSocial?: boolean;
-  showFooter?: boolean;
 }
 
 const CardWrapper = React.forwardRef<HTMLDivElement, CardWrapperProps>(
@@ -59,7 +57,6 @@ const CardWrapper = React.forwardRef<HTMLDivElement, CardWrapperProps>(
       backButtonHref,
       isBackArrowed,
       showSocial,
-      showFooter,
       ...props
     },
     ref
@@ -92,17 +89,6 @@ const CardWrapper = React.forwardRef<HTMLDivElement, CardWrapperProps>(
             className={className}
           />
         </CardFooter>
-        {showFooter && (
-          <CardFooter className="card-footer">
-            <div className="card-footer-content">
-              <p>Secured by</p>
-              <div className="flex place-items-center">
-                <SiClerk />
-                clerk
-              </div>
-            </div>
-          </CardFooter>
-        )}
       </Card>
     );
   }

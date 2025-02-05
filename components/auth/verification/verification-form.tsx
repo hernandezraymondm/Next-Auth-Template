@@ -8,7 +8,7 @@ import { FormAlert } from "@/components/form-alert";
 import { CardWrapper } from "@/components/auth/card-wrapper";
 import { TokenExpirationCountdown } from "@/components/auth/countdown";
 import { ResendCodeSection } from "@/components/auth/verification/resend-code-section";
-import { OtpInput } from "@/components/auth/verification/otp-input";
+import { OtpInput } from "@/components/auth/otp-input";
 import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { verifyEmailToken } from "@/actions/verify-email-token";

@@ -28,17 +28,21 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  password      String?
-  role          UserRole  @default(USER)
-  accounts      Account[]
+  id                      String    @id @default(cuid())
+  name                    String?
+  email                   String?   @unique
+  emailVerified           DateTime? @map("email_verified")
+  image                   String?
+  password                String?
+  role                    UserRole  @default(USER)
+  accounts                Account[]
+  twoFactorSecret         String?
+  isTwoFactorEnabled      Boolean   @default(false)
+  twoFactorConfirmationId String?
 
   // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  Authenticator         Authenticator[]
+  TwoFactorConfirmation TwoFactorConfirmation[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -67,6 +71,25 @@ model Account {
 
   @@unique([provider, providerAccountId])
   @@map("accounts")
+}
+
+model TwoFactorToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@map("two_factor_token")
+}
+
+model TwoFactorConfirmation {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId])
+  @@map("two_factor_confirmation")
 }
 
 // Optional for WebAuthn support

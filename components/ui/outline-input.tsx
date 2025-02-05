@@ -19,7 +19,7 @@ const OutlineInput = React.forwardRef<HTMLInputElement, OutlineInputProps>(
           type={type}
           id={id}
           className={cn(
-            "peer block w-full rounded-md border bg-background px-2.5 pb-2.5 pt-4 text-sm text-foreground appearance-none focus:outline-none focus:ring-0",
+            "peer block w-full appearance-none rounded-lg border bg-background px-2.5 pb-2.5 pt-4 text-sm text-foreground focus:outline-none focus:ring-0",
             "border-input",
             "focus:border-accent",
             "placeholder-shown:border-input",
@@ -40,14 +40,14 @@ const OutlineInput = React.forwardRef<HTMLInputElement, OutlineInputProps>(
         <label
           htmlFor={id}
           className={cn(
-            "absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-background px-2 peer-focus:px-2",
-            "text-gray-700 peer-focus:text-accent rounded-lg",
-            "peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2",
-            "peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4",
-            "rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1",
+            "absolute top-2 z-10 origin-[0] -translate-y-4 scale-75 transform bg-background px-2 text-sm duration-300 peer-focus:px-2",
+            "rounded-lg text-gray-500 peer-focus:text-tertiary",
+            "peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100",
+            "peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75",
+            "start-1 rtl:peer-focus:left-auto rtl:peer-focus:translate-x-1/4",
             "dark:bg-background",
-            "pointer-events-none user-select-none",
-            (isFocused || hasContent) && "text-gray-700"
+            "user-select-none pointer-events-none",
+            isFocused || hasContent
           )}
         >
           {label}

@@ -50,7 +50,6 @@ export const RegisterForm = () => {
       backButtonLink="Sign in"
       backButtonHref="/auth/login"
       showSocial
-      showFooter
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pb-3">

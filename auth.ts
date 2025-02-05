@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { Adapter } from "next-auth/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { delayWithHash } from "@/lib/utils";
+import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   /**
@@ -48,10 +49,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return false;
         }
 
+        if (user.isTwoFactorEnabled) {
+          const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
+            user.id
+          );
+
+          if (!twoFactorConfirmation) return false;
+
+          // Delete two factor confirmation for next signin
+          await db.twoFactorConfirmation.delete({
+            where: { id: twoFactorConfirmation.id },
+          });
+        }
+
         console.log(user);
-
-        // TODO: Add optional 2FA/MFA check here
-
         return true;
       } catch (error) {
         console.error("Error during sign-in callback:", error);
@@ -74,6 +85,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (token.role && session.user) {
         session.user.role = token.role;
       }
+      if (token.isTwoFactorEnabled && session.user) {
+        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
+      }
       return session;
     },
 
@@ -86,6 +100,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.role = user.role;
+        token.isTwoFactorEnabled = user.isTwoFactorEnabled;
       }
       return token;
     },
