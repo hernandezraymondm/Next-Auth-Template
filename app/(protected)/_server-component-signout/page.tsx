@@ -2,7 +2,7 @@ import { auth, signOut } from "@/auth";
 import { Button } from "@/components/ui/button";
 import { authRoutes } from "@/routes";
 
-const DashboardPage = async () => {
+const SamplePage = async () => {
   const session = await auth();
   return (
     <div>
@@ -21,4 +21,4 @@ const DashboardPage = async () => {
   );
 };
 
-export default DashboardPage;
+export default SamplePage;

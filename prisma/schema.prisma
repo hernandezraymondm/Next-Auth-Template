@@ -37,7 +37,7 @@ model User {
   role                    UserRole  @default(USER)
   accounts                Account[]
   twoFactorSecret         String?
-  twoFactorEnabled        Boolean   @default(false)
+  isTwoFactorEnabled      Boolean   @default(false)
   twoFactorConfirmationId String?
 
   // Optional for WebAuthn support
