@@ -48,6 +48,10 @@ export default {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        success: "hsl(var(--success))",
+        warning: "hsl(var(--warning))",
+        info: "hsl(var(--info))",
+        neutral: "hsl(var(--neutral))",
         smoke: {
           DEFAULT: "hsl(var(--smoke))",
           foreground: "hsl(var(--smoke-foreground))",

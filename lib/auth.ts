@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import { sendLockoutEmailAlert, sendVerificationEmail } from "@/lib/mail";
 import { getVerificationTokenByEmail } from "@/data/verification-token";
 import { generateVerificationToken } from "./token";
+import { auth } from "@/auth";
 
 export const loginAttempts = new Map<
   string,
@@ -107,3 +108,8 @@ setInterval(() => {
     }
   });
 }, CLEANUP_INTERVAL);
+
+export const currentUser = async () => {
+  const session = await auth();
+  return session?.user;
+};
