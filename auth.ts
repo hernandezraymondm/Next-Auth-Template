@@ -62,7 +62,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           });
         }
 
-        console.log(user);
+        // console.log(user);
         return true;
       } catch (error) {
         console.error("Error during sign-in callback:", error);
