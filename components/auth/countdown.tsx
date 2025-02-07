@@ -45,11 +45,7 @@ export const TokenExpirationCountdown = ({
     }
   };
 
-  return (
-    <span className="font-mono text-lg text-accent ml-2">
-      {formattedTime()}
-    </span>
-  );
+  return <span className="font-mono text-sm  ml-2">{formattedTime()}</span>;
 };
 
 interface ResendCodeCountdownProps {

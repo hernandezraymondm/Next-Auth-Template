@@ -1,5 +1,6 @@
 "use client";
 
+import * as z from "zod";
 import { useEffect, useState } from "react";
 import { IoIosMail } from "react-icons/io";
 import { Button } from "@/components/ui/button";
@@ -13,6 +14,10 @@ import { FormError } from "@/components/form-error";
 import { FormSuccess } from "@/components/form-success";
 import { verifyEmailToken } from "@/actions/verify-email-token";
 import { verifyEmailCode } from "@/actions/verify-email-code";
+import { Form } from "@/components/ui/form";
+import { OtpSchema } from "@/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 
 interface VerificationFormProps {
   token: string;
@@ -26,7 +31,12 @@ export const VerificationForm = ({ token }: VerificationFormProps) => {
   const [expires, setExpires] = useState(0);
   const [error, setError] = useState<string | undefined>(undefined);
   const [success, setSuccess] = useState(false);
-  const [otp, setOtp] = useState("");
+  const form = useForm({
+    resolver: zodResolver(OtpSchema),
+    defaultValues: {
+      code: "",
+    },
+  });
 
   useEffect(() => {
     const verifyLink = async () => {
@@ -49,12 +59,11 @@ export const VerificationForm = ({ token }: VerificationFormProps) => {
     }
   }, [token]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(undefined);
+  const onSubmit = (values: z.infer<typeof OtpSchema>) => {
+    setError("");
     setIsVerifying(true);
     setTimeout(async () => {
-      const result = await verifyEmailCode(token, otp);
+      const result = await verifyEmailCode(token, values.code);
       if (result.success) {
         setSuccess(true);
       } else {
@@ -101,29 +110,34 @@ export const VerificationForm = ({ token }: VerificationFormProps) => {
       isBackArrowed={true}
       className="!text-gray-600"
     >
-      <form onSubmit={handleSubmit} className="space-y-5">
-        {isVerifying ? (
-          <div className="mb-10">
-            <Loader size="lg" color="#8b70f5" />
-          </div>
-        ) : (
-          <div className="text-center">
-            <p className="paragraph">
-              Enter the 6-digit code we sent to <strong>{email}</strong> to
-              continue. <br /> This code will expire in
-              <strong>
-                <TokenExpirationCountdown expiration={expires} />
-              </strong>
-            </p>
-          </div>
-        )}
-        <OtpInput value={otp} onChange={setOtp} loading={isVerifying} />
-        {error && <FormAlert message={error} variant="error" />}
-        <Button type="submit" disabled={isVerifying} className="button">
-          Verify Email
-        </Button>
-        <ResendCodeSection email={email} token={token} setError={setError} />
-      </form>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+          {isVerifying ? (
+            <div className="mb-10">
+              <Loader size="lg" color="#8b70f5" />
+            </div>
+          ) : (
+            <div className="text-center">
+              <p className="paragraph">
+                Enter the 6-digit code we sent to <strong>{email}</strong> to
+                continue.
+              </p>
+              <div className="text-sm text-center mt-3">
+                This code will expire in
+                <strong>
+                  <TokenExpirationCountdown expiration={expires} />
+                </strong>
+              </div>
+            </div>
+          )}
+          <OtpInput form={form} loading={isVerifying} />
+          {error && <FormAlert message={error} variant="error" />}
+          <Button type="submit" disabled={isVerifying} className="button">
+            Verify Email
+          </Button>
+          <ResendCodeSection email={email} token={token} setError={setError} />
+        </form>
+      </Form>
     </CardWrapper>
   );
 };

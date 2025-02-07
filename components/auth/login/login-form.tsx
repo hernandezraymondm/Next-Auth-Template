@@ -33,7 +33,7 @@ export const LoginForm = () => {
       code: "",
     },
   });
-
+  // TODO: useSession status: "loading" | "authenticated" | "unauthenticated"
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
     startTransition(() => {
@@ -84,7 +84,7 @@ export const LoginForm = () => {
               type="button"
               variant="link"
               disabled={isPending}
-              className="font-semibold self-center text-accent"
+              className="font-semibold self-center text-tertiary"
             >
               <Fingerprint /> Use passkey instead
             </Button>
