@@ -13,8 +13,6 @@ interface RoleGateProps {
 export const RoleGate = ({ children, allowedRole }: RoleGateProps) => {
   const role = useCurrentRole();
 
-  console.log(`ROLE GATE: ${role}`);
-
   if (role !== allowedRole) {
     return (
       <FormAlert

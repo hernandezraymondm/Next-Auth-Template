@@ -25,6 +25,7 @@ declare module "next-auth" {
     user: {
       role: UserRole;
       isTwoFactorEnabled: boolean;
+      provider: string;
     } & DefaultSession["user"];
   }
 }
@@ -33,5 +34,6 @@ declare module "next-auth/jwt" {
   interface JWT {
     role: UserRole;
     isTwoFactorEnabled: boolean;
+    provider: string;
   }
 }

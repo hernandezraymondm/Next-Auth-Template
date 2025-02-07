@@ -13,7 +13,7 @@ import { Header } from "@/components/auth/header";
 import { Social } from "@/components/auth/social";
 import { BackButton } from "@/components/auth/back-button";
 
-const cardVariants = cva("shadow-2xl bg-smoke", {
+const cardVariants = cva("shadow-2xl bg-background/90", {
   variants: {
     size: {
       sm: "w-[400px]",

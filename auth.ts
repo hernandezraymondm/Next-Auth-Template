@@ -62,7 +62,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           });
         }
 
-        // console.log(user);
         return true;
       } catch (error) {
         console.error("Error during sign-in callback:", error);
@@ -71,38 +70,39 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
     },
 
-    /**
-     * Session callback to extend session object
-     * with token object's id and role.
-     * @param {Object} token - The token object
-     * @param {Object} session - The session object
-     * @returns {Object} The updated session object
-     */
-    async session({ token, session }) {
-      if (token.sub && session.user) {
-        session.user.id = token.sub;
-      }
-      if (token.role && session.user) {
-        session.user.role = token.role;
-      }
-      if (session.user) {
-        session.user.isTwoFactorEnabled = token.isTwoFactorEnabled;
-      }
-      return session;
-    },
-
-    /**
-     * JWT callback to include user role in the token object
-     * @param {Object} token - The token object
-     * @param {Object} user - The user object
-     * @returns {Object} The updated token object
-     */
-    async jwt({ token, user }) {
+    async jwt({ token, user, account, trigger, session }) {
       if (user) {
-        token.role = user.role;
-        token.isTwoFactorEnabled = user.isTwoFactorEnabled;
+        Object.assign(token, {
+          role: user.role,
+          isTwoFactorEnabled: user.isTwoFactorEnabled,
+        });
+      }
+      if (account) {
+        token.provider = account.provider;
+      }
+      if (trigger === "update" && session) {
+        Object.assign(token, {
+          ...(session.name && { name: session.name }),
+          ...(session.email && { email: session.email }),
+          ...(session.role && { role: session.role }),
+          ...(session.isTwoFactorEnabled && {
+            isTwoFactorEnabled: session.isTwoFactorEnabled,
+          }),
+        });
       }
       return token;
+    },
+
+    async session({ token, session }) {
+      if (session.user) {
+        Object.assign(session.user, {
+          id: token.sub,
+          role: token.role,
+          isTwoFactorEnabled: token.isTwoFactorEnabled,
+          provider: token.provider,
+        });
+      }
+      return session;
     },
   },
   adapter: PrismaAdapter(db) as Adapter,
