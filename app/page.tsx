@@ -24,7 +24,7 @@ export default function Home() {
           Secure, Seamless Authentication for Modern Web Apps
         </p>
         <div>
-          <LoginButton>
+          <LoginButton mode="modal" asChild>
             <Button
               variant="default"
               size="lg"

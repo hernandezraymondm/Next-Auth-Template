@@ -18,6 +18,7 @@ import { CardWrapper } from "@/components/auth/card-wrapper";
 
 export const LoginForm = () => {
   const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl");
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
       ? "This email is already associated with a different provider. Please use a different email or sign in with the correct provider."
@@ -30,14 +31,14 @@ export const LoginForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      code: "",
+      code: undefined,
     },
   });
   // TODO: useSession status: "loading" | "authenticated" | "unauthenticated"
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     setError("");
     startTransition(() => {
-      login(values)
+      login(values, callbackUrl)
         .then((data) => {
           if (data?.error) {
             form.reset();
@@ -47,7 +48,8 @@ export const LoginForm = () => {
             setShowTwoFactor(true);
           }
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log("Error during sign-in callback:", err);
           setError("Something went wrong");
         });
     });

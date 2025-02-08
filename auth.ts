@@ -1,14 +1,14 @@
 import NextAuth from "next-auth";
-import authConfig from "@/auth.config";
 import { db } from "@/lib/db";
 import { Adapter } from "next-auth/adapters";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { delayWithHash } from "@/lib/utils";
 import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation";
+import authConfig from "./auth.config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   /**
-   * - Defines custom pages for sign-in and error handling
+   * - Defines Custom Pages for sign-in and error handling
    * @property {string} signIn - Custom sign-in page path
    * @property {string} error - Custom error page path
    */
@@ -54,7 +54,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             user.id
           );
 
-          if (!twoFactorConfirmation) return false;
+          if (!twoFactorConfirmation) {
+            await delayWithHash();
+            return false;
+          }
 
           // Delete two factor confirmation for next signin
           await db.twoFactorConfirmation.delete({

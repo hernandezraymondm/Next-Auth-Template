@@ -2,6 +2,7 @@ import { SessionProvider } from "next-auth/react";
 import { Navbar } from "./_components/navbar";
 import { auth } from "@/auth";
 import { Toaster } from "@/components/ui/sonner";
+import { unauthorized } from "next/navigation";
 
 export default async function ProtectedLayout({
   children,
@@ -9,6 +10,10 @@ export default async function ProtectedLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+
+  if (!session) {
+    unauthorized();
+  }
 
   return (
     <SessionProvider session={session}>

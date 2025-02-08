@@ -18,14 +18,16 @@ export default {
       clientSecret: process.env.AUTH_FACEBOOK_SECRET!,
     }),
     Credentials({
-      authorize: async (credentials) => {
+      async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
 
         if (validatedFields.success) {
           const { email, password } = validatedFields.data;
 
           const user = await getUserByEmail(email);
-          if (!user || !user.password) return null; // if user registered with social
+
+          // if user registered with social
+          if (!user || !user.password) return null;
 
           const passwordMatch = await bcrypt.compare(password, user.password);
 
