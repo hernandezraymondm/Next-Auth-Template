@@ -18,7 +18,7 @@ export default {
       clientSecret: process.env.AUTH_FACEBOOK_SECRET!,
     }),
     Credentials({
-      authorize: async (credentials) => {
+      async authorize(credentials) {
         const validatedFields = LoginSchema.safeParse(credentials);
 
         if (validatedFields.success) {
