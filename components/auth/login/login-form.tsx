@@ -31,7 +31,7 @@ export const LoginForm = () => {
     defaultValues: {
       email: "",
       password: "",
-      code: "",
+      code: undefined,
     },
   });
   // TODO: useSession status: "loading" | "authenticated" | "unauthenticated"
@@ -49,7 +49,7 @@ export const LoginForm = () => {
           }
         })
         .catch((err) => {
-          console.log(err);
+          console.log("Error during sign-in callback:", err);
           setError("Something went wrong");
         });
     });
