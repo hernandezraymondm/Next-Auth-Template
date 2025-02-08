@@ -8,7 +8,7 @@ import { getTwoFactorConfirmationByUserId } from "@/data/two-factor-confirmation
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   /**
-   * - Defines custom pages for sign-in and error handling
+   * - Defines Custom Pages for sign-in and error handling
    * @property {string} signIn - Custom sign-in page path
    * @property {string} error - Custom error page path
    */
